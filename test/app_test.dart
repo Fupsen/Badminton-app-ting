@@ -93,15 +93,39 @@ void main() {
         w is TextField &&
         (w.decoration?.labelText == 'Mig/os' ||
             w.decoration?.labelText == 'Modstander'));
-    await tester.enterText(scoreFields.at(0), '15');
-    await tester.enterText(scoreFields.at(1), '10');
+    await tester.enterText(scoreFields.at(0), '11');
+    await tester.enterText(scoreFields.at(1), '5');
     await tester.tap(find.text('Gem'));
     await tester.pumpAndSettle();
 
     expect(find.text('Usædvanligt resultat'), findsOneWidget);
     await tester.tap(find.text('Gem alligevel'));
     await tester.pumpAndSettle();
-    expect((await store.load()).matches.single.pointDiff, 5);
+    expect((await store.load()).matches.single.pointDiff, 6);
+  });
+
+  testWidgets('a normal 3x15 match saves without warning', (tester) async {
+    final store = MemoryStore(AppData(
+      players: [Player(id: 'p', name: 'Mette', createdAt: DateTime(2026))],
+      activePlayerId: 'p',
+    ));
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Log kamp'));
+    await tester.pumpAndSettle();
+    final scoreFields = find.byWidgetPredicate((w) =>
+        w is TextField &&
+        (w.decoration?.labelText == 'Mig/os' ||
+            w.decoration?.labelText == 'Modstander'));
+    for (final (i, v) in ['15', '12', '21', '20'].indexed) {
+      await tester.enterText(scoreFields.at(i), v);
+    }
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Usædvanligt resultat'), findsNothing);
+    expect((await store.load()).matches.single.won, isTrue);
   });
 
   testWidgets('wide screens use a navigation rail', (tester) async {

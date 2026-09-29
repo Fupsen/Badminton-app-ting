@@ -17,9 +17,9 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Spillere**: Bruger du appen selv, har du én profil. Er du træner, kan du
   oprette flere, skifte mellem dem og sammenligne dem i en tabel.
 - **Kampe**: single/double/mixed, modstander(e), makker og sætresultater.
-  Resultatet tjekkes mod BWF-reglerne (til 21 med 2 points forspring, maks.
-  30, bedst af 3). Et afvigende resultat giver en advarsel, men kan stadig
-  gemmes.
+  Resultatet tjekkes mod de officielle pointsystemer: **3×15** (standard i
+  Danmark fra 1. juli 2026 og hos BWF fra 2027) og **3×21** (tidligere
+  standard). Et afvigende resultat giver en advarsel, men kan stadig gemmes.
 - **Træningskampe**: markér en kamp som træningskamp. Den giver ingen
   advarsel om pointsystemet og tæller ikke med i sejrsprocent, form og mål.
   På Statistik kan du vælge at medtage træningskampe.
@@ -43,6 +43,13 @@ kører på Android, iOS, Windows, macOS og Linux.
   minder dig om at tage backup, hvis det er over 30 dage siden.
 - **Responsivt layout**: bundnavigation på telefon og sidemenu på bredere
   skærme.
+
+## Badminton-viden
+
+`docs/viden/` er en dansk vidensbank om regler, teknik, benarbejde, taktik,
+fysisk træning og skader, med kildehenvisninger (BWF, Badminton Danmark, Team
+Danmark og forskning). Appens tekster og pointregler skal stemme med den.
+`CLAUDE.md` sørger for, at Claude bruger vidensbanken i nye sessioner.
 
 ## Kom i gang
 

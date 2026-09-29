@@ -170,7 +170,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get scoreWarningGame =>
-      'Mindst ét sæt følger ikke de officielle regler (til 21 med 2 points forspring, maks. 30).';
+      'Sættene følger ikke et officielt pointsystem: til 15 (ved 14-14 vinder man med 2, maks. 21) eller til 21 (ved 20-20 vinder man med 2, maks. 30). Alle sæt i en kamp skal følge samme system.';
 
   @override
   String get scoreWarningGameCount =>
@@ -178,7 +178,7 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get scoreWarningFooter =>
-      'Det er fint, hvis I fx har spillet til 15 til træning. Vil du gemme alligevel?';
+      'Det er fint, hvis I fx har spillet til 11 til træning. Så kan du også markere kampen som træningskamp. Vil du gemme alligevel?';
 
   @override
   String matchVs(String opponents) {

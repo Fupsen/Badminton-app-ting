@@ -1,6 +1,7 @@
 // Dansk indhold til teknik-biblioteket. Beskrivelserne tager udgangspunkt i
 // en højrehåndet spiller. De er generel træningsviden og erstatter ikke en
-// træner.
+// træner. Indholdet skal stemme med vidensbanken i docs/viden/ (teknik.md,
+// benarbejde.md og regler.md), som har kilderne.
 
 import 'technique.dart';
 
@@ -13,13 +14,17 @@ const strokes = <Technique>[
     category: 'Serv',
     summary:
         'En lav serv, der lige går over nettet og lander i forreste del af '
-        'modstanderens servefelt. Det mest brugte serv i double.',
+        'modstanderens servefelt. Den mest brugte serv i double.',
     whenToUse:
         'Standard i double og mixed, og som variation i single, så '
         'modstanderen ikke kan angribe serven.',
     keyPoints: [
-      'Kort baghåndsgreb med tommelfingeren bag skaftet.',
-      'Hold fjerbolden ved fjerene foran kroppen under taljen.',
+      'Kort tommelgreb: tommelfingeren på skaftets brede, flade side, og hold '
+          'højt oppe på grebet.',
+      'Hold fjerbolden ved fjerene foran kroppen. Hele fjerbolden skal være '
+          'under 1,15 m, når du rammer den.',
+      'Slip fjerbolden uden at give den spin, og ram korken først. Spin-serv '
+          'er forbudt siden 2025.',
       'Skub ketsjeren frem med en rolig bevægelse fra underarm og tommel, '
           'ikke med et sving fra skulderen.',
       'Fjerbolden skal toppe på din side af nettet og falde ned over det.',
@@ -28,7 +33,8 @@ const strokes = <Technique>[
     commonMistakes: [
       'Serven går for højt over nettet og bliver angrebet.',
       'For stort sving giver ujævn længde.',
-      'Ketsjerhovedet er over taljen ved træffet (regelfejl).',
+      'Fjerbolden er over 1,15 m ved træffet (servefejl).',
+      'Ketsjeren stopper eller tøver i fremadbevægelsen (servefejl).',
     ],
   ),
   Technique(
@@ -45,7 +51,9 @@ const strokes = <Technique>[
         'overraskelse.',
     keyPoints: [
       'Stå sidelæns med venstre fod forrest og vægten på højre ben.',
-      'Slip fjerbolden, og sving ketsjeren i en lang bue under og op.',
+      'Slip fjerbolden, og sving ketsjeren i en lang bue under og op. Ram '
+          'under fjerbolden med underarmsrotation og et strakt håndled.',
+      'Hele fjerbolden skal være under 1,15 m, når du rammer den.',
       'Flyt vægten fremad under svinget, og drej hofte og skulder med.',
       'Afslut svinget højt over venstre skulder.',
       'Sigt højt, så fjerbolden falder lodret ned ved baglinjen.',
@@ -74,7 +82,7 @@ const strokes = <Technique>[
       'Stå sidelæns med venstre arm pegende op mod fjerbolden.',
       'Kast-bevægelse: albuen føres op og frem, underarmen roterer '
           '(pronation) i træffet.',
-      'Træf fjerbolden så højt som muligt med strakt arm.',
+      'Træf fjerbolden så højt som muligt, over og lidt foran slagskulderen.',
       'Flyt vægten fra bagerste til forreste ben under slaget.',
     ],
     commonMistakes: [
@@ -145,15 +153,16 @@ const strokes = <Technique>[
         'den med forhånd (rundt om hovedet).',
     keyPoints: [
       'Drej ryggen mod nettet, og gå sidste skridt med højre ben.',
-      'Baghåndsgreb med tommelfingeren flad på skaftet.',
-      'Albuen peger op, og slaget kommer fra underarmsrotation (supination) '
-          'og et kort, hurtigt håndled.',
-      'Træf fjerbolden højt og lidt foran kroppen.',
+      'Basisgreb eller hjørnegreb, ikke det flade tommelgreb, som bruges til '
+          'slag foran kroppen.',
+      'Albuen løftes og peger op, og slaget kommer fra underarmsrotation: et '
+          'kort "punch", hvor hånden stopper brat.',
+      'Træf fjerbolden højt, ved siden af eller lidt bag kroppen.',
       'Drej straks rundt og kom tilbage mod midten.',
     ],
     commonMistakes: [
       'Træffer for lavt og for sent, så slaget bliver kort.',
-      'Bruger forhåndsgreb.',
+      'Bruger forhåndsgreb eller det flade tommelgreb.',
       'Står med front mod nettet i stedet for ryggen.',
     ],
   ),
@@ -174,7 +183,7 @@ const strokes = <Technique>[
       'Ketsjeren oppe foran kroppen, klar i begge sider.',
       'Kort, kompakt slag fra underarm og håndled, intet stort sving.',
       'Træf fjerbolden foran kroppen i nethøjde.',
-      'Skift hurtigt mellem forhånds- og baghåndsgreb.',
+      'Forhånd evt. i stegepandegreb, baghånd i tommelgreb. Skift hurtigt.',
     ],
     commonMistakes: [
       'For stort sving, så man ikke når næste slag.',
@@ -196,7 +205,8 @@ const strokes = <Technique>[
     keyPoints: [
       'Lav, bred forsvarsstilling med knæene bøjet.',
       'Ketsjeren foran kroppen i baghåndsgreb (dækker det meste af kroppen).',
-      'Brug smashens fart: block ved blot at holde ketsjeren fast.',
+      'Block: åben ketsjerflade, ram lidt under fjerbolden, og skub den blødt '
+          'over. Brug smashens fart i stedet for at svinge.',
       'Træf foran kroppen, ikke ved siden af.',
       'Split step lige når modstanderen slår.',
     ],
@@ -265,9 +275,11 @@ const strokes = <Technique>[
         'duellen.',
     keyPoints: [
       'Ketsjeren skal være oppe, klar ved nettet.',
+      'Forhånd: skift til stegepandegreb. Baghånd: tommelgreb.',
       'Kort, hurtigt slag: prik eller "tip" fjerbolden ned.',
       'Stop ketsjeren efter træffet, så du ikke rører nettet.',
       'Sigt efter gulvet mellem modstanderne eller mod kroppen.',
+      'Få hurtigt ketsjeren op igen efter slaget.',
     ],
     commonMistakes: [
       'Svinger for meget og rammer nettet.',
@@ -310,9 +322,12 @@ const footwork = <Technique>[
         'klar til at starte i alle retninger.',
     whenToUse: 'Før hvert eneste af modstanderens slag.',
     keyPoints: [
-      'Stå i midten af banen med fødderne i skulderbreddes afstand.',
+      'Stå i din basisposition, typisk omkring midten. Den flytter sig efter, '
+          'hvor modstanderen kan slå hen.',
+      'Fødderne i skulderbreddes afstand.',
       'Let bøjede knæ, vægten på forfødderne.',
-      'Lav et lille hop, så du lander præcis når modstanderen træffer.',
+      'Lav et lavt hop lige før modstanderen rammer, så du lander, når '
+          'fjerbolden bliver ramt.',
       'Land lidt bredere end du stod, og skub fra i den retning, fjerbolden '
           'går.',
     ],
@@ -334,9 +349,10 @@ const footwork = <Technique>[
         'Til at bevæge sig hurtigt sidelæns og til de fleste bevægelser frem '
         'og tilbage på banen.',
     keyPoints: [
-      'Hold kroppen lav og front i bevægelsesretningen.',
-      'Bagerste fod lukker op til forreste, derefter skubber forreste fod '
-          'videre.',
+      'Hold kroppen lav og hovedet i samme højde. Glid, og spring ikke op.',
+      'Den ene fod "jager" den anden uden helt at nå den, og derefter skubber '
+          'den forreste fod videre.',
+      'Kort jordkontakt i hvert skridt.',
       'Små, hurtige skridt frem for store.',
     ],
     commonMistakes: [
@@ -357,7 +373,9 @@ const footwork = <Technique>[
         'når du er presset.',
     keyPoints: [
       'Start eksplosivt fra split step.',
-      'Sidste skridt skal altid være med ketsjerbenet (højre).',
+      'Fremad: hæl-tå og længere skridt. Baglæns: på tæerne, korte og hurtige '
+          'skridt.',
+      'Sidste skridt mod nettet (udfaldet) er med ketsjerbenet (højre).',
       'Tæl dine skridt til hvert hjørne, så de sidder automatisk.',
     ],
     commonMistakes: [
@@ -376,13 +394,14 @@ const footwork = <Technique>[
     whenToUse: 'Ved alle slag i forreste del af banen: netdrop, lift og kill.',
     keyPoints: [
       'Land på hælen, og rul frem på foden.',
-      'Knæet peger samme vej som foden og er over anklen, ikke foran tæerne.',
-      'Bagerste fod bliver på gulvet og trækkes med.',
+      'Forreste fod peger mod fjerbolden, og knæet peger samme vej som foden.',
+      'Bøj bagerste knæ. Bagerste fod bliver på gulvet og trækkes med.',
+      'Stræk den bagerste arm ud for at holde balancen.',
       'Overkroppen er rank; ræk med ketsjeren, ikke med ryggen.',
       'Skub kraftigt tilbage fra forreste ben.',
     ],
     commonMistakes: [
-      'Knæet falder indad eller langt frem over tæerne (belaster knæet).',
+      'Knæet falder indad eller peger en anden vej end foden (belaster knæet).',
       'Overkroppen læner sig langt frem.',
       'For kort udfald, så man ikke når fjerbolden.',
     ],

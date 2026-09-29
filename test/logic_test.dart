@@ -32,16 +32,40 @@ TrainingSession training(DateTime date, int minutes,
 
 void main() {
   group('scoring', () {
-    test('standard games', () {
-      expect(isStandardGame(const GameScore(21, 19)), isTrue);
-      expect(isStandardGame(const GameScore(21, 0)), isTrue);
-      expect(isStandardGame(const GameScore(22, 20)), isTrue);
-      expect(isStandardGame(const GameScore(28, 30)), isTrue);
-      expect(isStandardGame(const GameScore(30, 29)), isTrue);
-      expect(isStandardGame(const GameScore(21, 20)), isFalse);
-      expect(isStandardGame(const GameScore(23, 20)), isFalse);
-      expect(isStandardGame(const GameScore(15, 10)), isFalse);
-      expect(isStandardGame(const GameScore(31, 29)), isFalse);
+    test('3x21 games', () {
+      const s = ScoringSystem.to21;
+      expect(isStandardGame(const GameScore(21, 19), s), isTrue);
+      expect(isStandardGame(const GameScore(21, 0), s), isTrue);
+      expect(isStandardGame(const GameScore(22, 20), s), isTrue);
+      expect(isStandardGame(const GameScore(28, 30), s), isTrue);
+      expect(isStandardGame(const GameScore(30, 29), s), isTrue);
+      expect(isStandardGame(const GameScore(21, 20), s), isFalse);
+      expect(isStandardGame(const GameScore(23, 20), s), isFalse);
+      expect(isStandardGame(const GameScore(15, 10), s), isFalse);
+      expect(isStandardGame(const GameScore(31, 29), s), isFalse);
+    });
+
+    test('3x15 games (Danmark fra 1. juli 2026, BWF fra 2027)', () {
+      const s = ScoringSystem.to15;
+      expect(isStandardGame(const GameScore(15, 0), s), isTrue);
+      expect(isStandardGame(const GameScore(15, 13), s), isTrue);
+      expect(isStandardGame(const GameScore(16, 14), s), isTrue);
+      expect(isStandardGame(const GameScore(18, 20), s), isTrue);
+      // Loft ved 21: ved 20-20 vinder næste point.
+      expect(isStandardGame(const GameScore(21, 20), s), isTrue);
+      expect(isStandardGame(const GameScore(21, 19), s), isTrue);
+      expect(isStandardGame(const GameScore(15, 14), s), isFalse);
+      expect(isStandardGame(const GameScore(17, 14), s), isFalse);
+      expect(isStandardGame(const GameScore(21, 18), s), isFalse);
+      expect(isStandardGame(const GameScore(22, 20), s), isFalse);
+      expect(isStandardGame(const GameScore(14, 10), s), isFalse);
+    });
+
+    test('without a system a game is valid in either system', () {
+      expect(isStandardGame(const GameScore(15, 10)), isTrue);
+      expect(isStandardGame(const GameScore(21, 15)), isTrue);
+      expect(isStandardGame(const GameScore(21, 20)), isTrue);
+      expect(isStandardGame(const GameScore(11, 5)), isFalse);
     });
 
     test('valid best of three', () {
@@ -52,6 +76,10 @@ void main() {
       final three = checkMatch(
           const [GameScore(21, 15), GameScore(19, 21), GameScore(21, 17)]);
       expect(three.warnings, isEmpty);
+
+      final to15 = checkMatch(
+          const [GameScore(15, 12), GameScore(13, 15), GameScore(21, 20)]);
+      expect(to15.warnings, isEmpty);
     });
 
     test('errors block saving', () {
@@ -64,7 +92,7 @@ void main() {
     });
 
     test('non-standard scores only warn', () {
-      final check = checkMatch(const [GameScore(15, 10)]);
+      final check = checkMatch(const [GameScore(11, 5)]);
       expect(check.canSave, isTrue);
       expect(check.warnings, {
         ScoreWarning.nonStandardGame,
@@ -74,6 +102,9 @@ void main() {
       final extra = checkMatch(
           const [GameScore(21, 15), GameScore(21, 15), GameScore(15, 21)]);
       expect(extra.warnings, {ScoreWarning.nonStandardGameCount});
+      // Et sæt til 15 og et sæt til 21 i samme kamp passer ikke sammen.
+      final mixed = checkMatch(const [GameScore(15, 10), GameScore(21, 15)]);
+      expect(mixed.warnings, {ScoreWarning.nonStandardGame});
     });
   });
 
