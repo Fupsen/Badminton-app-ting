@@ -39,9 +39,13 @@ GoalProgress goalProgress(
       return GoalProgress(current: minutes, target: goal.target);
     case GoalType.winRate:
       final since = DateTime(
-          goal.createdAt.year, goal.createdAt.month, goal.createdAt.day);
-      final rate =
-          WinStats.of(matches.where((m) => !m.date.isBefore(since))).rate;
+        goal.createdAt.year,
+        goal.createdAt.month,
+        goal.createdAt.day,
+      );
+      final rate = WinStats.of(
+        competitiveOnly(matches).where((m) => !m.date.isBefore(since)),
+      ).rate;
       return GoalProgress(
         current: rate == null ? null : (rate * 100).round(),
         target: goal.target,

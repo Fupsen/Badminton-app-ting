@@ -5,7 +5,6 @@
   "navOverview": "Oversigt",
   "navMatches": "Kampe",
   "navTraining": "Træning",
-  "navGoals": "Mål",
   "navStats": "Statistik",
 
   "welcomeTitle": "Velkommen til Badminton-logbog",
@@ -119,7 +118,6 @@
   "@goalTargetMinutes": {"placeholders": {"target": {"type": "int"}}},
   "goalTargetWinRate": "Vind {target} % af kampene",
   "@goalTargetWinRate": {"placeholders": {"target": {"type": "int"}}},
-  "noGoals": "Ingen mål endnu. Tryk på + for at sætte dit første mål.",
 
   "logMatch": "Log kamp",
   "logTraining": "Log træning",
@@ -188,5 +186,44 @@
   "@countTrainings": {"placeholders": {"count": {"type": "int"}}},
   "countGoals": "{count, plural, =1{1 mål} other{{count} mål}}",
   "@countGoals": {"placeholders": {"count": {"type": "int"}}},
-  "welcomeRestore": "Gendan fra backup"
+  "welcomeRestore": "Gendan fra backup",
+
+  "navTechnique": "Teknik",
+  "practiceMatch": "Træningskamp",
+  "practiceMatchHint": "Tæller ikke med i sejrsprocent og form",
+  "statsIncludePractice": "Medtag træningskampe",
+  "noGoalsDashboard": "Sæt et mål, fx 3 træningspas om ugen.",
+
+  "techniqueStrokes": "Slag",
+  "techniqueFootwork": "Benarbejde",
+  "techniqueDrills": "Øvelser",
+  "techniqueDisclaimer": "Beskrivelserne er generel træningsviden for højrehåndede spillere og erstatter ikke en træner.",
+  "lastTrained": "Sidst trænet {date}",
+  "@lastTrained": {"placeholders": {"date": {"type": "String"}}},
+  "neverTrained": "Ikke trænet endnu",
+  "techniqueWhenToUse": "Hvornår bruges det",
+  "techniqueKeyPoints": "Teknikpunkter",
+  "techniqueMistakes": "Typiske fejl",
+  "techniqueYourTraining": "Din træning",
+  "techniqueSessions12w": "{count, plural, =0{Ikke trænet de seneste 12 uger} =1{1 træningspas de seneste 12 uger} other{{count} træningspas de seneste 12 uger}}",
+  "@techniqueSessions12w": {"placeholders": {"count": {"type": "int"}}},
+  "drillPlayers": "{count, plural, =1{Kan laves alene} other{{count} spillere}}",
+  "@drillPlayers": {"placeholders": {"count": {"type": "int"}}},
+  "drillLevelBeginner": "Begynder",
+  "drillLevelIntermediate": "Øvet",
+  "drillLevelAdvanced": "Avanceret",
+  "drillAllLevels": "Alle",
+  "drillSteps": "Sådan gør du",
+  "drillTips": "Tips",
+  "drillTrains": "Træner",
+  "logThisDrill": "Log denne øvelse",
+
+  "trainingFocusTitle": "Hvad trænede du?",
+  "addDrill": "Tilføj øvelse",
+  "chooseDrill": "Vælg øvelse",
+
+  "statsTechniqueSection": "Slag og benarbejde",
+  "statsTechniqueHint": "Antal træningspas de seneste 12 uger",
+  "statsTechniqueNone": "Vælg slag og benarbejde, når du logger træning, så kan du se her, hvad du træner mest.",
+  "statsNotTrained30": "Ikke trænet i over 30 dage"
 }

@@ -11,23 +11,24 @@ import 'training_screen.dart';
 import 'widgets/common.dart';
 
 class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({super.key, required this.onNavigate});
-
-  /// Skifter til en anden fane (index i hovednavigationen).
-  final ValueChanged<int> onNavigate;
+  const DashboardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
-    final matches = state.activeMatches;
+    // Træningskampe tæller ikke med i nøgletal og form.
+    final matches = competitiveOnly(state.activeMatches).toList();
     final trainings = state.activeTrainings;
     final goals = state.activeGoals;
     final l = context.l10n;
     final theme = Theme.of(context);
     final overall = WinStats.of(matches);
     final streak = currentStreak(matches);
-    final minutes7d =
-        trainingMinutesSince(trainings, days: 7, now: DateTime.now());
+    final minutes7d = trainingMinutesSince(
+      trainings,
+      days: 7,
+      now: DateTime.now(),
+    );
 
     return ContentWidth(
       child: ListView(
@@ -78,8 +79,8 @@ class DashboardScreen extends StatelessWidget {
                 value: streak == null
                     ? l.noData
                     : streak.won
-                        ? l.streakWins(streak.length)
-                        : l.streakLosses(streak.length),
+                    ? l.streakWins(streak.length)
+                    : l.streakLosses(streak.length),
               ),
             ],
           ),
@@ -89,23 +90,32 @@ class DashboardScreen extends StatelessWidget {
               subtitle: l.recentFormHint,
               child: FormRow(results: recentForm(matches)),
             ),
-          if (goals.isNotEmpty) ...[
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 16, 4, 4),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(l.yourGoals, style: theme.textTheme.titleMedium),
+                ),
+                TextButton.icon(
+                  onPressed: () => openGoalForm(context),
+                  icon: const Icon(Icons.add),
+                  label: Text(l.newGoal),
+                ),
+              ],
+            ),
+          ),
+          if (goals.isEmpty)
             Padding(
-              padding: const EdgeInsets.fromLTRB(4, 16, 4, 4),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(l.yourGoals, style: theme.textTheme.titleMedium),
-                  ),
-                  TextButton(
-                    onPressed: () => onNavigate(3),
-                    child: Text(l.navGoals),
-                  ),
-                ],
+              padding: const EdgeInsets.fromLTRB(4, 0, 4, 16),
+              child: Text(
+                l.noGoalsDashboard,
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
-            for (final g in goals) GoalCard(goal: g, compact: true),
-          ],
+          for (final g in goals) GoalCard(goal: g, compact: true),
         ],
       ),
     );

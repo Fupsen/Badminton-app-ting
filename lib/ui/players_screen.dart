@@ -10,8 +10,11 @@ import 'widgets/common.dart';
 class PlayersScreen extends StatelessWidget {
   const PlayersScreen({super.key});
 
-  Future<String?> _askName(BuildContext context, String title,
-      {String initial = ''}) {
+  Future<String?> _askName(
+    BuildContext context,
+    String title, {
+    String initial = '',
+  }) {
     final controller = TextEditingController(text: initial);
     final l = context.l10n;
     return showDialog<String>(
@@ -51,9 +54,9 @@ class PlayersScreen extends StatelessWidget {
         actions: [
           if (state.players.length > 1)
             TextButton.icon(
-              onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const CompareScreen()),
-              ),
+              onPressed: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const CompareScreen())),
               icon: const Icon(Icons.compare_arrows),
               label: Text(l.comparePlayers),
             ),
@@ -77,9 +80,11 @@ class PlayersScreen extends StatelessWidget {
           children: [
             for (final p in state.players)
               ListTile(
-                leading: Icon(p.id == active?.id
-                    ? Icons.radio_button_checked
-                    : Icons.radio_button_unchecked),
+                leading: Icon(
+                  p.id == active?.id
+                      ? Icons.radio_button_checked
+                      : Icons.radio_button_unchecked,
+                ),
                 title: Text(p.name),
                 subtitle: p.id == active?.id ? Text(l.activePlayer) : null,
                 onTap: () => state.setActivePlayer(p.id),
@@ -90,8 +95,11 @@ class PlayersScreen extends StatelessWidget {
                       tooltip: l.renamePlayer,
                       icon: const Icon(Icons.edit_outlined),
                       onPressed: () async {
-                        final name = await _askName(context, l.renamePlayer,
-                            initial: p.name);
+                        final name = await _askName(
+                          context,
+                          l.renamePlayer,
+                          initial: p.name,
+                        );
                         if (name != null && name.trim().isNotEmpty) {
                           await state.renamePlayer(p.id, name);
                         }
@@ -131,7 +139,12 @@ class CompareScreen extends StatelessWidget {
 
     final rows = [
       for (final p in state.players)
-        _Row.of(p, state.matchesFor(p.id), state.trainingsFor(p.id), now),
+        _Row.of(
+          p,
+          competitiveOnly(state.matchesFor(p.id)).toList(),
+          state.trainingsFor(p.id),
+          now,
+        ),
     ]..sort((a, b) => (b.stats.rate ?? -1).compareTo(a.stats.rate ?? -1));
 
     return Scaffold(
@@ -151,25 +164,29 @@ class CompareScreen extends StatelessWidget {
             ],
             rows: [
               for (final r in rows)
-                DataRow(cells: [
-                  DataCell(Text(r.player.name)),
-                  DataCell(Text('${r.stats.played}')),
-                  DataCell(Text(percent(r.stats.rate, l.noData))),
-                  DataCell(Text(l.minutesShort(r.minutes4w))),
-                  DataCell(Text('${r.sessions4w}')),
-                  DataCell(r.form.isEmpty
-                      ? Text(l.noData)
-                      : Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            for (final won in r.form)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 4),
-                                child: ResultBadge(won: won, size: 22),
-                              ),
-                          ],
-                        )),
-                ]),
+                DataRow(
+                  cells: [
+                    DataCell(Text(r.player.name)),
+                    DataCell(Text('${r.stats.played}')),
+                    DataCell(Text(percent(r.stats.rate, l.noData))),
+                    DataCell(Text(l.minutesShort(r.minutes4w))),
+                    DataCell(Text('${r.sessions4w}')),
+                    DataCell(
+                      r.form.isEmpty
+                          ? Text(l.noData)
+                          : Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                for (final won in r.form)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 4),
+                                    child: ResultBadge(won: won, size: 22),
+                                  ),
+                              ],
+                            ),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),
@@ -181,8 +198,12 @@ class CompareScreen extends StatelessWidget {
 class _Row {
   _Row(this.player, this.stats, this.minutes4w, this.sessions4w, this.form);
 
-  factory _Row.of(Player player, List<MatchRecord> matches,
-      List<TrainingSession> trainings, DateTime now) {
+  factory _Row.of(
+    Player player,
+    List<MatchRecord> matches,
+    List<TrainingSession> trainings,
+    DateTime now,
+  ) {
     final today = DateTime(now.year, now.month, now.day);
     final from = addDays(today, -27);
     final recent = trainings.where((t) => !t.date.isBefore(from));

@@ -4,11 +4,11 @@ import 'package:provider/provider.dart';
 import '../state/app_state.dart';
 import 'backup_screen.dart';
 import 'dashboard_screen.dart';
-import 'goals_screen.dart';
 import 'labels.dart';
 import 'matches_screen.dart';
 import 'players_screen.dart';
 import 'stats_screen.dart';
+import 'technique_screen.dart';
 import 'training_screen.dart';
 
 /// Bredde hvor layoutet skifter fra bundnavigation (mobil) til sidemenu
@@ -42,32 +42,27 @@ class _HomeShellState extends State<HomeShell> {
       (Icons.dashboard_outlined, Icons.dashboard, l.navOverview),
       (Icons.sports_tennis_outlined, Icons.sports_tennis, l.navMatches),
       (Icons.fitness_center_outlined, Icons.fitness_center, l.navTraining),
-      (Icons.flag_outlined, Icons.flag, l.navGoals),
+      (Icons.menu_book_outlined, Icons.menu_book, l.navTechnique),
       (Icons.insights_outlined, Icons.insights, l.navStats),
     ];
     final body = switch (_index) {
-      0 => DashboardScreen(onNavigate: (i) => setState(() => _index = i)),
+      0 => const DashboardScreen(),
       1 => const MatchesScreen(),
       2 => const TrainingScreen(),
-      3 => const GoalsScreen(),
+      3 => const TechniqueScreen(),
       _ => const StatsScreen(),
     };
     final fab = switch (_index) {
       1 => FloatingActionButton(
-          tooltip: l.newMatch,
-          onPressed: () => openMatchForm(context),
-          child: const Icon(Icons.add),
-        ),
+        tooltip: l.newMatch,
+        onPressed: () => openMatchForm(context),
+        child: const Icon(Icons.add),
+      ),
       2 => FloatingActionButton(
-          tooltip: l.newTraining,
-          onPressed: () => openTrainingForm(context),
-          child: const Icon(Icons.add),
-        ),
-      3 => FloatingActionButton(
-          tooltip: l.newGoal,
-          onPressed: () => openGoalForm(context),
-          child: const Icon(Icons.add),
-        ),
+        tooltip: l.newTraining,
+        onPressed: () => openTrainingForm(context),
+        child: const Icon(Icons.add),
+      ),
       _ => null,
     };
 
@@ -150,9 +145,8 @@ class PlayerSwitcher extends StatelessWidget {
       tooltip: l.activePlayer,
       onSelected: (id) {
         if (id == _manage) {
-          Navigator.of(context).push(
-            MaterialPageRoute(builder: (_) => const PlayersScreen()),
-          );
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (_) => const PlayersScreen()));
         } else if (id == _backup) {
           openBackupScreen(context);
         } else {
@@ -246,16 +240,23 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Icon(Icons.sports_tennis,
-                      size: 72, color: theme.colorScheme.primary),
+                  Icon(
+                    Icons.sports_tennis,
+                    size: 72,
+                    color: theme.colorScheme.primary,
+                  ),
                   const SizedBox(height: 24),
-                  Text(l.welcomeTitle,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineSmall),
+                  Text(
+                    l.welcomeTitle,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.headlineSmall,
+                  ),
                   const SizedBox(height: 12),
-                  Text(l.welcomeBody,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyLarge),
+                  Text(
+                    l.welcomeBody,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.bodyLarge,
+                  ),
                   const SizedBox(height: 32),
                   TextField(
                     controller: _controller,
@@ -271,8 +272,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   ListenableBuilder(
                     listenable: _controller,
                     builder: (context, _) => FilledButton(
-                      onPressed:
-                          _controller.text.trim().isEmpty ? null : _start,
+                      onPressed: _controller.text.trim().isEmpty
+                          ? null
+                          : _start,
                       child: Text(l.welcomeStart),
                     ),
                   ),

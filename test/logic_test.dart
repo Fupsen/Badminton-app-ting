@@ -4,6 +4,7 @@ import 'package:badminton_app/data/data_store.dart';
 import 'package:badminton_app/logic/goals.dart';
 import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/logic/stats.dart';
+import 'package:badminton_app/logic/technique_stats.dart';
 import 'package:badminton_app/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -222,5 +223,127 @@ void main() {
         const [GameScore(21, 18), GameScore(21, 15)]);
     expect(loaded.trainings.single.type, TrainingType.footwork);
     expect(loaded.goals.single.type, GoalType.winRate);
+  });
+
+  group('practice matches and technique tags', () {
+    test('old data without new fields still loads', () {
+      final m = MatchRecord.fromJson({
+        'id': 'm',
+        'playerId': 'p',
+        'date': '2026-09-01T00:00:00.000',
+        'type': 'single',
+        'games': [
+          [21, 10],
+          [21, 12],
+        ],
+      });
+      expect(m.practice, isFalse);
+      final t = TrainingSession.fromJson({
+        'id': 't',
+        'playerId': 'p',
+        'date': '2026-09-01T00:00:00.000',
+        'durationMinutes': 60,
+        'type': 'technique',
+        'intensity': 3,
+      });
+      expect(t.techniqueIds, isEmpty);
+      expect(t.drillIds, isEmpty);
+    });
+
+    test('new fields survive a json round trip', () {
+      final m = MatchRecord(
+        id: 'm',
+        playerId: 'p',
+        date: DateTime(2026, 9, 1),
+        type: MatchType.single,
+        opponents: 'Bo',
+        games: const [GameScore(15, 10)],
+        practice: true,
+      );
+      expect(MatchRecord.fromJson(m.toJson()).practice, isTrue);
+      final t = TrainingSession(
+        id: 't',
+        playerId: 'p',
+        date: DateTime(2026, 9, 1),
+        durationMinutes: 60,
+        type: TrainingType.technique,
+        intensity: 3,
+        techniqueIds: const ['clear', 'drop'],
+        drillIds: const ['clear_duel'],
+      );
+      final back = TrainingSession.fromJson(t.toJson());
+      expect(back.techniqueIds, ['clear', 'drop']);
+      expect(back.drillIds, ['clear_duel']);
+    });
+
+    MatchRecord practice(DateTime date, bool won) => MatchRecord(
+          id: newId(),
+          playerId: 'p',
+          date: date,
+          type: MatchType.single,
+          opponents: 'Bo',
+          games: [won ? const GameScore(15, 5) : const GameScore(5, 15)],
+          practice: true,
+        );
+
+    test('competitiveOnly removes practice matches', () {
+      final real = match(DateTime(2026, 9, 1), [
+        [21, 10],
+        [21, 10],
+      ]);
+      final all = [real, practice(DateTime(2026, 9, 2), false)];
+      expect(competitiveOnly(all), [real]);
+    });
+
+    test('win rate goal ignores practice matches', () {
+      final goal = Goal(
+        id: 'g',
+        playerId: 'p',
+        type: GoalType.winRate,
+        target: 60,
+        createdAt: DateTime(2026, 9, 1),
+      );
+      final matches = [
+        match(DateTime(2026, 9, 2), [
+          [21, 10],
+          [21, 10],
+        ]),
+        practice(DateTime(2026, 9, 3), false),
+        practice(DateTime(2026, 9, 4), false),
+      ];
+      final p = goalProgress(goal,
+          matches: matches, trainings: const [], now: DateTime(2026, 9, 5));
+      expect(p.current, 100);
+    });
+
+    test('technique usage counts sessions, minutes and last trained', () {
+      TrainingSession tagged(DateTime date, int minutes, List<String> ids) =>
+          TrainingSession(
+            id: newId(),
+            playerId: 'p',
+            date: date,
+            durationMinutes: minutes,
+            type: TrainingType.technique,
+            intensity: 3,
+            techniqueIds: ids,
+          );
+      final sessions = [
+        tagged(DateTime(2026, 6, 1), 60, ['clear']),
+        tagged(DateTime(2026, 9, 1), 90, ['clear', 'drop']),
+        tagged(DateTime(2026, 9, 10), 30, ['clear', 'clear']),
+      ];
+      final all = techniqueUsage(sessions);
+      expect(all['clear']!.sessions, 3);
+      expect(all['clear']!.minutes, 180);
+      expect(all['clear']!.lastTrained, DateTime(2026, 9, 10));
+      expect(all['drop']!.sessions, 1);
+      expect(all.containsKey('smash'), isFalse);
+
+      final recent = techniqueUsage(sessions, since: DateTime(2026, 8, 1));
+      expect(recent['clear']!.sessions, 2);
+      expect(recent['clear']!.minutes, 120);
+      // Sidst trænet gælder uanset periode.
+      expect(recent['clear']!.lastTrained, DateTime(2026, 9, 10));
+    });
   });
 }

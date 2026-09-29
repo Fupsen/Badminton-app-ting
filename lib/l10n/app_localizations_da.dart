@@ -22,9 +22,6 @@ class AppLocalizationsDa extends AppLocalizations {
   String get navTraining => 'Træning';
 
   @override
-  String get navGoals => 'Mål';
-
-  @override
   String get navStats => 'Statistik';
 
   @override
@@ -345,10 +342,6 @@ class AppLocalizationsDa extends AppLocalizations {
   }
 
   @override
-  String get noGoals =>
-      'Ingen mål endnu. Tryk på + for at sætte dit første mål.';
-
-  @override
   String get logMatch => 'Log kamp';
 
   @override
@@ -580,4 +573,121 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get welcomeRestore => 'Gendan fra backup';
+
+  @override
+  String get navTechnique => 'Teknik';
+
+  @override
+  String get practiceMatch => 'Træningskamp';
+
+  @override
+  String get practiceMatchHint => 'Tæller ikke med i sejrsprocent og form';
+
+  @override
+  String get statsIncludePractice => 'Medtag træningskampe';
+
+  @override
+  String get noGoalsDashboard => 'Sæt et mål, fx 3 træningspas om ugen.';
+
+  @override
+  String get techniqueStrokes => 'Slag';
+
+  @override
+  String get techniqueFootwork => 'Benarbejde';
+
+  @override
+  String get techniqueDrills => 'Øvelser';
+
+  @override
+  String get techniqueDisclaimer =>
+      'Beskrivelserne er generel træningsviden for højrehåndede spillere og erstatter ikke en træner.';
+
+  @override
+  String lastTrained(String date) {
+    return 'Sidst trænet $date';
+  }
+
+  @override
+  String get neverTrained => 'Ikke trænet endnu';
+
+  @override
+  String get techniqueWhenToUse => 'Hvornår bruges det';
+
+  @override
+  String get techniqueKeyPoints => 'Teknikpunkter';
+
+  @override
+  String get techniqueMistakes => 'Typiske fejl';
+
+  @override
+  String get techniqueYourTraining => 'Din træning';
+
+  @override
+  String techniqueSessions12w(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count træningspas de seneste 12 uger',
+      one: '1 træningspas de seneste 12 uger',
+      zero: 'Ikke trænet de seneste 12 uger',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String drillPlayers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spillere',
+      one: 'Kan laves alene',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get drillLevelBeginner => 'Begynder';
+
+  @override
+  String get drillLevelIntermediate => 'Øvet';
+
+  @override
+  String get drillLevelAdvanced => 'Avanceret';
+
+  @override
+  String get drillAllLevels => 'Alle';
+
+  @override
+  String get drillSteps => 'Sådan gør du';
+
+  @override
+  String get drillTips => 'Tips';
+
+  @override
+  String get drillTrains => 'Træner';
+
+  @override
+  String get logThisDrill => 'Log denne øvelse';
+
+  @override
+  String get trainingFocusTitle => 'Hvad trænede du?';
+
+  @override
+  String get addDrill => 'Tilføj øvelse';
+
+  @override
+  String get chooseDrill => 'Vælg øvelse';
+
+  @override
+  String get statsTechniqueSection => 'Slag og benarbejde';
+
+  @override
+  String get statsTechniqueHint => 'Antal træningspas de seneste 12 uger';
+
+  @override
+  String get statsTechniqueNone =>
+      'Vælg slag og benarbejde, når du logger træning, så kan du se her, hvad du træner mest.';
+
+  @override
+  String get statsNotTrained30 => 'Ikke trænet i over 30 dage';
 }

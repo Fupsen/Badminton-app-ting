@@ -118,12 +118,6 @@ abstract class AppLocalizations {
   /// **'Træning'**
   String get navTraining;
 
-  /// No description provided for @navGoals.
-  ///
-  /// In da, this message translates to:
-  /// **'Mål'**
-  String get navGoals;
-
   /// No description provided for @navStats.
   ///
   /// In da, this message translates to:
@@ -676,12 +670,6 @@ abstract class AppLocalizations {
   /// **'Vind {target} % af kampene'**
   String goalTargetWinRate(int target);
 
-  /// No description provided for @noGoals.
-  ///
-  /// In da, this message translates to:
-  /// **'Ingen mål endnu. Tryk på + for at sætte dit første mål.'**
-  String get noGoals;
-
   /// No description provided for @logMatch.
   ///
   /// In da, this message translates to:
@@ -1005,6 +993,198 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Gendan fra backup'**
   String get welcomeRestore;
+
+  /// No description provided for @navTechnique.
+  ///
+  /// In da, this message translates to:
+  /// **'Teknik'**
+  String get navTechnique;
+
+  /// No description provided for @practiceMatch.
+  ///
+  /// In da, this message translates to:
+  /// **'Træningskamp'**
+  String get practiceMatch;
+
+  /// No description provided for @practiceMatchHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Tæller ikke med i sejrsprocent og form'**
+  String get practiceMatchHint;
+
+  /// No description provided for @statsIncludePractice.
+  ///
+  /// In da, this message translates to:
+  /// **'Medtag træningskampe'**
+  String get statsIncludePractice;
+
+  /// No description provided for @noGoalsDashboard.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt et mål, fx 3 træningspas om ugen.'**
+  String get noGoalsDashboard;
+
+  /// No description provided for @techniqueStrokes.
+  ///
+  /// In da, this message translates to:
+  /// **'Slag'**
+  String get techniqueStrokes;
+
+  /// No description provided for @techniqueFootwork.
+  ///
+  /// In da, this message translates to:
+  /// **'Benarbejde'**
+  String get techniqueFootwork;
+
+  /// No description provided for @techniqueDrills.
+  ///
+  /// In da, this message translates to:
+  /// **'Øvelser'**
+  String get techniqueDrills;
+
+  /// No description provided for @techniqueDisclaimer.
+  ///
+  /// In da, this message translates to:
+  /// **'Beskrivelserne er generel træningsviden for højrehåndede spillere og erstatter ikke en træner.'**
+  String get techniqueDisclaimer;
+
+  /// No description provided for @lastTrained.
+  ///
+  /// In da, this message translates to:
+  /// **'Sidst trænet {date}'**
+  String lastTrained(String date);
+
+  /// No description provided for @neverTrained.
+  ///
+  /// In da, this message translates to:
+  /// **'Ikke trænet endnu'**
+  String get neverTrained;
+
+  /// No description provided for @techniqueWhenToUse.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvornår bruges det'**
+  String get techniqueWhenToUse;
+
+  /// No description provided for @techniqueKeyPoints.
+  ///
+  /// In da, this message translates to:
+  /// **'Teknikpunkter'**
+  String get techniqueKeyPoints;
+
+  /// No description provided for @techniqueMistakes.
+  ///
+  /// In da, this message translates to:
+  /// **'Typiske fejl'**
+  String get techniqueMistakes;
+
+  /// No description provided for @techniqueYourTraining.
+  ///
+  /// In da, this message translates to:
+  /// **'Din træning'**
+  String get techniqueYourTraining;
+
+  /// No description provided for @techniqueSessions12w.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =0{Ikke trænet de seneste 12 uger} =1{1 træningspas de seneste 12 uger} other{{count} træningspas de seneste 12 uger}}'**
+  String techniqueSessions12w(int count);
+
+  /// No description provided for @drillPlayers.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{Kan laves alene} other{{count} spillere}}'**
+  String drillPlayers(int count);
+
+  /// No description provided for @drillLevelBeginner.
+  ///
+  /// In da, this message translates to:
+  /// **'Begynder'**
+  String get drillLevelBeginner;
+
+  /// No description provided for @drillLevelIntermediate.
+  ///
+  /// In da, this message translates to:
+  /// **'Øvet'**
+  String get drillLevelIntermediate;
+
+  /// No description provided for @drillLevelAdvanced.
+  ///
+  /// In da, this message translates to:
+  /// **'Avanceret'**
+  String get drillLevelAdvanced;
+
+  /// No description provided for @drillAllLevels.
+  ///
+  /// In da, this message translates to:
+  /// **'Alle'**
+  String get drillAllLevels;
+
+  /// No description provided for @drillSteps.
+  ///
+  /// In da, this message translates to:
+  /// **'Sådan gør du'**
+  String get drillSteps;
+
+  /// No description provided for @drillTips.
+  ///
+  /// In da, this message translates to:
+  /// **'Tips'**
+  String get drillTips;
+
+  /// No description provided for @drillTrains.
+  ///
+  /// In da, this message translates to:
+  /// **'Træner'**
+  String get drillTrains;
+
+  /// No description provided for @logThisDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Log denne øvelse'**
+  String get logThisDrill;
+
+  /// No description provided for @trainingFocusTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvad trænede du?'**
+  String get trainingFocusTitle;
+
+  /// No description provided for @addDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Tilføj øvelse'**
+  String get addDrill;
+
+  /// No description provided for @chooseDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Vælg øvelse'**
+  String get chooseDrill;
+
+  /// No description provided for @statsTechniqueSection.
+  ///
+  /// In da, this message translates to:
+  /// **'Slag og benarbejde'**
+  String get statsTechniqueSection;
+
+  /// No description provided for @statsTechniqueHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Antal træningspas de seneste 12 uger'**
+  String get statsTechniqueHint;
+
+  /// No description provided for @statsTechniqueNone.
+  ///
+  /// In da, this message translates to:
+  /// **'Vælg slag og benarbejde, når du logger træning, så kan du se her, hvad du træner mest.'**
+  String get statsTechniqueNone;
+
+  /// No description provided for @statsNotTrained30.
+  ///
+  /// In da, this message translates to:
+  /// **'Ikke trænet i over 30 dage'**
+  String get statsNotTrained30;
 }
 
 class _AppLocalizationsDelegate

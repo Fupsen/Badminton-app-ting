@@ -39,15 +39,21 @@ class MatchTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
-    final opponents =
-        match.opponents.isEmpty ? l.unknownOpponent : match.opponents;
+    final opponents = match.opponents.isEmpty
+        ? l.unknownOpponent
+        : match.opponents;
     final details = [
       context.formatDate(match.date),
       match.type.label(l),
       if (match.partner.isNotEmpty) l.matchWithPartner(match.partner),
+      if (match.practice) l.practiceMatch,
     ].join(' · ');
     return ListTile(
-      leading: ResultBadge(won: match.won),
+      // Træningskampe vises dæmpet, fordi de ikke tæller i statistikken.
+      leading: Opacity(
+        opacity: match.practice ? 0.45 : 1,
+        child: ResultBadge(won: match.won),
+      ),
       title: Text(l.matchVs(opponents)),
       subtitle: Text(details),
       trailing: Text(
@@ -60,10 +66,12 @@ class MatchTile extends StatelessWidget {
 }
 
 Future<void> openMatchForm(BuildContext context, {MatchRecord? existing}) =>
-    Navigator.of(context).push(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => MatchForm(existing: existing),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => MatchForm(existing: existing),
+      ),
+    );
 
 class MatchForm extends StatefulWidget {
   const MatchForm({super.key, this.existing});
@@ -78,6 +86,7 @@ class _MatchFormState extends State<MatchForm> {
   final _formKey = GlobalKey<FormState>();
   late DateTime _date;
   late MatchType _type;
+  late bool _practice;
   late final TextEditingController _opponents;
   late final TextEditingController _partner;
   late final TextEditingController _notes;
@@ -90,6 +99,7 @@ class _MatchFormState extends State<MatchForm> {
     final m = widget.existing;
     _date = m?.date ?? DateTime.now();
     _type = m?.type ?? MatchType.single;
+    _practice = m?.practice ?? false;
     _opponents = TextEditingController(text: m?.opponents ?? '');
     _partner = TextEditingController(text: m?.partner ?? '');
     _notes = TextEditingController(text: m?.notes ?? '');
@@ -115,10 +125,10 @@ class _MatchFormState extends State<MatchForm> {
   }
 
   List<GameScore> _games() => [
-        for (final (own, opp) in _scores)
-          if (own.text.isNotEmpty && opp.text.isNotEmpty)
-            GameScore(int.parse(own.text), int.parse(opp.text)),
-      ];
+    for (final (own, opp) in _scores)
+      if (own.text.isNotEmpty && opp.text.isNotEmpty)
+        GameScore(int.parse(own.text), int.parse(opp.text)),
+  ];
 
   Future<void> _save() async {
     final l = context.l10n;
@@ -131,27 +141,32 @@ class _MatchFormState extends State<MatchForm> {
       _scoreError = check.errors.isEmpty
           ? null
           : check.errors
-              .map((e) => switch (e) {
+                .map(
+                  (e) => switch (e) {
                     ScoreError.noGames => l.scoreErrorNoGames,
                     ScoreError.tiedGame => l.scoreErrorTiedGame,
                     ScoreError.noWinner => l.scoreErrorNoWinner,
-                  })
-              .join('\n');
+                  },
+                )
+                .join('\n');
     });
     if (!check.canSave) return;
 
-    if (check.warnings.isNotEmpty) {
+    // Træningskampe spilles ofte til fx 15, så advar kun ved rigtige kampe.
+    if (!_practice && check.warnings.isNotEmpty) {
       final proceed = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
           title: Text(l.scoreWarningTitle),
-          content: Text([
-            if (check.warnings.contains(ScoreWarning.nonStandardGame))
-              l.scoreWarningGame,
-            if (check.warnings.contains(ScoreWarning.nonStandardGameCount))
-              l.scoreWarningGameCount,
-            l.scoreWarningFooter,
-          ].join('\n\n')),
+          content: Text(
+            [
+              if (check.warnings.contains(ScoreWarning.nonStandardGame))
+                l.scoreWarningGame,
+              if (check.warnings.contains(ScoreWarning.nonStandardGameCount))
+                l.scoreWarningGameCount,
+              l.scoreWarningFooter,
+            ].join('\n\n'),
+          ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context, false),
@@ -167,16 +182,19 @@ class _MatchFormState extends State<MatchForm> {
       if (proceed != true) return;
     }
 
-    await state.saveMatch(MatchRecord(
-      id: widget.existing?.id ?? newId(),
-      playerId: widget.existing?.playerId ?? state.activePlayer!.id,
-      date: _date,
-      type: _type,
-      opponents: _opponents.text.trim(),
-      partner: _type == MatchType.single ? '' : _partner.text.trim(),
-      games: games,
-      notes: _notes.text.trim(),
-    ));
+    await state.saveMatch(
+      MatchRecord(
+        id: widget.existing?.id ?? newId(),
+        playerId: widget.existing?.playerId ?? state.activePlayer!.id,
+        date: _date,
+        type: _type,
+        opponents: _opponents.text.trim(),
+        partner: _type == MatchType.single ? '' : _partner.text.trim(),
+        games: games,
+        notes: _notes.text.trim(),
+        practice: _practice,
+      ),
+    );
     if (mounted) Navigator.pop(context);
   }
 
@@ -194,8 +212,10 @@ class _MatchFormState extends State<MatchForm> {
     final l = context.l10n;
     final state = context.watch<AppState>();
     final previous = state.activeMatches;
-    List<String> distinct(Iterable<String> values) =>
-        {for (final v in values) if (v.trim().isNotEmpty) v.trim()}.toList();
+    List<String> distinct(Iterable<String> values) => {
+      for (final v in values)
+        if (v.trim().isNotEmpty) v.trim(),
+    }.toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -231,6 +251,14 @@ class _MatchFormState extends State<MatchForm> {
                 selected: {_type},
                 onSelectionChanged: (s) => setState(() => _type = s.first),
               ),
+              const SizedBox(height: 8),
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l.practiceMatch),
+                subtitle: Text(l.practiceMatchHint),
+                value: _practice,
+                onChanged: (v) => setState(() => _practice = v),
+              ),
               const SizedBox(height: 16),
               SuggestField(
                 controller: _opponents,
@@ -247,15 +275,18 @@ class _MatchFormState extends State<MatchForm> {
               ],
               const SizedBox(height: 24),
               for (var i = 0; i < _scores.length; i++) _scoreRow(i),
-              Text(l.optionalThirdGame,
-                  style: Theme.of(context).textTheme.bodySmall),
+              Text(
+                l.optionalThirdGame,
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
               if (_scoreError != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Text(
                     _scoreError!,
-                    style:
-                        TextStyle(color: Theme.of(context).colorScheme.error),
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               const SizedBox(height: 24),
@@ -285,10 +316,10 @@ class _MatchFormState extends State<MatchForm> {
     }
 
     InputDecoration decoration(String label) => InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-          isDense: true,
-        );
+      labelText: label,
+      border: const OutlineInputBorder(),
+      isDense: true,
+    );
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),

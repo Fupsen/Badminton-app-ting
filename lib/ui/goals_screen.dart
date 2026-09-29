@@ -8,24 +8,6 @@ import '../state/app_state.dart';
 import 'labels.dart';
 import 'widgets/common.dart';
 
-class GoalsScreen extends StatelessWidget {
-  const GoalsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final goals = context.watch<AppState>().activeGoals;
-    if (goals.isEmpty) {
-      return EmptyState(icon: Icons.flag, message: context.l10n.noGoals);
-    }
-    return ContentWidth(
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(12, 12, 12, 88),
-        children: [for (final g in goals) GoalCard(goal: g)],
-      ),
-    );
-  }
-}
-
 /// Kort der viser et mål og hvor langt spilleren er nået.
 class GoalCard extends StatelessWidget {
   const GoalCard({super.key, required this.goal, this.compact = false});
@@ -51,16 +33,22 @@ class GoalCard extends StatelessWidget {
       GoalType.winRate => l.goalTargetWinRate(goal.target),
     };
     final status = switch (goal.type) {
-      GoalType.sessionsPerWeek =>
-        l.goalProgressSessions(progress.current!, goal.target),
-      GoalType.minutesPerWeek =>
-        l.goalProgressMinutes(progress.current!, goal.target),
-      GoalType.winRate => progress.current == null
-          ? l.goalNoMatchesYet(goal.target, since)
-          : l.goalProgressWinRate(progress.current!, goal.target, since),
+      GoalType.sessionsPerWeek => l.goalProgressSessions(
+        progress.current!,
+        goal.target,
+      ),
+      GoalType.minutesPerWeek => l.goalProgressMinutes(
+        progress.current!,
+        goal.target,
+      ),
+      GoalType.winRate =>
+        progress.current == null
+            ? l.goalNoMatchesYet(goal.target, since)
+            : l.goalProgressWinRate(progress.current!, goal.target, since),
     };
-    final color =
-        progress.reached ? ResultBadge.winColor : theme.colorScheme.primary;
+    final color = progress.reached
+        ? ResultBadge.winColor
+        : theme.colorScheme.primary;
 
     return Card(
       child: InkWell(
@@ -104,10 +92,12 @@ class GoalCard extends StatelessWidget {
 }
 
 Future<void> openGoalForm(BuildContext context, {Goal? existing}) =>
-    Navigator.of(context).push(MaterialPageRoute(
-      fullscreenDialog: true,
-      builder: (_) => GoalForm(existing: existing),
-    ));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        fullscreenDialog: true,
+        builder: (_) => GoalForm(existing: existing),
+      ),
+    );
 
 class GoalForm extends StatefulWidget {
   const GoalForm({super.key, this.existing});
@@ -134,7 +124,8 @@ class _GoalFormState extends State<GoalForm> {
     super.initState();
     _type = widget.existing?.type ?? GoalType.sessionsPerWeek;
     _target = TextEditingController(
-        text: (widget.existing?.target ?? _defaults[_type]).toString());
+      text: (widget.existing?.target ?? _defaults[_type]).toString(),
+    );
   }
 
   @override
@@ -147,13 +138,15 @@ class _GoalFormState extends State<GoalForm> {
     final state = context.read<AppState>();
     if (!_formKey.currentState!.validate()) return;
     final existing = widget.existing;
-    await state.saveGoal(Goal(
-      id: existing?.id ?? newId(),
-      playerId: existing?.playerId ?? state.activePlayer!.id,
-      type: _type,
-      target: int.parse(_target.text),
-      createdAt: existing?.createdAt ?? DateTime.now(),
-    ));
+    await state.saveGoal(
+      Goal(
+        id: existing?.id ?? newId(),
+        playerId: existing?.playerId ?? state.activePlayer!.id,
+        type: _type,
+        target: int.parse(_target.text),
+        createdAt: existing?.createdAt ?? DateTime.now(),
+      ),
+    );
     if (mounted) Navigator.pop(context);
   }
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../content/technique.dart';
 import '../l10n/app_localizations.dart';
 import '../models/models.dart';
 
@@ -16,68 +17,93 @@ extension L10nContext on BuildContext {
 
 extension MatchTypeLabel on MatchType {
   String label(AppLocalizations l) => switch (this) {
-        MatchType.single => l.matchTypeSingle,
-        MatchType.double => l.matchTypeDouble,
-        MatchType.mixed => l.matchTypeMixed,
-      };
+    MatchType.single => l.matchTypeSingle,
+    MatchType.double => l.matchTypeDouble,
+    MatchType.mixed => l.matchTypeMixed,
+  };
 }
 
 extension TrainingTypeLabel on TrainingType {
   String label(AppLocalizations l) => switch (this) {
-        TrainingType.technique => l.trainingTypeTechnique,
-        TrainingType.physical => l.trainingTypePhysical,
-        TrainingType.matchPlay => l.trainingTypeMatchPlay,
-        TrainingType.footwork => l.trainingTypeFootwork,
-        TrainingType.other => l.trainingTypeOther,
-      };
+    TrainingType.technique => l.trainingTypeTechnique,
+    TrainingType.physical => l.trainingTypePhysical,
+    TrainingType.matchPlay => l.trainingTypeMatchPlay,
+    TrainingType.footwork => l.trainingTypeFootwork,
+    TrainingType.other => l.trainingTypeOther,
+  };
 
   IconData get icon => switch (this) {
-        TrainingType.technique => Icons.sports_tennis,
-        TrainingType.physical => Icons.fitness_center,
-        TrainingType.matchPlay => Icons.sports_score,
-        TrainingType.footwork => Icons.directions_run,
-        TrainingType.other => Icons.more_horiz,
-      };
+    TrainingType.technique => Icons.sports_tennis,
+    TrainingType.physical => Icons.fitness_center,
+    TrainingType.matchPlay => Icons.sports_score,
+    TrainingType.footwork => Icons.directions_run,
+    TrainingType.other => Icons.more_horiz,
+  };
 
   /// Fast farve pr. type, så graf og liste matcher hinanden.
   Color get color => switch (this) {
-        TrainingType.technique => const Color(0xFF2A78D6),
-        TrainingType.physical => const Color(0xFFE0782A),
-        TrainingType.matchPlay => const Color(0xFF3A9D5D),
-        TrainingType.footwork => const Color(0xFF8E5BD0),
-        TrainingType.other => const Color(0xFF8A8F98),
-      };
+    TrainingType.technique => const Color(0xFF2A78D6),
+    TrainingType.physical => const Color(0xFFE0782A),
+    TrainingType.matchPlay => const Color(0xFF3A9D5D),
+    TrainingType.footwork => const Color(0xFF8E5BD0),
+    TrainingType.other => const Color(0xFF8A8F98),
+  };
 }
 
 extension GoalTypeLabel on GoalType {
   String label(AppLocalizations l) => switch (this) {
-        GoalType.sessionsPerWeek => l.goalTypeSessionsPerWeek,
-        GoalType.minutesPerWeek => l.goalTypeMinutesPerWeek,
-        GoalType.winRate => l.goalTypeWinRate,
-      };
+    GoalType.sessionsPerWeek => l.goalTypeSessionsPerWeek,
+    GoalType.minutesPerWeek => l.goalTypeMinutesPerWeek,
+    GoalType.winRate => l.goalTypeWinRate,
+  };
 
   IconData get icon => switch (this) {
-        GoalType.sessionsPerWeek => Icons.event_repeat,
-        GoalType.minutesPerWeek => Icons.timer_outlined,
-        GoalType.winRate => Icons.emoji_events_outlined,
-      };
+    GoalType.sessionsPerWeek => Icons.event_repeat,
+    GoalType.minutesPerWeek => Icons.timer_outlined,
+    GoalType.winRate => Icons.emoji_events_outlined,
+  };
 }
 
+extension DrillLevelLabel on DrillLevel {
+  String label(AppLocalizations l) => switch (this) {
+    DrillLevel.beginner => l.drillLevelBeginner,
+    DrillLevel.intermediate => l.drillLevelIntermediate,
+    DrillLevel.advanced => l.drillLevelAdvanced,
+  };
+}
+
+extension TechniqueKindIcon on TechniqueKind {
+  IconData get icon => switch (this) {
+    TechniqueKind.stroke => Icons.sports_tennis,
+    TechniqueKind.footwork => Icons.directions_run,
+  };
+}
+
+/// Navne på de teknikker, der findes; ukendte id'er springes over.
+List<String> techniqueNames(Iterable<String> ids) => [
+  for (final id in ids)
+    if (techniqueById(id) case final t?) t.name,
+];
+
 String intensityLabel(AppLocalizations l, int value) => switch (value) {
-      1 => l.intensity1,
-      2 => l.intensity2,
-      3 => l.intensity3,
-      4 => l.intensity4,
-      _ => l.intensity5,
-    };
+  1 => l.intensity1,
+  2 => l.intensity2,
+  3 => l.intensity3,
+  4 => l.intensity4,
+  _ => l.intensity5,
+};
 
 String formatScore(List<GameScore> games) =>
     games.map((g) => '${g.own}-${g.opponent}').join(', ');
 
 /// Viser en bekræftelsesdialog for sletning. Returnerer true ved "Slet"
 /// (eller [confirmLabel], hvis angivet).
-Future<bool> confirmDelete(BuildContext context, String title,
-    {String? body, String? confirmLabel}) async {
+Future<bool> confirmDelete(
+  BuildContext context,
+  String title, {
+  String? body,
+  String? confirmLabel,
+}) async {
   final l = context.l10n;
   final result = await showDialog<bool>(
     context: context,

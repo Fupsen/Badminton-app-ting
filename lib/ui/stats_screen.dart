@@ -2,19 +2,32 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../content/technique.dart';
 import '../logic/stats.dart';
+import '../logic/technique_stats.dart';
 import '../models/models.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
 import 'widgets/common.dart';
 
-class StatsScreen extends StatelessWidget {
+class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
+
+  @override
+  State<StatsScreen> createState() => _StatsScreenState();
+}
+
+class _StatsScreenState extends State<StatsScreen> {
+  bool _includePractice = false;
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
-    final matches = state.activeMatches;
+    final allMatches = state.activeMatches;
+    final hasPractice = allMatches.any((m) => m.practice);
+    final matches = _includePractice
+        ? allMatches
+        : competitiveOnly(allMatches).toList();
     final trainings = state.activeTrainings;
     final l = context.l10n;
     final overall = WinStats.of(matches);
@@ -26,6 +39,18 @@ class StatsScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(12),
         children: [
+          if (hasPractice)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: FilterChip(
+                  label: Text(l.statsIncludePractice),
+                  selected: _includePractice,
+                  onSelected: (v) => setState(() => _includePractice = v),
+                ),
+              ),
+            ),
           SectionCard(
             title: l.statsWinRateSection,
             child: matches.isEmpty
@@ -45,7 +70,15 @@ class StatsScreen extends StatelessWidget {
             child: trainings.isEmpty
                 ? Text(l.statsNoTraining)
                 : TrainingChart(
-                    weeks: weeklyTraining(trainings, now: DateTime.now())),
+                    weeks: weeklyTraining(trainings, now: DateTime.now()),
+                  ),
+          ),
+          SectionCard(
+            title: l.statsTechniqueSection,
+            subtitle: l.statsTechniqueHint,
+            child: trainings.any((t) => t.techniqueIds.isNotEmpty)
+                ? TechniqueUsageList(trainings: trainings)
+                : Text(l.statsTechniqueNone),
           ),
           if (matches.isNotEmpty)
             SectionCard(
@@ -64,8 +97,8 @@ class StatsScreen extends StatelessWidget {
                         value: streak == null
                             ? l.noData
                             : streak.won
-                                ? l.streakWins(streak.length)
-                                : l.streakLosses(streak.length),
+                            ? l.streakWins(streak.length)
+                            : l.streakLosses(streak.length),
                       ),
                       StatTile(
                         label: l.statsLongestWinStreak,
@@ -74,8 +107,10 @@ class StatsScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 16),
-                  Text(l.statsPointDiff,
-                      style: Theme.of(context).textTheme.titleSmall),
+                  Text(
+                    l.statsPointDiff,
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                   const SizedBox(height: 12),
                   PointDiffChart(values: pointDiffSeries(matches, last: 20)),
                 ],
@@ -124,8 +159,10 @@ class TrainingChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final theme = Theme.of(context);
-    final maxMinutes =
-        weeks.fold(0, (m, w) => w.totalMinutes > m ? w.totalMinutes : m);
+    final maxMinutes = weeks.fold(
+      0,
+      (m, w) => w.totalMinutes > m ? w.totalMinutes : m,
+    );
     final usedTypes = TrainingType.values
         .where((t) => weeks.any((w) => (w.minutesByType[t] ?? 0) > 0))
         .toList();
@@ -281,14 +318,16 @@ class PointDiffChart extends StatelessWidget {
               ),
             ),
           ),
-          extraLinesData: ExtraLinesData(horizontalLines: [
-            HorizontalLine(
-              y: 0,
-              color: theme.colorScheme.outline,
-              strokeWidth: 1,
-              dashArray: [4, 4],
-            ),
-          ]),
+          extraLinesData: ExtraLinesData(
+            horizontalLines: [
+              HorizontalLine(
+                y: 0,
+                color: theme.colorScheme.outline,
+                strokeWidth: 1,
+                dashArray: [4, 4],
+              ),
+            ],
+          ),
           lineTouchData: LineTouchData(
             touchTooltipData: LineTouchTooltipData(
               getTooltipColor: (_) => theme.colorScheme.inverseSurface,
@@ -329,8 +368,83 @@ class PointDiffChart extends StatelessWidget {
 /// Vælger et rundt interval (højst 5 streger) og et loft over [max], så
 /// akserne viser pæne tal i stedet for fx 465,7.
 ({double max, double interval}) _niceAxis(int max, List<int> intervals) {
-  final interval = intervals.firstWhere((i) => max / i <= 5,
-      orElse: () => intervals.last);
+  final interval = intervals.firstWhere(
+    (i) => max / i <= 5,
+    orElse: () => intervals.last,
+  );
   final steps = (max / interval).floor() + 1;
   return (max: (steps * interval).toDouble(), interval: interval.toDouble());
+}
+
+/// Vandrette bjælker med antal træningspas pr. slag/benarbejde de seneste 12
+/// uger, og hvad der ikke er trænet i over 30 dage.
+class TechniqueUsageList extends StatelessWidget {
+  const TechniqueUsageList({super.key, required this.trainings});
+
+  final List<TrainingSession> trainings;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final usage = techniqueUsage(trainings, since: addDays(today, -7 * 12));
+    final rows = [
+      for (final t in techniques)
+        if ((usage[t.id]?.sessions ?? 0) > 0) (t, usage[t.id]!.sessions),
+    ]..sort((a, b) => b.$2.compareTo(a.$2));
+    final max = rows.isEmpty ? 1 : rows.first.$2;
+    final staleBefore = addDays(today, -30);
+    final stale = [
+      for (final t in techniques)
+        if (usage[t.id]?.lastTrained?.isBefore(staleBefore) ?? true) t,
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (final (t, count) in rows)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 150,
+                  child: Text(t.name, overflow: TextOverflow.ellipsis),
+                ),
+                Expanded(
+                  child: LinearProgressIndicator(
+                    value: count / max,
+                    minHeight: 10,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                SizedBox(
+                  width: 36,
+                  child: Text('$count', textAlign: TextAlign.end),
+                ),
+              ],
+            ),
+          ),
+        if (stale.isNotEmpty) ...[
+          const SizedBox(height: 16),
+          Text(l.statsNotTrained30, style: theme.textTheme.titleSmall),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final t in stale)
+                Chip(
+                  avatar: Icon(t.kind.icon, size: 16),
+                  label: Text(t.name),
+                  visualDensity: VisualDensity.compact,
+                ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
 }

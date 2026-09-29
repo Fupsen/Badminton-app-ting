@@ -120,7 +120,7 @@ void main() {
     expect(find.byType(NavigationBar), findsNothing);
 
     // Alle faner kan åbnes uden fejl, også uden data.
-    for (final tab in ['Kampe', 'Træning', 'Mål', 'Statistik', 'Oversigt']) {
+    for (final tab in ['Kampe', 'Træning', 'Teknik', 'Statistik', 'Oversigt']) {
       await tester.tap(find.text(tab).first);
       await tester.pumpAndSettle();
     }
@@ -220,5 +220,114 @@ void main() {
     expect(find.text('Mette'), findsOneWidget);
     expect(find.text('Backup indlæst'), findsOneWidget);
     expect((await store.load()).matches, hasLength(1));
+  });
+
+  AppData onePlayer() => AppData(
+        players: [Player(id: 'p', name: 'Mette', createdAt: DateTime(2026))],
+        activePlayerId: 'p',
+      );
+
+  Finder navItem(String label) => find.descendant(
+      of: find.byType(NavigationBar), matching: find.text(label));
+
+  testWidgets('practice match skips warning and is excluded from stats',
+      (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Log kamp'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Træningskamp'));
+    await tester.pumpAndSettle();
+    final scoreFields = find.byWidgetPredicate((w) =>
+        w is TextField &&
+        (w.decoration?.labelText == 'Mig/os' ||
+            w.decoration?.labelText == 'Modstander'));
+    await tester.enterText(scoreFields.at(0), '15');
+    await tester.enterText(scoreFields.at(1), '10');
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    // Ingen advarsel om pointsystemet for en træningskamp.
+    expect(find.text('Usædvanligt resultat'), findsNothing);
+    expect((await store.load()).matches.single.practice, isTrue);
+
+    // Oversigten tæller den ikke med.
+    expect(find.text('100 %'), findsNothing);
+    expect(find.text('0 vundet · 0 tabt'), findsOneWidget);
+
+    // Kamplisten viser den som træningskamp.
+    await tester.tap(navItem('Kampe'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Træningskamp'), findsOneWidget);
+
+    // Statistik: kun med når filteret er slået til.
+    await tester.tap(navItem('Statistik'));
+    await tester.pumpAndSettle();
+    expect(find.text('100 %'), findsNothing);
+    await tester.tap(find.text('Medtag træningskampe'));
+    await tester.pumpAndSettle();
+    expect(find.text('100 %'), findsWidgets);
+  });
+
+  testWidgets('technique tab: stroke, drill and log the drill',
+      (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Teknik'));
+    await tester.pumpAndSettle();
+    expect(find.text('Kort serv'), findsOneWidget);
+
+    await tester.tap(find.text('Clear'));
+    await tester.pumpAndSettle();
+    expect(find.text('Teknikpunkter'), findsOneWidget);
+    expect(find.text('Ikke trænet endnu'), findsOneWidget);
+
+    await tester.scrollUntilVisible(find.text('Clear-duel'), 200,
+        scrollable: find.byType(Scrollable).last);
+    await tester.tap(find.text('Clear-duel'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sådan gør du'), findsOneWidget);
+
+    await tester.tap(find.text('Log denne øvelse'));
+    await tester.pumpAndSettle();
+    expect(find.text('Nyt træningspas'), findsOneWidget);
+    final clearChip =
+        tester.widget<FilterChip>(find.widgetWithText(FilterChip, 'Clear'));
+    expect(clearChip.selected, isTrue);
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    final saved = (await store.load()).trainings.single;
+    expect(saved.drillIds, ['clear_duel']);
+    expect(saved.techniqueIds, containsAll(['clear', 'split_step']));
+    expect(saved.durationMinutes, 10);
+
+    // Tilbage på slaget kan man se, at det er trænet.
+    await tester.tap(find.byTooltip('Tilbage'));
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(find.textContaining('Sidst trænet'), -200,
+        scrollable: find.byType(Scrollable).last);
+    expect(find.textContaining('Sidst trænet'), findsOneWidget);
+    expect(find.text('Ikke trænet endnu'), findsNothing);
+  });
+
+  testWidgets('goals are created from the overview', (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    expect(navItem('Mål'), findsNothing);
+    expect(find.text('Sæt et mål, fx 3 træningspas om ugen.'), findsOneWidget);
+    await tester.tap(find.text('Nyt mål'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('3 pas om ugen'), findsOneWidget);
+    expect((await store.load()).goals, hasLength(1));
   });
 }

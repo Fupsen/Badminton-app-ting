@@ -8,21 +8,36 @@ kører på Android, iOS, Windows, macOS og Linux.
 | --- | --- | --- |
 | ![](docs/screenshots/oversigt-mobil.png) | ![](docs/screenshots/kamp-mobil.png) | ![](docs/screenshots/statistik-desktop.png) |
 
+| Øvelser (mobil) | Teknik (computer) | Øvelse (computer) |
+| --- | --- | --- |
+| ![](docs/screenshots/ovelser-mobil.png) | ![](docs/screenshots/teknik-desktop.png) | ![](docs/screenshots/ovelse-desktop.png) |
+
 ## Funktioner
 
 - **Spillere**: Bruger du appen selv, har du én profil. Er du træner, kan du
   oprette flere, skifte mellem dem og sammenligne dem i en tabel.
 - **Kampe**: single/double/mixed, modstander(e), makker og sætresultater.
   Resultatet tjekkes mod BWF-reglerne (til 21 med 2 points forspring, maks.
-  30, bedst af 3). Et afvigende resultat, fx til 15 til træning, giver en
-  advarsel men kan stadig gemmes.
+  30, bedst af 3). Et afvigende resultat giver en advarsel, men kan stadig
+  gemmes.
+- **Træningskampe**: markér en kamp som træningskamp. Den giver ingen
+  advarsel om pointsystemet og tæller ikke med i sejrsprocent, form og mål.
+  På Statistik kan du vælge at medtage træningskampe.
 - **Træning**: dato, varighed, type (teknik, fysisk, kamptræning,
-  footwork, andet), intensitet 1–5 og noter.
+  footwork, andet), intensitet 1–5, noter, og hvilke slag, hvilket
+  benarbejde og hvilke øvelser der blev trænet.
+- **Teknik**: bibliotek med 12 slag og 7 former for benarbejde. Hvert punkt
+  har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
+  hvornår du sidst trænede det. Dertil kommer 16 øvelser med niveau, antal
+  spillere, tid, trin og tips. En øvelse kan logges direkte som
+  træningspas. Teksterne tager udgangspunkt i højrehåndede spillere og er
+  generel træningsviden. De erstatter ikke en træner.
 - **Mål**: træningspas pr. uge, træningsminutter pr. uge eller sejrsprocent,
-  med fremskridtsbjælke.
+  med fremskridtsbjælke. Mål oprettes og vises på Oversigten.
 - **Statistik**: sejrsprocent samlet og pr. kamptype, træningsminutter pr.
   uge (12 uger, fordelt på type), form over de seneste 10 kampe, aktuel og
-  længste stime, pointforskel pr. kamp og resultater mod hver modstander.
+  længste stime, pointforskel pr. kamp, resultater mod hver modstander og
+  hvilke slag og hvilket benarbejde du træner mest eller har glemt.
 - **Backup og gendannelse**: eksportér alle data til en JSON-fil og
   importér den igen. Du kan flette filen ind eller erstatte alt. Oversigten
   minder dig om at tage backup, hvis det er over 30 dage siden.
@@ -52,6 +67,7 @@ lib/
   models/      Datamodeller (spiller, kamp, træning, mål) med JSON
   data/        DataStore (lokal JSON-fil), backup-format og fildialoger
   state/       AppState (ChangeNotifier) som skærmene lytter på
+  content/     Teknik-biblioteket: slag, benarbejde og øvelser (dansk)
   logic/       Ren Dart: pointregler, statistik og mål (unit-testet)
   ui/          Skærme og widgets
   l10n/        Tekster (app_da.arb) og genereret oversættelseskode
@@ -82,3 +98,5 @@ Cloud-sync er planlagt. Det tilføjes ved at lave en ny implementation af
 Appen er på dansk. Alle tekster ligger i `lib/l10n/app_da.arb`. Engelsk
 tilføjes ved at oprette `lib/l10n/app_en.arb` med de samme nøgler, køre
 `flutter gen-l10n` og fjerne den faste `locale` i `lib/main.dart`.
+Teknik-biblioteket ligger i `lib/content/technique_da.dart`. En engelsk
+udgave skal have en `technique_en.dart` med de samme id'er.

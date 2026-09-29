@@ -54,14 +54,18 @@ class WeekTraining {
   int get totalMinutes => minutesByType.values.fold(0, (a, b) => a + b);
 }
 
+/// Kun rigtige kampe, uden træningskampe.
+Iterable<MatchRecord> competitiveOnly(Iterable<MatchRecord> matches) =>
+    matches.where((m) => !m.practice);
+
 /// Kampe sorteret med den nyeste først.
 List<MatchRecord> newestFirst(Iterable<MatchRecord> matches) =>
     matches.toList()..sort((a, b) => b.date.compareTo(a.date));
 
 Map<MatchType, WinStats> winStatsByType(Iterable<MatchRecord> matches) => {
-      for (final type in MatchType.values)
-        type: WinStats.of(matches.where((m) => m.type == type)),
-    };
+  for (final type in MatchType.values)
+    type: WinStats.of(matches.where((m) => m.type == type)),
+};
 
 /// Statistik pr. modstander, sorteret efter flest spillede kampe.
 /// Navne sammenlignes uden hensyn til store/små bogstaver og mellemrum.
@@ -158,8 +162,11 @@ int trainingMinutesSince(
 /// ISO-8601 ugenummer (som bruges i Danmark).
 int isoWeekNumber(DateTime date) {
   // Ugen hører til det år, dens torsdag ligger i.
-  final thursday =
-      DateTime.utc(date.year, date.month, date.day + 4 - date.weekday);
+  final thursday = DateTime.utc(
+    date.year,
+    date.month,
+    date.day + 4 - date.weekday,
+  );
   final jan1 = DateTime.utc(thursday.year, 1, 1);
   return thursday.difference(jan1).inDays ~/ 7 + 1;
 }

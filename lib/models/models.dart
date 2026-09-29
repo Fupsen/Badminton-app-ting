@@ -24,16 +24,16 @@ class Player {
       Player(id: id, name: name ?? this.name, createdAt: createdAt);
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'createdAt': createdAt.toIso8601String(),
-      };
+    'id': id,
+    'name': name,
+    'createdAt': createdAt.toIso8601String(),
+  };
 
   factory Player.fromJson(Map<String, dynamic> json) => Player(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        createdAt: DateTime.parse(json['createdAt'] as String),
-      );
+    id: json['id'] as String,
+    name: json['name'] as String,
+    createdAt: DateTime.parse(json['createdAt'] as String),
+  );
 }
 
 enum MatchType { single, double, mixed }
@@ -70,12 +70,16 @@ class MatchRecord {
     required this.games,
     this.partner = '',
     this.notes = '',
+    this.practice = false,
   });
 
   final String id;
   final String playerId;
   final DateTime date;
   final MatchType type;
+
+  /// Træningskamp. Tæller som standard ikke med i sejrsprocent og form.
+  final bool practice;
 
   /// Modstander(e) som fri tekst, fx "Anders" eller "Anders / Bo".
   final String opponents;
@@ -93,28 +97,30 @@ class MatchRecord {
   int get pointDiff => pointsFor - pointsAgainst;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerId': playerId,
-        'date': date.toIso8601String(),
-        'type': type.name,
-        'opponents': opponents,
-        'partner': partner,
-        'games': games.map((g) => g.toJson()).toList(),
-        'notes': notes,
-      };
+    'id': id,
+    'playerId': playerId,
+    'date': date.toIso8601String(),
+    'type': type.name,
+    'opponents': opponents,
+    'partner': partner,
+    'games': games.map((g) => g.toJson()).toList(),
+    'notes': notes,
+    'practice': practice,
+  };
 
   factory MatchRecord.fromJson(Map<String, dynamic> json) => MatchRecord(
-        id: json['id'] as String,
-        playerId: json['playerId'] as String,
-        date: DateTime.parse(json['date'] as String),
-        type: MatchType.values.byName(json['type'] as String),
-        opponents: json['opponents'] as String? ?? '',
-        partner: json['partner'] as String? ?? '',
-        games: (json['games'] as List<dynamic>)
-            .map((g) => GameScore.fromJson(g as List<dynamic>))
-            .toList(),
-        notes: json['notes'] as String? ?? '',
-      );
+    id: json['id'] as String,
+    playerId: json['playerId'] as String,
+    date: DateTime.parse(json['date'] as String),
+    type: MatchType.values.byName(json['type'] as String),
+    opponents: json['opponents'] as String? ?? '',
+    partner: json['partner'] as String? ?? '',
+    games: (json['games'] as List<dynamic>)
+        .map((g) => GameScore.fromJson(g as List<dynamic>))
+        .toList(),
+    notes: json['notes'] as String? ?? '',
+    practice: json['practice'] as bool? ?? false,
+  );
 }
 
 enum TrainingType { technique, physical, matchPlay, footwork, other }
@@ -128,6 +134,8 @@ class TrainingSession {
     required this.type,
     required this.intensity,
     this.notes = '',
+    this.techniqueIds = const [],
+    this.drillIds = const [],
   });
 
   final String id;
@@ -140,15 +148,23 @@ class TrainingSession {
   final int intensity;
   final String notes;
 
+  /// Slag og benarbejde der blev trænet (id'er fra teknik-biblioteket).
+  final List<String> techniqueIds;
+
+  /// Øvelser fra teknik-biblioteket der blev lavet.
+  final List<String> drillIds;
+
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerId': playerId,
-        'date': date.toIso8601String(),
-        'durationMinutes': durationMinutes,
-        'type': type.name,
-        'intensity': intensity,
-        'notes': notes,
-      };
+    'id': id,
+    'playerId': playerId,
+    'date': date.toIso8601String(),
+    'durationMinutes': durationMinutes,
+    'type': type.name,
+    'intensity': intensity,
+    'notes': notes,
+    'techniqueIds': techniqueIds,
+    'drillIds': drillIds,
+  };
 
   factory TrainingSession.fromJson(Map<String, dynamic> json) =>
       TrainingSession(
@@ -159,8 +175,13 @@ class TrainingSession {
         type: TrainingType.values.byName(json['type'] as String),
         intensity: json['intensity'] as int,
         notes: json['notes'] as String? ?? '',
+        techniqueIds: _stringList(json['techniqueIds']),
+        drillIds: _stringList(json['drillIds']),
       );
 }
+
+List<String> _stringList(Object? value) =>
+    (value as List<dynamic>? ?? const []).cast<String>().toList();
 
 enum GoalType {
   /// Antal træningspas i indeværende uge.
@@ -189,20 +210,20 @@ class Goal {
   final DateTime createdAt;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'playerId': playerId,
-        'type': type.name,
-        'target': target,
-        'createdAt': createdAt.toIso8601String(),
-      };
+    'id': id,
+    'playerId': playerId,
+    'type': type.name,
+    'target': target,
+    'createdAt': createdAt.toIso8601String(),
+  };
 
   factory Goal.fromJson(Map<String, dynamic> json) => Goal(
-        id: json['id'] as String,
-        playerId: json['playerId'] as String,
-        type: GoalType.values.byName(json['type'] as String),
-        target: json['target'] as int,
-        createdAt: DateTime.parse(json['createdAt'] as String),
-      );
+    id: json['id'] as String,
+    playerId: json['playerId'] as String,
+    type: GoalType.values.byName(json['type'] as String),
+    target: json['target'] as int,
+    createdAt: DateTime.parse(json['createdAt'] as String),
+  );
 }
 
 /// Hele appens data samlet ét sted.
@@ -214,10 +235,10 @@ class AppData {
     List<Goal>? goals,
     this.activePlayerId,
     this.lastBackupAt,
-  })  : players = players ?? [],
-        matches = matches ?? [],
-        trainings = trainings ?? [],
-        goals = goals ?? [];
+  }) : players = players ?? [],
+       matches = matches ?? [],
+       trainings = trainings ?? [],
+       goals = goals ?? [];
 
   static const schemaVersion = 1;
 
@@ -231,14 +252,14 @@ class AppData {
   DateTime? lastBackupAt;
 
   Map<String, dynamic> toJson() => {
-        'schemaVersion': schemaVersion,
-        'activePlayerId': activePlayerId,
-        'lastBackupAt': lastBackupAt?.toIso8601String(),
-        'players': players.map((p) => p.toJson()).toList(),
-        'matches': matches.map((m) => m.toJson()).toList(),
-        'trainings': trainings.map((t) => t.toJson()).toList(),
-        'goals': goals.map((g) => g.toJson()).toList(),
-      };
+    'schemaVersion': schemaVersion,
+    'activePlayerId': activePlayerId,
+    'lastBackupAt': lastBackupAt?.toIso8601String(),
+    'players': players.map((p) => p.toJson()).toList(),
+    'matches': matches.map((m) => m.toJson()).toList(),
+    'trainings': trainings.map((t) => t.toJson()).toList(),
+    'goals': goals.map((g) => g.toJson()).toList(),
+  };
 
   factory AppData.fromJson(Map<String, dynamic> json) {
     List<T> list<T>(String key, T Function(Map<String, dynamic>) f) =>
