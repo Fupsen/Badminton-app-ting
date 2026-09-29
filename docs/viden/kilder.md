@@ -24,7 +24,7 @@ sammendrag er brugt.
 
 | Kilde | Status | Bruges i |
 | --- | --- | --- |
-| BWF Coach Education: *Coaches' Manual Level 1* (282 s.). Officiel side <https://development.bwfbadminton.com/coaches/level-1>. Fil: <http://www.badminton-israel.co.il/newsNdata/General/CoachEducationBWF/BWF_Coach_Manual_Level_1.pdf> | Udtræk (moduler 4-9, 11) | teknik, benarbejde, taktik, fysisk, skader |
+| BWF Coach Education: *Coaches' Manual Level 1* (282 s.). Officiel side <https://development.bwfbadminton.com/coaches/level-1>. Fil: <http://www.badminton-israel.co.il/newsNdata/General/CoachEducationBWF/BWF_Coach_Manual_Level_1.pdf> | Udtræk (moduler 3-9, 11) | teknik, benarbejde, taktik, øvelser, fysisk, skader |
 
 ## Forskning
 

@@ -40,7 +40,7 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
   - *Angreb*: **front-bag**. Én spiller bagerst smasher eller dropper, én ved
     nettet afslutter.
   - *Forsvar*: **side om side**. Hver spiller dækker sin halvdel.
-- **Rotation** *(praksis)*: når ens side løfter, går man fra front-bag til side
+- **Rotation** (`doubles_rotation`) *(praksis)*: når ens side løfter, går man fra front-bag til side
   om side. Når man får en bold, der kan slås nedad, går man fra side om side
   til front-bag. Den, der slår et løft fra nettet, går typisk bagud i
   forsvarsposition i samme side.
@@ -69,6 +69,11 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
   "forsvar mod smash, og vend det til neutralt", eller "angreb, og afslut ved
   nettet". Brug øvelserne i appen (`serve_receive`, `smash_defence`,
   `two_vs_one_defence`, `drop_kill`).
+- **[Ø/E]** **Kampe med særregler** (conditioned games) fra BWF-manualen:
+  kun kort serv, ekstra mange flick-serv, ingen løft på smash, markerede
+  hjørner og start i faste formationer. De er med i appen som
+  `low_serve_game`, `flick_or_short`, `no_lift_doubles`, `corners_game` og
+  `doubles_attack_defence` (se [ovelser.md](ovelser.md)).
 
 ## Kilder
 

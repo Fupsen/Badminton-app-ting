@@ -26,11 +26,14 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Træning**: dato, varighed, type (teknik, fysisk, kamptræning,
   footwork, andet), intensitet 1–5, noter, og hvilke slag, hvilket
   benarbejde og hvilke øvelser der blev trænet.
-- **Teknik**: bibliotek med 12 slag og 7 former for benarbejde, samt de
-  gældende **regler** (3×15, serv, fejl, let m.m.). Hvert punkt
-  har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
-  hvornår du sidst trænede det. Dertil kommer 16 øvelser med niveau, antal
-  spillere, tid, trin og tips. En øvelse kan logges direkte som
+- **Teknik**: bibliotek med greb og 18 slag (bl.a. flick-serv, hop-smash,
+  rundt om hovedet, trukket drop og spin-netdrop) og 14 former for
+  benarbejde (fx hop og landing, vejen til hvert nethjørne og rotation i
+  double), samt de gældende **regler** (3×15, serv, fejl, let m.m.). Hvert
+  punkt har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
+  hvornår du sidst trænede det. Dertil kommer 32 øvelser med niveau, antal
+  spillere, tid, trin og tips, fra øvelser for børn og øvelser alene til
+  kampe med særregler og intervaltræning. En øvelse kan logges direkte som
   træningspas. Teksterne tager udgangspunkt i højrehåndede spillere og er
   generel træningsviden. De erstatter ikke en træner.
 - **Mål**: træningspas pr. uge, træningsminutter pr. uge eller sejrsprocent,

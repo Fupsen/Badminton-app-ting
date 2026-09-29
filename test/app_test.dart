@@ -305,8 +305,11 @@ void main() {
 
     await tester.tap(navItem('Teknik'));
     await tester.pumpAndSettle();
+    expect(find.text('Greb'), findsOneWidget);
     expect(find.text('Kort serv'), findsOneWidget);
 
+    await tester.scrollUntilVisible(find.text('Clear'), 200,
+        scrollable: find.byType(Scrollable).last);
     await tester.tap(find.text('Clear'));
     await tester.pumpAndSettle();
     expect(find.text('Teknikpunkter'), findsOneWidget);

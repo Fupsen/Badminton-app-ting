@@ -12,6 +12,7 @@ sessioner.
 | [regler.md](regler.md) | BWF-reglerne (v5.0, 2025) og **3×15-pointsystemet**, som gælder i Danmark fra 1. juli 2026 og internationalt fra 4. januar 2027. |
 | [teknik.md](teknik.md) | Greb, slagets fire faser og alle slag med teknikpunkter. |
 | [benarbejde.md](benarbejde.md) | Bevægelsescyklus, split step, skridttyper, udfald, landing og mønstre til hvert hjørne. |
+| [ovelser.md](ovelser.md) | Alle øvelser i appen med niveau og kilde, og hvordan BWF organiserer træningen (fodring, multi-fjer, skygge, kampe med særregler). |
 | [taktik.md](taktik.md) | Grundprincipper, single, double, mixed og situationstræning. |
 | [fysisk-traening.md](fysisk-traening.md) | Kampens krav, opvarmning, træning af hver egenskab, børn og unge, planlægning. |
 | [skader.md](skader.md) | Hvor ofte og hvor skader sker, typiske skader og forebyggelse. |
@@ -31,13 +32,17 @@ sessioner.
 4. **Højrehåndet** som standard. Venstrehåndede spejler det.
 5. **Egne ord.** Der er ingen lange citater fra kilderne.
 6. **Appen følger vidensbanken.** Indholdet i `lib/content/technique_da.dart`
-   og reglerne i `lib/logic/scoring.dart` skal stemme med filerne her.
+   (slag, benarbejde og øvelser) og reglerne i `lib/logic/scoring.dart` skal
+   stemme med filerne her.
    Ændres det ene, skal det andet tjekkes.
 
 ## Kendte huller (til næste opdatering)
 
-- BWF's Level 1-manual er kun læst som målrettede udtræk, ikke side for side.
-  Level 2-manualen og BWF Shuttle Time (børn og skoler) er ikke læst.
+- BWF's Level 1-manual er kun læst som målrettede udtræk, ikke side for side
+  (moduler 3-9 og 11). Level 2-manualen og BWF Shuttle Time (børn og skoler)
+  er ikke læst.
+- "Rundt om hovedet" og de fleste øvelsers tider og gentagelser bygger på
+  praksis og mangler en trænerkilde.
 - Badminton Danmarks BATK-materiale og talentstrategien er ikke læst direkte.
 - Taktik til double og mixed bygger mest på praksis og bør suppleres med en
   trænerkilde.

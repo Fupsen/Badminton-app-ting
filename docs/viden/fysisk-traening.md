@@ -47,8 +47,8 @@ hjælper restitutionen og mindsker stivhed [BWF-L1, s. 194-197].
 | Egenskab | Eksempler |
 | --- | --- |
 | Aerob base | Rolig løb/cykling; lange serier af skyggebadminton i moderat tempo. |
-| Kampspecifik intervaltræning **[Ø/E]** | Multi-fjer eller skygge med ca. 5-10 s arbejde og 10-20 s pause, 10-20 gentagelser. Forholdet mellem arbejde og pause følger kampen (ca. 1:2). |
-| Hurtighed og agility | Split-step-reaktion, retningsskift på signal. |
+| Kampspecifik intervaltræning **[Ø/E]** | Multi-fjer eller skygge med ca. 5-10 s arbejde og 10-20 s pause, 10-20 gentagelser. Forholdet mellem arbejde og pause følger kampen (ca. 1:2). Øvelsen `interval_shadow` i appen. |
+| Hurtighed og agility | Split-step-reaktion, retningsskift på signal (`split_step_reaction`, `agility_signal`). |
 | Styrke | Ben (squat, udfald, hop og landing), baglår, læg/akillessene, skulderens udadrotation, core. |
 | Bevægelighed | Hofter, ankler, brystryg og skulder. |
 
