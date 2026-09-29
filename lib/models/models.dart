@@ -213,6 +213,7 @@ class AppData {
     List<TrainingSession>? trainings,
     List<Goal>? goals,
     this.activePlayerId,
+    this.lastBackupAt,
   })  : players = players ?? [],
         matches = matches ?? [],
         trainings = trainings ?? [],
@@ -226,9 +227,13 @@ class AppData {
   final List<Goal> goals;
   String? activePlayerId;
 
+  /// Hvornår der sidst blev eksporteret en backup fra denne enhed.
+  DateTime? lastBackupAt;
+
   Map<String, dynamic> toJson() => {
         'schemaVersion': schemaVersion,
         'activePlayerId': activePlayerId,
+        'lastBackupAt': lastBackupAt?.toIso8601String(),
         'players': players.map((p) => p.toJson()).toList(),
         'matches': matches.map((m) => m.toJson()).toList(),
         'trainings': trainings.map((t) => t.toJson()).toList(),
@@ -240,8 +245,10 @@ class AppData {
         (json[key] as List<dynamic>? ?? [])
             .map((e) => f(e as Map<String, dynamic>))
             .toList();
+    final lastBackupAt = json['lastBackupAt'] as String?;
     return AppData(
       activePlayerId: json['activePlayerId'] as String?,
+      lastBackupAt: lastBackupAt == null ? null : DateTime.parse(lastBackupAt),
       players: list('players', Player.fromJson),
       matches: list('matches', MatchRecord.fromJson),
       trainings: list('trainings', TrainingSession.fromJson),

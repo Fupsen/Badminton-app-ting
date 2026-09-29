@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+import '../data/backup.dart';
 import '../data/data_store.dart';
 import '../models/models.dart';
 
@@ -100,6 +101,43 @@ class AppState extends ChangeNotifier {
   Future<void> setActivePlayer(String id) async {
     _data.activePlayerId = id;
     await _commit();
+  }
+
+  // Backup
+
+  DateTime? get lastBackupAt => _data.lastBackupAt;
+
+  /// Sand når der er data, som ikke er taget backup af i over 30 dage.
+  bool needsBackupReminder(DateTime now) {
+    if (_data.matches.isEmpty && _data.trainings.isEmpty) return false;
+    final last = _data.lastBackupAt;
+    return last == null || now.difference(last).inDays > 30;
+  }
+
+  /// Laver en backup af alle data. Kald [markBackedUp], når filen faktisk er
+  /// gemt eller delt.
+  String exportBackup(DateTime now) {
+    final copy = AppData.fromJson(_data.toJson())..lastBackupAt = now;
+    return encodeBackup(copy, exportedAt: now);
+  }
+
+  Future<void> markBackedUp(DateTime now) {
+    _data.lastBackupAt = now;
+    return _commit();
+  }
+
+  /// Indlæser en backup. Med [replace] erstattes alle data; ellers flettes
+  /// backuppen ind uden at slette noget.
+  Future<void> importBackup(AppData incoming, {required bool replace}) {
+    final lastBackupAt = _data.lastBackupAt;
+    _data = replace ? incoming : mergeData(_data, incoming);
+    // Tidspunktet for sidste backup hører til denne enhed, ikke til filen.
+    _data.lastBackupAt = lastBackupAt;
+    if (!_data.players.any((p) => p.id == _data.activePlayerId)) {
+      _data.activePlayerId =
+          _data.players.isEmpty ? null : _data.players.first.id;
+    }
+    return _commit();
   }
 
   // Kampe, træning og mål. "save" opretter eller erstatter på id.

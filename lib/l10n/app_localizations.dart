@@ -825,6 +825,186 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Log nogle træningspas for at se udviklingen her.'**
   String get statsNoTraining;
+
+  /// No description provided for @backupTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Backup og gendannelse'**
+  String get backupTitle;
+
+  /// No description provided for @backupIntro.
+  ///
+  /// In da, this message translates to:
+  /// **'Dine data ligger kun på denne enhed. Tag backup jævnligt, så du ikke mister dem, hvis telefonen bliver væk eller udskiftes. En backup kan også bruges til at flytte data mellem telefon og computer.'**
+  String get backupIntro;
+
+  /// No description provided for @backupLast.
+  ///
+  /// In da, this message translates to:
+  /// **'Sidste backup: {date}'**
+  String backupLast(String date);
+
+  /// No description provided for @backupNever.
+  ///
+  /// In da, this message translates to:
+  /// **'Der er endnu ikke taget backup på denne enhed.'**
+  String get backupNever;
+
+  /// No description provided for @backupExport.
+  ///
+  /// In da, this message translates to:
+  /// **'Eksportér backup'**
+  String get backupExport;
+
+  /// No description provided for @backupExportHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Gem en fil med alle spillere, kampe, træningspas og mål.'**
+  String get backupExportHint;
+
+  /// No description provided for @backupExportDone.
+  ///
+  /// In da, this message translates to:
+  /// **'Backup gemt'**
+  String get backupExportDone;
+
+  /// No description provided for @backupExportFailed.
+  ///
+  /// In da, this message translates to:
+  /// **'Kunne ikke eksportere: {error}'**
+  String backupExportFailed(String error);
+
+  /// No description provided for @backupImport.
+  ///
+  /// In da, this message translates to:
+  /// **'Importér backup'**
+  String get backupImport;
+
+  /// No description provided for @backupImportHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Hent data fra en backup-fil, fx fra din anden enhed.'**
+  String get backupImportHint;
+
+  /// No description provided for @backupImportTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Importér backup?'**
+  String get backupImportTitle;
+
+  /// No description provided for @backupImportContains.
+  ///
+  /// In da, this message translates to:
+  /// **'Filen indeholder {summary}.'**
+  String backupImportContains(String summary);
+
+  /// No description provided for @backupImportMergeInfo.
+  ///
+  /// In da, this message translates to:
+  /// **'Flet ind: tilføjer det, der mangler, og opdaterer ændrede rækker. Intet bliver slettet.'**
+  String get backupImportMergeInfo;
+
+  /// No description provided for @backupImportReplaceInfo.
+  ///
+  /// In da, this message translates to:
+  /// **'Erstat alt: sletter alle nuværende data på denne enhed og bruger kun filens.'**
+  String get backupImportReplaceInfo;
+
+  /// No description provided for @backupMerge.
+  ///
+  /// In da, this message translates to:
+  /// **'Flet ind'**
+  String get backupMerge;
+
+  /// No description provided for @backupReplace.
+  ///
+  /// In da, this message translates to:
+  /// **'Erstat alt'**
+  String get backupReplace;
+
+  /// No description provided for @backupReplaceConfirmTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Erstat alle data?'**
+  String get backupReplaceConfirmTitle;
+
+  /// No description provided for @backupReplaceConfirmBody.
+  ///
+  /// In da, this message translates to:
+  /// **'Alle nuværende spillere, kampe, træningspas og mål på denne enhed bliver slettet og erstattet af filens indhold. Det kan ikke fortrydes.'**
+  String get backupReplaceConfirmBody;
+
+  /// No description provided for @backupImportDone.
+  ///
+  /// In da, this message translates to:
+  /// **'Backup indlæst'**
+  String get backupImportDone;
+
+  /// No description provided for @backupImportFailed.
+  ///
+  /// In da, this message translates to:
+  /// **'Kunne ikke læse filen: {error}'**
+  String backupImportFailed(String error);
+
+  /// No description provided for @backupInvalidFile.
+  ///
+  /// In da, this message translates to:
+  /// **'Filen er ikke en gyldig backup fra Badminton-logbog.'**
+  String get backupInvalidFile;
+
+  /// No description provided for @backupTooNew.
+  ///
+  /// In da, this message translates to:
+  /// **'Backuppen er lavet med en nyere version af appen. Opdatér appen og prøv igen.'**
+  String get backupTooNew;
+
+  /// No description provided for @backupReminderNever.
+  ///
+  /// In da, this message translates to:
+  /// **'Du har ikke taget backup endnu. Dine data findes kun på denne enhed.'**
+  String get backupReminderNever;
+
+  /// No description provided for @backupReminderOld.
+  ///
+  /// In da, this message translates to:
+  /// **'Det er over 30 dage siden, du sidst tog backup.'**
+  String get backupReminderOld;
+
+  /// No description provided for @backupReminderAction.
+  ///
+  /// In da, this message translates to:
+  /// **'Tag backup'**
+  String get backupReminderAction;
+
+  /// No description provided for @countPlayers.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 spiller} other{{count} spillere}}'**
+  String countPlayers(int count);
+
+  /// No description provided for @countMatches.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 kamp} other{{count} kampe}}'**
+  String countMatches(int count);
+
+  /// No description provided for @countTrainings.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 træningspas} other{{count} træningspas}}'**
+  String countTrainings(int count);
+
+  /// No description provided for @countGoals.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 mål} other{{count} mål}}'**
+  String countGoals(int count);
+
+  /// No description provided for @welcomeRestore.
+  ///
+  /// In da, this message translates to:
+  /// **'Gendan fra backup'**
+  String get welcomeRestore;
 }
 
 class _AppLocalizationsDelegate

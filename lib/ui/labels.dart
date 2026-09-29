@@ -74,9 +74,10 @@ String intensityLabel(AppLocalizations l, int value) => switch (value) {
 String formatScore(List<GameScore> games) =>
     games.map((g) => '${g.own}-${g.opponent}').join(', ');
 
-/// Viser en bekræftelsesdialog for sletning. Returnerer true ved "Slet".
+/// Viser en bekræftelsesdialog for sletning. Returnerer true ved "Slet"
+/// (eller [confirmLabel], hvis angivet).
 Future<bool> confirmDelete(BuildContext context, String title,
-    {String? body}) async {
+    {String? body, String? confirmLabel}) async {
   final l = context.l10n;
   final result = await showDialog<bool>(
     context: context,
@@ -94,7 +95,7 @@ Future<bool> confirmDelete(BuildContext context, String title,
             foregroundColor: Theme.of(context).colorScheme.onError,
           ),
           onPressed: () => Navigator.pop(context, true),
-          child: Text(l.delete),
+          child: Text(confirmLabel ?? l.delete),
         ),
       ],
     ),

@@ -23,6 +23,9 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Statistik**: sejrsprocent samlet og pr. kamptype, træningsminutter pr.
   uge (12 uger, fordelt på type), form over de seneste 10 kampe, aktuel og
   længste stime, pointforskel pr. kamp og resultater mod hver modstander.
+- **Backup og gendannelse**: eksportér alle data til en JSON-fil og
+  importér den igen. Du kan flette filen ind eller erstatte alt. Oversigten
+  minder dig om at tage backup, hvis det er over 30 dage siden.
 - **Responsivt layout**: bundnavigation på telefon og sidemenu på bredere
   skærme.
 
@@ -47,7 +50,7 @@ Windows.
 ```
 lib/
   models/      Datamodeller (spiller, kamp, træning, mål) med JSON
-  data/        DataStore-interface + lokal JSON-fil
+  data/        DataStore (lokal JSON-fil), backup-format og fildialoger
   state/       AppState (ChangeNotifier) som skærmene lytter på
   logic/       Ren Dart: pointregler, statistik og mål (unit-testet)
   ui/          Skærme og widgets
@@ -56,8 +59,21 @@ lib/
 
 ### Data
 
-Alt gemmes lokalt i én JSON-fil i appens support-mappe. Der er **ingen
-backup**: mister du enheden eller afinstallerer appen, forsvinder dataene.
+Alt gemmes lokalt i én JSON-fil i appens support-mappe. Data synkroniseres
+ikke automatisk, så **tag backup jævnligt** via spiller-menuen →
+*Backup og gendannelse*:
+
+- **Eksportér**: på computeren vælger du, hvor filen gemmes. På telefonen
+  åbner delingsmenuen, så du kan gemme i Filer, sende på mail, lægge i Drev
+  osv.
+- **Importér**: vælg en backup-fil. *Flet ind* tilføjer det, der mangler,
+  uden at slette noget. *Erstat alt* overskriver alle data på enheden.
+- **Ny telefon**: tryk på *Gendan fra backup* på velkomstskærmen.
+- **Flyt data mellem enheder**: eksportér på den ene enhed og importér med
+  *Flet ind* på den anden.
+
+![Backup](docs/screenshots/backup-desktop.png)
+
 Cloud-sync er planlagt. Det tilføjes ved at lave en ny implementation af
 `DataStore` i `lib/data/data_store.dart`, uden at skærmene skal ændres.
 

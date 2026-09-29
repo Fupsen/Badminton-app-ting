@@ -440,4 +440,144 @@ class AppLocalizationsDa extends AppLocalizations {
   @override
   String get statsNoTraining =>
       'Log nogle træningspas for at se udviklingen her.';
+
+  @override
+  String get backupTitle => 'Backup og gendannelse';
+
+  @override
+  String get backupIntro =>
+      'Dine data ligger kun på denne enhed. Tag backup jævnligt, så du ikke mister dem, hvis telefonen bliver væk eller udskiftes. En backup kan også bruges til at flytte data mellem telefon og computer.';
+
+  @override
+  String backupLast(String date) {
+    return 'Sidste backup: $date';
+  }
+
+  @override
+  String get backupNever => 'Der er endnu ikke taget backup på denne enhed.';
+
+  @override
+  String get backupExport => 'Eksportér backup';
+
+  @override
+  String get backupExportHint =>
+      'Gem en fil med alle spillere, kampe, træningspas og mål.';
+
+  @override
+  String get backupExportDone => 'Backup gemt';
+
+  @override
+  String backupExportFailed(String error) {
+    return 'Kunne ikke eksportere: $error';
+  }
+
+  @override
+  String get backupImport => 'Importér backup';
+
+  @override
+  String get backupImportHint =>
+      'Hent data fra en backup-fil, fx fra din anden enhed.';
+
+  @override
+  String get backupImportTitle => 'Importér backup?';
+
+  @override
+  String backupImportContains(String summary) {
+    return 'Filen indeholder $summary.';
+  }
+
+  @override
+  String get backupImportMergeInfo =>
+      'Flet ind: tilføjer det, der mangler, og opdaterer ændrede rækker. Intet bliver slettet.';
+
+  @override
+  String get backupImportReplaceInfo =>
+      'Erstat alt: sletter alle nuværende data på denne enhed og bruger kun filens.';
+
+  @override
+  String get backupMerge => 'Flet ind';
+
+  @override
+  String get backupReplace => 'Erstat alt';
+
+  @override
+  String get backupReplaceConfirmTitle => 'Erstat alle data?';
+
+  @override
+  String get backupReplaceConfirmBody =>
+      'Alle nuværende spillere, kampe, træningspas og mål på denne enhed bliver slettet og erstattet af filens indhold. Det kan ikke fortrydes.';
+
+  @override
+  String get backupImportDone => 'Backup indlæst';
+
+  @override
+  String backupImportFailed(String error) {
+    return 'Kunne ikke læse filen: $error';
+  }
+
+  @override
+  String get backupInvalidFile =>
+      'Filen er ikke en gyldig backup fra Badminton-logbog.';
+
+  @override
+  String get backupTooNew =>
+      'Backuppen er lavet med en nyere version af appen. Opdatér appen og prøv igen.';
+
+  @override
+  String get backupReminderNever =>
+      'Du har ikke taget backup endnu. Dine data findes kun på denne enhed.';
+
+  @override
+  String get backupReminderOld =>
+      'Det er over 30 dage siden, du sidst tog backup.';
+
+  @override
+  String get backupReminderAction => 'Tag backup';
+
+  @override
+  String countPlayers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spillere',
+      one: '1 spiller',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String countMatches(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count kampe',
+      one: '1 kamp',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String countTrainings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count træningspas',
+      one: '1 træningspas',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String countGoals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count mål',
+      one: '1 mål',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get welcomeRestore => 'Gendan fra backup';
 }

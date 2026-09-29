@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'data/backup_files.dart';
 import 'data/data_store.dart';
 import 'l10n/app_localizations.dart';
 import 'state/app_state.dart';
@@ -13,15 +14,23 @@ void main() {
 }
 
 class BadmintonApp extends StatelessWidget {
-  const BadmintonApp({super.key, required this.store});
+  const BadmintonApp({
+    super.key,
+    required this.store,
+    this.backupFiles = const PlatformBackupFiles(),
+  });
 
   final DataStore store;
+  final BackupFiles backupFiles;
 
   @override
   Widget build(BuildContext context) {
     const seed = Color(0xFF1B7F5B);
-    return ChangeNotifierProvider(
-      create: (_) => AppState(store)..load(),
+    return MultiProvider(
+      providers: [
+        Provider<BackupFiles>.value(value: backupFiles),
+        ChangeNotifierProvider(create: (_) => AppState(store)..load()),
+      ],
       child: MaterialApp(
         onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
         debugShowCheckedModeBanner: false,

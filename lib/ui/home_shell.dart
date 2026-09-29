@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../state/app_state.dart';
+import 'backup_screen.dart';
 import 'dashboard_screen.dart';
 import 'goals_screen.dart';
 import 'labels.dart';
@@ -138,6 +139,7 @@ class PlayerSwitcher extends StatelessWidget {
   const PlayerSwitcher({super.key});
 
   static const _manage = '__manage__';
+  static const _backup = '__backup__';
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +153,8 @@ class PlayerSwitcher extends StatelessWidget {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (_) => const PlayersScreen()),
           );
+        } else if (id == _backup) {
+          openBackupScreen(context);
         } else {
           state.setActivePlayer(id);
         }
@@ -169,6 +173,14 @@ class PlayerSwitcher extends StatelessWidget {
             contentPadding: EdgeInsets.zero,
             leading: const Icon(Icons.group_outlined),
             title: Text(l.managePlayers),
+          ),
+        ),
+        PopupMenuItem(
+          value: _backup,
+          child: ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: const Icon(Icons.backup_outlined),
+            title: Text(l.backupTitle),
           ),
         ),
       ],
@@ -263,6 +275,12 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           _controller.text.trim().isEmpty ? null : _start,
                       child: Text(l.welcomeStart),
                     ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextButton.icon(
+                    onPressed: () => importBackupFlow(context),
+                    icon: const Icon(Icons.restore),
+                    label: Text(l.welcomeRestore),
                   ),
                 ],
               ),
