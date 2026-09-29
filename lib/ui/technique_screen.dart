@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../content/rules.dart';
 import '../content/technique.dart';
 import '../logic/stats.dart';
 import '../logic/technique_stats.dart';
@@ -9,9 +10,9 @@ import 'labels.dart';
 import 'training_screen.dart';
 import 'widgets/common.dart';
 
-enum _Section { strokes, footwork, drills }
+enum _Section { strokes, footwork, drills, rules }
 
-/// Teknik-fanen: bibliotek med slag, benarbejde og øvelser.
+/// Teknik-fanen: bibliotek med slag, benarbejde, øvelser og regler.
 class TechniqueScreen extends StatefulWidget {
   const TechniqueScreen({super.key});
 
@@ -19,9 +20,21 @@ class TechniqueScreen extends StatefulWidget {
   State<TechniqueScreen> createState() => _TechniqueScreenState();
 }
 
-class _TechniqueScreenState extends State<TechniqueScreen> {
-  _Section _section = _Section.strokes;
+class _TechniqueScreenState extends State<TechniqueScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController _tabs = TabController(
+    length: _Section.values.length,
+    vsync: this,
+  )..addListener(() => setState(() {}));
   DrillLevel? _level;
+
+  _Section get _section => _Section.values[_tabs.index];
+
+  @override
+  void dispose() {
+    _tabs.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,47 +46,109 @@ class _TechniqueScreenState extends State<TechniqueScreen> {
       _Section.strokes => _techniqueList(TechniqueKind.stroke, usage),
       _Section.footwork => _techniqueList(TechniqueKind.footwork, usage),
       _Section.drills => _drillList(),
+      _Section.rules => _ruleList(),
     };
+    final theme = Theme.of(context);
 
     return ContentWidth(
-      child: ListView(
-        padding: const EdgeInsets.only(bottom: 24),
+      child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-            child: SegmentedButton<_Section>(
-              segments: [
-                ButtonSegment(
-                  value: _Section.strokes,
-                  label: Text(l.techniqueStrokes),
-                ),
-                ButtonSegment(
-                  value: _Section.footwork,
-                  label: Text(l.techniqueFootwork),
-                ),
-                ButtonSegment(
-                  value: _Section.drills,
-                  label: Text(l.techniqueDrills),
+          TabBar(
+            controller: _tabs,
+            isScrollable: true,
+            tabAlignment: TabAlignment.start,
+            tabs: [
+              Tab(text: l.techniqueStrokes),
+              Tab(text: l.techniqueFootwork),
+              Tab(text: l.techniqueDrills),
+              Tab(text: l.techniqueRules),
+            ],
+          ),
+          Expanded(
+            child: ListView(
+              key: PageStorageKey(_section),
+              padding: const EdgeInsets.only(top: 8, bottom: 24),
+              children: [
+                ...items,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  child: Text(
+                    _section == _Section.rules
+                        ? l.rulesDisclaimer
+                        : l.techniqueDisclaimer,
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                    ),
+                  ),
                 ),
               ],
-              selected: {_section},
-              showSelectedIcon: false,
-              onSelectionChanged: (s) => setState(() => _section = s.first),
-            ),
-          ),
-          ...items,
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-            child: Text(
-              l.techniqueDisclaimer,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  List<Widget> _ruleList() {
+    final l = context.l10n;
+    final theme = Theme.of(context);
+    return [
+      Card(
+        margin: const EdgeInsets.fromLTRB(12, 4, 12, 8),
+        color: theme.colorScheme.primaryContainer,
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.campaign_outlined,
+                color: theme.colorScheme.onPrimaryContainer,
+              ),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  rulesHighlight,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: theme.colorScheme.onPrimaryContainer,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      for (final (i, r) in ruleSections.indexed)
+        Card(
+          margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+          clipBehavior: Clip.antiAlias,
+          child: ExpansionTile(
+            // Egen nøgle, så åben/lukket gemmes pr. sektion og ikke blandes
+            // sammen med listens scroll-position.
+            key: PageStorageKey('rule_${r.id}'),
+            // Pointsystemet er det vigtigste, så det er foldet ud fra start.
+            initiallyExpanded: i == 0,
+            shape: const Border(),
+            title: Text(r.title, style: theme.textTheme.titleMedium),
+            childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+            expandedCrossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (r.intro != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(r.intro!),
+                ),
+              _Bullets(r.points),
+              Text(
+                l.rulesSource(r.source),
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.colorScheme.onSurfaceVariant,
+                ),
+              ),
+            ],
+          ),
+        ),
+    ];
   }
 
   List<Widget> _techniqueList(

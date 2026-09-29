@@ -7,6 +7,7 @@ import 'package:badminton_app/logic/stats.dart';
 import 'package:badminton_app/logic/technique_stats.dart';
 import 'package:badminton_app/models/models.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 MatchRecord match(DateTime date, List<List<int>> games,
         {String opponents = 'Bo', MatchType type = MatchType.single}) =>
@@ -376,5 +377,24 @@ void main() {
       // Sidst trænet gælder uanset periode.
       expect(recent['clear']!.lastTrained, DateTime(2026, 9, 10));
     });
+  });
+
+  test('shared preferences store round trip (webudgaven)', () async {
+    SharedPreferences.setMockInitialValues({});
+    final store = SharedPreferencesStore();
+    expect((await store.load()).players, isEmpty);
+    await store.save(AppData(
+      players: [Player(id: 'p', name: 'Mette', createdAt: DateTime(2026))],
+      matches: [match(DateTime(2026, 9, 1), [[15, 10], [15, 12]])],
+      activePlayerId: 'p',
+    ));
+    final loaded = await SharedPreferencesStore().load();
+    expect(loaded.players.single.name, 'Mette');
+    expect(loaded.matches.single.won, isTrue);
+  });
+
+  test('newId gives unique ids', () {
+    final ids = {for (var i = 0; i < 1000; i++) newId()};
+    expect(ids, hasLength(1000));
   });
 }

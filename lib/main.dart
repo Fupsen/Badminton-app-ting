@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -10,7 +11,15 @@ import 'ui/home_shell.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(BadmintonApp(store: JsonFileStore()));
+  runApp(
+    kIsWeb
+        // I browseren er der intet filsystem.
+        ? BadmintonApp(
+            store: SharedPreferencesStore(),
+            backupFiles: const WebBackupFiles(),
+          )
+        : BadmintonApp(store: JsonFileStore()),
+  );
 }
 
 class BadmintonApp extends StatelessWidget {

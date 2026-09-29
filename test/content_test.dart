@@ -1,3 +1,4 @@
+import 'package:badminton_app/content/rules.dart';
 import 'package:badminton_app/content/technique.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -60,5 +61,34 @@ void main() {
   test('unknown ids return null', () {
     expect(techniqueById('findes_ikke'), isNull);
     expect(drillById('findes_ikke'), isNull);
+  });
+
+  group('rules', () {
+    test('sections are complete and ids unique', () {
+      final ids = ruleSections.map((r) => r.id).toList();
+      expect(ids.toSet(), hasLength(ids.length));
+      for (final r in ruleSections) {
+        expect(r.title.trim(), isNotEmpty, reason: r.id);
+        expect(r.points, isNotEmpty, reason: r.id);
+        expect(r.source.trim(), isNotEmpty, reason: r.id);
+      }
+    });
+
+    test('scoring matches docs/viden/regler.md and scoring.dart', () {
+      final scoring = ruleSections.firstWhere((r) => r.id == 'scoring');
+      final text = scoring.points.join(' ');
+      expect(text, contains('3×15'));
+      expect(text, contains('14-14'));
+      expect(text, contains('20-20'));
+      expect(text, contains('3×21'));
+      expect(rulesHighlight, contains('1. juli 2026'));
+    });
+
+    test('service rules include 1,15 m and the 2025 spin ban', () {
+      final service = ruleSections.firstWhere((r) => r.id == 'service');
+      final text = service.points.join(' ');
+      expect(text, contains('1,15 m'));
+      expect(text, contains('spin'));
+    });
   });
 }

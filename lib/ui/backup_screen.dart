@@ -33,6 +33,7 @@ class BackupScreen extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 12),
               child: Text(l.backupIntro, style: theme.textTheme.bodyLarge),
             ),
+            const WebInstallHint(),
             Card(
               child: ListTile(
                 leading: Icon(

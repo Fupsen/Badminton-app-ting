@@ -1042,6 +1042,30 @@ abstract class AppLocalizations {
   /// **'Øvelser'**
   String get techniqueDrills;
 
+  /// No description provided for @techniqueRules.
+  ///
+  /// In da, this message translates to:
+  /// **'Regler'**
+  String get techniqueRules;
+
+  /// No description provided for @rulesSource.
+  ///
+  /// In da, this message translates to:
+  /// **'Kilde: {source}'**
+  String rulesSource(String source);
+
+  /// No description provided for @webInstallHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Læg appen på hjemmeskærmen: tryk på Del og vælg Føj til hjemmeskærm. Ellers kan Safari slette dine data, hvis appen ikke bruges i 7 dage. Tag også backup jævnligt.'**
+  String get webInstallHint;
+
+  /// No description provided for @rulesDisclaimer.
+  ///
+  /// In da, this message translates to:
+  /// **'Et sammendrag af BWF\'s og Badminton Danmarks regler. Ved tvivl gælder de officielle regler.'**
+  String get rulesDisclaimer;
+
   /// No description provided for @techniqueDisclaimer.
   ///
   /// In da, this message translates to:

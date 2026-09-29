@@ -9,8 +9,10 @@ final _random = Random();
 /// Genererer et unikt id uden eksterne afhængigheder.
 String newId() {
   final time = DateTime.now().microsecondsSinceEpoch.toRadixString(36);
-  final rand = _random.nextInt(1 << 32).toRadixString(36).padLeft(7, '0');
-  return '$time$rand';
+  // Højst 2^30 pr. kald: i webudgaven er `1 << 32` lig 0 (32-bit
+  // bitoperationer i JavaScript), og nextInt(0) kaster en fejl.
+  String part() => _random.nextInt(1 << 30).toRadixString(36).padLeft(6, '0');
+  return '$time${part()}${part()}';
 }
 
 class Player {

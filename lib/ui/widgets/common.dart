@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../labels.dart';
@@ -217,3 +218,36 @@ class ResponsiveGrid extends StatelessWidget {
 
 String percent(double? rate, String fallback) =>
     rate == null ? fallback : '${(rate * 100).round()} %';
+
+/// Tip om at lægge webudgaven på hjemmeskærmen. Vises kun i browseren.
+class WebInstallHint extends StatelessWidget {
+  const WebInstallHint({super.key, this.force = false});
+
+  /// Vis også uden for webudgaven. Bruges i tests.
+  final bool force;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!kIsWeb && !force) return const SizedBox.shrink();
+    final colors = Theme.of(context).colorScheme;
+    return Card(
+      color: colors.secondaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(Icons.add_to_home_screen, color: colors.onSecondaryContainer),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                context.l10n.webInstallHint,
+                style: TextStyle(color: colors.onSecondaryContainer),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

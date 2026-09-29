@@ -10,6 +10,7 @@ import 'players_screen.dart';
 import 'stats_screen.dart';
 import 'technique_screen.dart';
 import 'training_screen.dart';
+import 'widgets/common.dart';
 
 /// Bredde hvor layoutet skifter fra bundnavigation (mobil) til sidemenu
 /// (tablet/computer).
@@ -257,7 +258,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     textAlign: TextAlign.center,
                     style: theme.textTheme.bodyLarge,
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
+                  const WebInstallHint(),
+                  const SizedBox(height: 16),
                   TextField(
                     controller: _controller,
                     autofocus: true,

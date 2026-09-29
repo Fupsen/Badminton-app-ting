@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/models.dart';
 
@@ -45,6 +46,28 @@ class JsonFileStore implements DataStore {
     final tmp = File('${file.path}.tmp');
     await tmp.writeAsString(jsonEncode(data.toJson()), flush: true);
     await tmp.rename(file.path);
+  }
+}
+
+/// Gemmer alle data som JSON i SharedPreferences. Bruges i webudgaven, hvor
+/// der ikke er et filsystem (i browseren ender det i localStorage).
+class SharedPreferencesStore implements DataStore {
+  SharedPreferencesStore({this.key = 'badminton_data'});
+
+  final String key;
+
+  @override
+  Future<AppData> load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final content = prefs.getString(key);
+    if (content == null || content.trim().isEmpty) return AppData();
+    return AppData.fromJson(jsonDecode(content) as Map<String, dynamic>);
+  }
+
+  @override
+  Future<void> save(AppData data) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(key, jsonEncode(data.toJson()));
   }
 }
 

@@ -37,7 +37,9 @@ efter 1. sæt og før et eventuelt 3. sæt (§8.1). Glemmer man et sideskift,
 skiftes der, så snart det opdages, og stillingen står ved magt (§8.2).
 
 > Appen (`lib/logic/scoring.dart`) accepterer begge systemer, men alle sæt i
-> én kamp skal følge samme system.
+> én kamp skal følge samme system. Regel-sektionen i appen
+> (`lib/content/rules_da.dart`) er et sammendrag af denne fil og skal
+> opdateres sammen med den.
 
 ## Bane, net og udstyr
 

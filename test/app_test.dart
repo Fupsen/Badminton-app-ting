@@ -1,8 +1,10 @@
 import 'package:badminton_app/data/backup.dart';
 import 'package:badminton_app/data/backup_files.dart';
 import 'package:badminton_app/data/data_store.dart';
+import 'package:badminton_app/l10n/app_localizations.dart';
 import 'package:badminton_app/main.dart';
 import 'package:badminton_app/models/models.dart';
+import 'package:badminton_app/ui/widgets/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -353,5 +355,48 @@ void main() {
 
     expect(find.text('3 pas om ugen'), findsOneWidget);
     expect((await store.load()).goals, hasLength(1));
+  });
+
+  testWidgets('rules tab shows the 3x15 rules', (tester) async {
+    // Højt vindue som en telefon, så sektionerne kan ses uden at scrolle.
+    tester.view.physicalSize = const Size(400, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Teknik'));
+    await tester.pumpAndSettle();
+    // Fanerne kan scrolles; testskriften er bredere end rigtig skrift.
+    await tester.ensureVisible(find.widgetWithText(Tab, 'Regler'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(Tab, 'Regler'));
+    await tester.pumpAndSettle();
+
+    expect(find.textContaining('3×15 i alle kampe fra 1. juli 2026'),
+        findsOneWidget);
+    // Pointsystemet er foldet ud, de andre sektioner er lukkede.
+    expect(find.textContaining('Ved 14-14'), findsOneWidget);
+    expect(find.textContaining('under 1,15 m'), findsNothing);
+    await tester.tap(find.text('Serv'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('under 1,15 m'), findsOneWidget);
+  });
+
+  testWidgets('web install hint is hidden outside the browser',
+      (tester) async {
+    await tester.pumpWidget(BadmintonApp(store: MemoryStore()));
+    await tester.pumpAndSettle();
+    expect(find.byIcon(Icons.add_to_home_screen), findsNothing);
+
+    // Med force vises tippet (sådan ser det ud i webudgaven).
+    await tester.pumpWidget(const MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: Scaffold(body: WebInstallHint(force: true)),
+    ));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Føj til hjemmeskærm'), findsOneWidget);
   });
 }

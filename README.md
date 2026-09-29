@@ -26,7 +26,8 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Træning**: dato, varighed, type (teknik, fysisk, kamptræning,
   footwork, andet), intensitet 1–5, noter, og hvilke slag, hvilket
   benarbejde og hvilke øvelser der blev trænet.
-- **Teknik**: bibliotek med 12 slag og 7 former for benarbejde. Hvert punkt
+- **Teknik**: bibliotek med 12 slag og 7 former for benarbejde, samt de
+  gældende **regler** (3×15, serv, fejl, let m.m.). Hvert punkt
   har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
   hvornår du sidst trænede det. Dertil kommer 16 øvelser med niveau, antal
   spillere, tid, trin og tips. En øvelse kan logges direkte som
@@ -43,6 +44,32 @@ kører på Android, iOS, Windows, macOS og Linux.
   minder dig om at tage backup, hvis det er over 30 dage siden.
 - **Responsivt layout**: bundnavigation på telefon og sidemenu på bredere
   skærme.
+
+## Installér
+
+**iPhone** (webudgave, gratis og uden App Store):
+
+1. Åbn <https://fupsen.github.io/Badminton-app-ting/> i **Safari**.
+2. Tryk på **Del** (firkanten med pilen) og vælg **Føj til hjemmeskærm**.
+3. Åbn appen fra ikonet på hjemmeskærmen. **Gør det altid herfra.** Safari
+   kan slette data fra hjemmesider, der ikke er brugt i 7 dage, men ikke fra
+   apps på hjemmeskærmen.
+
+**Windows:**
+
+1. Gå til [Releases](https://github.com/Fupsen/Badminton-app-ting/releases),
+   og hent den nyeste `Badminton-logbog-windows-….zip`.
+2. Højreklik på zip-filen, og vælg **Udpak alle**.
+3. Dobbeltklik på **badminton_app.exe**. Viser Windows "Windows beskyttede din
+   pc", så klik **Flere oplysninger → Kør alligevel**. Appen er ikke signeret
+   med et betalt certifikat.
+
+**Flyt data mellem iPhone og Windows:** data ligger på hver enhed for sig.
+Brug *Backup og gendannelse*: eksportér på den ene, og importér med *Flet ind*
+på den anden.
+
+**Nye versioner:** webudgaven opdateres automatisk, når `main` ændres. En ny
+Windows-version laves under Actions → *Udgiv Windows-app* → *Run workflow*.
 
 ## Badminton-viden
 
@@ -74,7 +101,7 @@ lib/
   models/      Datamodeller (spiller, kamp, træning, mål) med JSON
   data/        DataStore (lokal JSON-fil), backup-format og fildialoger
   state/       AppState (ChangeNotifier) som skærmene lytter på
-  content/     Teknik-biblioteket: slag, benarbejde og øvelser (dansk)
+  content/     Teknik-bibliotek og regler (dansk)
   logic/       Ren Dart: pointregler, statistik og mål (unit-testet)
   ui/          Skærme og widgets
   l10n/        Tekster (app_da.arb) og genereret oversættelseskode

@@ -599,6 +599,22 @@ class AppLocalizationsDa extends AppLocalizations {
   String get techniqueDrills => 'Øvelser';
 
   @override
+  String get techniqueRules => 'Regler';
+
+  @override
+  String rulesSource(String source) {
+    return 'Kilde: $source';
+  }
+
+  @override
+  String get webInstallHint =>
+      'Læg appen på hjemmeskærmen: tryk på Del og vælg Føj til hjemmeskærm. Ellers kan Safari slette dine data, hvis appen ikke bruges i 7 dage. Tag også backup jævnligt.';
+
+  @override
+  String get rulesDisclaimer =>
+      'Et sammendrag af BWF\'s og Badminton Danmarks regler. Ved tvivl gælder de officielle regler.';
+
+  @override
   String get techniqueDisclaimer =>
       'Beskrivelserne er generel træningsviden for højrehåndede spillere og erstatter ikke en træner.';
 

@@ -37,12 +37,22 @@ lib/models   datamodeller + JSON (nye felter skal være valgfrie, så gamle
 lib/data     DataStore (lokal JSON-fil), backup-format, fildialoger
 lib/state    AppState (ChangeNotifier)
 lib/logic    ren Dart: pointregler (scoring.dart), statistik, mål
-lib/content  teknik-bibliotek (technique.dart + technique_da.dart); id'er må
-             ikke ændres
+lib/content  teknik-bibliotek (technique*.dart; id'er må ikke ændres) og
+             regler (rules*.dart, skal stemme med docs/viden/regler.md)
 lib/ui       skærme og widgets
 lib/l10n     app_da.arb (alle UI-tekster) + genereret kode
 docs/viden   badminton-vidensbank med kilder
 ```
+
+## Udgivelse
+
+- **iPhone:** webudgave (PWA) på GitHub Pages, bygget af
+  `.github/workflows/web.yml` ved push til `main`. Web bruger
+  `SharedPreferencesStore` og `WebBackupFiles` (se `lib/main.dart`). Undgå
+  `dart:io` i kode, der kører på web, og husk, at bitoperationer er 32-bit i
+  browseren (fx er `1 << 32` lig 0).
+- **Windows:** `.github/workflows/release.yml` (manuel) bygger en zip til
+  Releases.
 
 ## Kommandoer
 
@@ -51,6 +61,7 @@ flutter pub get
 flutter gen-l10n        # efter ændringer i lib/l10n/app_da.arb
 flutter analyze         # skal give "No issues found!"
 flutter test            # alle tests skal bestå
+flutter build web --release --no-web-resources-cdn --base-href /Badminton-app-ting/
 ```
 
 - UI-tekster skrives aldrig direkte i koden. De ligger i `app_da.arb`.

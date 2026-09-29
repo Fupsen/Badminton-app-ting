@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 
+import 'web_download.dart';
+
 /// Gemmer og åbner backup-filer. Et interface, så tests kan bruge en falsk
 /// implementation uden rigtige fildialoger.
 abstract class BackupFiles {
@@ -61,6 +63,29 @@ class PlatformBackupFiles implements BackupFiles {
       // Android kender ikke altid .json som type; vis alle filer dér.
       acceptedTypeGroups: Platform.isAndroid ? const [] : const [_jsonType],
     );
+    return file?.readAsString();
+  }
+}
+
+/// Backup i webudgaven: eksport som download, import via filvælgeren.
+class WebBackupFiles implements BackupFiles {
+  const WebBackupFiles();
+
+  @override
+  Future<bool> save(
+    String fileName,
+    String contents, {
+    Rect? sharePositionOrigin,
+  }) async {
+    downloadTextFile(fileName, contents);
+    return true;
+  }
+
+  @override
+  Future<String?> pickAndRead() async {
+    // Intet filter: iPhone kender ikke altid .json som filtype, og filen
+    // valideres alligevel, når den læses.
+    final file = await openFile();
     return file?.readAsString();
   }
 }
