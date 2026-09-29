@@ -1,0 +1,57 @@
+# Bygger Windows-appen og udgiver den som en zip-fil under Releases.
+# Startes manuelt: Actions -> "Udgiv Windows-app" -> Run workflow.
+name: Udgiv Windows-app
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Versionsnummer, fx 1.0.0"
+        required: true
+        default: "1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.5
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Byg
+        shell: pwsh
+        run: flutter build windows --release --build-name "$env:VERSION"
+      - name: Pak som zip
+        shell: pwsh
+        run: >-
+          Compress-Archive -Path build/windows/x64/runner/Release/*
+          -DestinationPath "Badminton-logbog-windows-$env:VERSION.zip"
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ inputs.version }}
+          name: Badminton-logbog ${{ inputs.version }}
+          target_commitish: ${{ github.sha }}
+          files: Badminton-logbog-windows-${{ inputs.version }}.zip
+          body: |
+            ## Installér på Windows
+
+            1. Hent `Badminton-logbog-windows-${{ inputs.version }}.zip` herunder.
+            2. Højreklik på filen, og vælg **Udpak alle**. Læg mappen et fast sted, fx i Dokumenter.
+            3. Åbn mappen, og dobbeltklik på **badminton_app.exe**.
+            4. Hvis Windows viser "Windows beskyttede din pc": klik **Flere oplysninger** og derefter **Kør alligevel**. Advarslen kommer, fordi appen ikke er signeret med et betalt certifikat.
+
+            Tip: højreklik på `badminton_app.exe` og vælg **Send til → Skrivebord (opret genvej)**.
+
+            ## iPhone
+
+            Brug webudgaven: åbn linket fra README i **Safari**, tryk på **Del** og vælg **Føj til hjemmeskærm**.
+
+            Data på Windows og iPhone er adskilt. Flyt dem med **Backup og gendannelse** (eksportér på den ene, importér med *Flet ind* på den anden).
