@@ -6,6 +6,38 @@
 import 'technique.dart';
 
 const strokes = <Technique>[
+  // Grundlag
+  Technique(
+    id: 'grips',
+    kind: TechniqueKind.stroke,
+    name: 'Greb',
+    category: 'Grundlag',
+    summary:
+        'De fire greb, som alle slag bygger på: basisgreb, tommelgreb, '
+        'hjørnegreb og stegepandegreb.',
+    whenToUse:
+        'Hele tiden. Basisgrebet er udgangspunktet mellem slagene, og du '
+        'skifter greb efter, hvor fjerbolden er i forhold til kroppen.',
+    keyPoints: [
+      'Basisgreb (V-greb): tommel og pegefinger danner et V på skaftet, som '
+          'når man giver hånd. Til forhånd og til slag ved siden af kroppen.',
+      'Tommelgreb: tommelfingeren på skaftets brede, flade side. Til baghånd '
+          'foran kroppen: kort serv, netdrop, lift, net kill og drive.',
+      'Hjørnegreb: tommelfingeren på skaftets skrå kant. Til baghånd ved '
+          'siden af eller lidt bag kroppen, fx clear og drop fra '
+          'baghåndshjørnet.',
+      'Stegepandegreb: ketsjerfladen vender mod nettet. Til forhånd langt '
+          'foran kroppen, fx net kill, og til baghånd langt bag kroppen.',
+      'Hold løst mellem slagene, og klem først til i træffet. Så kan '
+          'fingrene dreje grebet hurtigt.',
+    ],
+    commonMistakes: [
+      'Bruger stegepandegreb til alt. Det gør især baghånden og slag bagfra '
+          'svage.',
+      'Klemmer hårdt hele tiden, så grebsskift bliver langsomme, og armen '
+          'bliver træt.',
+    ],
+  ),
   // Serv
   Technique(
     id: 'serve_short',
@@ -35,6 +67,63 @@ const strokes = <Technique>[
       'For stort sving giver ujævn længde.',
       'Fjerbolden er over 1,15 m ved træffet (servefejl).',
       'Ketsjeren stopper eller tøver i fremadbevægelsen (servefejl).',
+    ],
+  ),
+  Technique(
+    id: 'serve_forehand_low',
+    kind: TechniqueKind.stroke,
+    name: 'Kort forhåndsserv',
+    category: 'Serv',
+    summary:
+        'En lav serv med forhånd, der lige går over nettet og lander forrest '
+        'i modstanderens servefelt.',
+    whenToUse:
+        'Mest i single, hvor den er et alternativ til den høje serv. I double '
+        'bruges næsten altid den korte baghåndsserv.',
+    keyPoints: [
+      'Stå sidelæns i servefeltet med vægten på bagerste ben. Basisgreb, og '
+          'hold ketsjer og fjerbold højt.',
+      'Flyt vægten frem, og slip fjerbolden til siden og lidt foran dig.',
+      'Bøj håndleddet bagud, og hold det bøjet, mens du skubber fjerbolden '
+          'over. Intet slag fra håndleddet.',
+      'Hele fjerbolden skal være under 1,15 m, når du rammer den, og den må '
+          'ikke få spin.',
+      'Lad den korte, den høje og flick-serven ligne hinanden, så '
+          'modtageren ikke kan læse dig.',
+    ],
+    commonMistakes: [
+      'Håndleddet knækker frem i træffet, så serven bliver for høj eller for '
+          'lang.',
+      'Fjerbolden er over 1,15 m ved træffet (servefejl).',
+      'Står med front mod nettet, så vægtoverførslen mangler.',
+    ],
+  ),
+  Technique(
+    id: 'serve_flick',
+    kind: TechniqueKind.stroke,
+    name: 'Flick-serv',
+    category: 'Serv',
+    summary:
+        'En serv, der ligner en kort serv, men i sidste øjeblik bliver '
+        'flicket op over modtageren og bagud.',
+    whenToUse:
+        'Mod en modtager, der står langt fremme og angriber den korte serv. '
+        'Mest i double, men også i single. I double skal den lande inden for '
+        'den lange servelinje for double.',
+    keyPoints: [
+      'Samme greb, stilling og forberedelse som den korte serv. Det er hele '
+          'pointen.',
+      'Kort bagsving med bøjet håndled og åben ketsjerflade.',
+      'Accelerér ketsjerhovedet pludseligt frem og op i sidste øjeblik.',
+      'Sigt lige over modtagerens ketsjer. Den skal ikke være så høj som en '
+          'lang serv, men modtageren må ikke kunne nå den i luften.',
+      'De samme serveregler gælder: under 1,15 m, ingen spin og ingen pause '
+          'i fremadbevægelsen.',
+    ],
+    commonMistakes: [
+      'Forberedelsen afslører serven, fx med et længere bagsving.',
+      'For lav, så modtageren kan smashe den.',
+      'Bruges så tit, at modtageren står og venter på den.',
     ],
   ),
   Technique(
@@ -118,6 +207,34 @@ const strokes = <Technique>[
     ],
   ),
   Technique(
+    id: 'pulled_drop',
+    kind: TechniqueKind.stroke,
+    name: 'Trukket drop',
+    category: 'Bagbane',
+    summary:
+        'Et roligt drop fra et presset bagerste hjørne, hvor fjerbolden '
+        '"trækkes" over nettet med mindre armrotation.',
+    whenToUse:
+        'Når du er presset, og fjerbolden er bag dig i et af de bagerste '
+        'hjørner. Den lander i modstanderens forreste midtbane, lige bag den '
+        'korte servelinje, og gør det svært at angribe dig.',
+    keyPoints: [
+      'Bøj albuen, og drej grebet mod tommelgreb (forhånd) eller mod '
+          'hjørne- eller stegepandegreb (baghånd). Jo mere kryds, jo mere '
+          'drejer du.',
+      'Ræk afslappet ud, og kom med hånden ind under fjerbolden.',
+      'Mindsk armrotationen lige før træffet, og skub igennem fjerbolden.',
+      'Træffet sker lidt bag kroppen. Brug udsvinget til hurtigt at vende '
+          'dig mod nettet.',
+      'Sæt forreste fod i gulvet samtidig med eller lige før træffet.',
+    ],
+    commonMistakes: [
+      'Slår for hårdt, så dropet bliver langt og kan angribes.',
+      'Kommer for sent bagud og rammer fjerbolden alt for langt bag kroppen.',
+      'Bliver stående med ryggen til banen efter slaget.',
+    ],
+  ),
+  Technique(
     id: 'smash',
     kind: TechniqueKind.stroke,
     name: 'Smash',
@@ -138,6 +255,64 @@ const strokes = <Technique>[
       'Træffer bag hovedet, så smashen bliver flad og lang.',
       'Smasher fra for langt tilbage og bliver kontret.',
       'Bliver stående efter slaget.',
+    ],
+  ),
+  Technique(
+    id: 'jump_smash',
+    kind: TechniqueKind.stroke,
+    name: 'Hop-smash',
+    category: 'Bagbane',
+    summary:
+        'En smash, hvor du hopper og drejer i luften, så du rammer højere og '
+        'tidligere og får en stejlere vinkel.',
+    whenToUse:
+        'For øvede og elite. Når fjerbolden er høj og ikke for langt '
+        'tilbage, og du har tid til at komme bag den. Den koster meget '
+        'energi og belaster benene, så brug den til at afslutte, ikke i hver '
+        'duel.',
+    keyPoints: [
+      'Tag et skridt bagud, så bagerste ben er ladet, og stå sidelæns.',
+      'Hop op, og begynd at dreje kroppen i luften.',
+      'Albuen op og frem, og underarmen drejet udad, som når man reder hår.',
+      'Kast ketsjerhovedet frem med kraftig indadrotation, og ræk op, så du '
+          'rammer foran slagskulderen.',
+      'Land blødt på forfoden med bøjede ankler, knæ og hofter, og gå '
+          'straks frem.',
+    ],
+    commonMistakes: [
+      'Hopper for tidligt eller står under fjerbolden, så træffet sker bag '
+          'hovedet.',
+      'Lander hårdt på stive ben (belaster knæ og ankel).',
+      'Hopper så højt, at du ikke når tilbage til næste slag.',
+      'Laver mange gentagelser, før landingen sidder.',
+    ],
+  ),
+  Technique(
+    id: 'around_the_head',
+    kind: TechniqueKind.stroke,
+    name: 'Rundt om hovedet',
+    category: 'Bagbane',
+    summary:
+        'Et forhåndsslag over hovedet fra baghåndssiden. Du bøjer '
+        'overkroppen til venstre og rammer fjerbolden over eller lidt til '
+        'venstre for hovedet.',
+    whenToUse:
+        'Når fjerbolden kommer højt til dit baghåndshjørne, og du kan nå at '
+        'komme bag den. Det giver et stærkere slag end baghånd, fordi du kan '
+        'slå clear, drop og smash som med forhånd.',
+    keyPoints: [
+      'Drej kroppen, og gå baglæns med chassé, så du kommer bag fjerbolden.',
+      'Bøj overkroppen til venstre, og før albuen højt op over hovedet.',
+      'Ram med underarmsrotation over eller lidt til venstre for hovedet og '
+          'lige så højt som ved en clear.',
+      'Samme forberedelse til clear, drop og smash.',
+      'Brug et saksehop, og skub straks tilbage mod midten.',
+    ],
+    commonMistakes: [
+      'Kommer ikke bag fjerbolden og rammer den bag hovedet.',
+      'Vælger rundt om hovedet, når fjerbolden er for dyb, i stedet for '
+          'baghånd.',
+      'Går så langt ud i hjørnet, at det er svært at komme tilbage.',
     ],
   ),
   Technique(
@@ -253,13 +428,39 @@ const strokes = <Technique>[
       'Gå frem med et udfald på højre ben.',
       'Ketsjeren oppe foran, så du træffer fjerbolden så højt som muligt.',
       'Blød hånd: fingrene styrer, ikke armen.',
-      'Et spinnende netdrop (skåret) er svært at returnere.',
+      'Har du tid, så giv fjerbolden spin (se Spin-netdrop).',
       'Kom tilbage fra udfaldet med et skub fra forreste ben.',
     ],
     commonMistakes: [
       'Træffer for lavt og for sent.',
       'Fjerbolden går for højt over nettet og bliver dræbt.',
       'Forreste knæ går ind over tæerne i udfaldet.',
+    ],
+  ),
+  Technique(
+    id: 'net_spin',
+    kind: TechniqueKind.stroke,
+    name: 'Spin-netdrop',
+    category: 'Net',
+    summary:
+        'Et netdrop, hvor fjerbolden får spin, så den vælter rundt over '
+        'nettet og er svær at ramme rent.',
+    whenToUse:
+        'Ved nettet, når fjerbolden er under nethøjde, og du har lidt tid. '
+        'Spin er kun forbudt i serven, ikke i spillet.',
+    keyPoints: [
+      'Samme forberedelse som et almindeligt netdrop: udfald og ketsjeren '
+          'frem.',
+      'Ram på tværs under fjerbolden i en let buet bane, fx fra højre mod '
+          'venstre.',
+      'Lad fingrene styre ketsjeren. Bevægelsen er lille.',
+      'Ram så højt og tæt på nettet som muligt.',
+      'Få ketsjeren op efter slaget, klar til et svar ved nettet.',
+    ],
+    commonMistakes: [
+      'For stor bevægelse, så fjerbolden går for højt.',
+      'Forsøger spin fra for lav en position, så fjerbolden ikke når over.',
+      'Bliver stående ved nettet og kommer for sent til næste slag.',
     ],
   ),
   Technique(
@@ -338,6 +539,32 @@ const footwork = <Technique>[
     ],
   ),
   Technique(
+    id: 'jump_landing',
+    kind: TechniqueKind.footwork,
+    name: 'Hop og landing',
+    category: 'Grundlag',
+    summary:
+        'Sådan sætter du af og lander sikkert. Grundlaget for hop-smash, '
+        'saksehop og hurtige retningsskift, og vigtigt for at undgå skader.',
+    whenToUse:
+        'Ved alle hop på banen. Træn det for sig, før du laver mange '
+        'hop-smash eller saksehop. God for børn og begyndere.',
+    keyPoints: [
+      'Start fra en god squat: hælene nede, sid tilbage, brystet op, og hold '
+          'ryg og skinneben parallelle.',
+      'Sving armene ned og tilbage og derefter frem og op, når du sætter af.',
+      'Stræk ankler, knæ og hofter helt ud i luften.',
+      'Land på forfoden først, og bøj ankler, knæ og hofter for at tage '
+          'stødet.',
+      'Knæene peger samme vej som tæerne, også i landingen.',
+    ],
+    commonMistakes: [
+      'Lander på stive ben eller på hælene.',
+      'Knæene falder indad i landingen.',
+      'Brystet falder frem, så balancen går tabt.',
+    ],
+  ),
+  Technique(
     id: 'chasse',
     kind: TechniqueKind.footwork,
     name: 'Chassé (sideskridt)',
@@ -384,6 +611,51 @@ const footwork = <Technique>[
     ],
   ),
   Technique(
+    id: 'cross_behind',
+    kind: TechniqueKind.footwork,
+    name: 'Bagom-skridt (cross-behind)',
+    category: 'Bevægelse',
+    summary:
+        'Et skridt, hvor det frie ben (venstre) føres bag om ketsjerbenet. '
+        'Dækker afstand til siden og bagud.',
+    whenToUse:
+        'Når du skal hurtigt ud til siden eller bagud, fx mod forhåndssiden '
+        'i bagbanen. Det er sjældent mere end ét ad gangen.',
+    keyPoints: [
+      'Start fra split step.',
+      'Før venstre ben bag om højre, og hold hofterne drejet mod siden.',
+      'Tag kun ét bagom-skridt, og fortsæt med chassé eller et hop.',
+      'Hold overkroppen rank og hovedet i samme højde.',
+    ],
+    commonMistakes: [
+      'Flere bagom-skridt i træk, så balancen går tabt.',
+      'Krydser foran i stedet for bagom og vender forkert.',
+    ],
+  ),
+  Technique(
+    id: 'hop_pivot',
+    kind: TechniqueKind.footwork,
+    name: 'Hop og pivot',
+    category: 'Bevægelse',
+    summary:
+        'Små hop, hvor du sætter af og lander på samme fod, ofte med en '
+        'drejning. Vender kroppen hurtigt og dækker afstand.',
+    whenToUse:
+        'Fx mod baghåndsnettet (pivot om venstre fod) og mod '
+        'baghåndshjørnet, hvor kroppen skal drejes hurtigt.',
+    keyPoints: [
+      'Sæt af og land på samme fod.',
+      'Drej i luften eller på forfoden, så kroppen peger derhen, hvor du '
+          'skal.',
+      'Hoppet skal mest give afstand, ikke højde.',
+      'Øv pivot på begge ben og i begge retninger.',
+    ],
+    commonMistakes: [
+      'Hopper op i stedet for hen ad gulvet.',
+      'Drejer på hælen og mister farten.',
+    ],
+  ),
+  Technique(
     id: 'lunge',
     kind: TechniqueKind.footwork,
     name: 'Udfald (lunge)',
@@ -404,6 +676,79 @@ const footwork = <Technique>[
       'Knæet falder indad eller peger en anden vej end foden (belaster knæet).',
       'Overkroppen læner sig langt frem.',
       'For kort udfald, så man ikke når fjerbolden.',
+    ],
+  ),
+  Technique(
+    id: 'forehand_net',
+    kind: TechniqueKind.footwork,
+    name: 'Til forhåndsnettet',
+    category: 'Til nettet',
+    summary:
+        'Vejen fra midten frem til det forreste højre hjørne og tilbage '
+        'igen.',
+    whenToUse:
+        'Når modstanderen spiller drop eller netdrop til din forhåndsside.',
+    keyPoints: [
+      'Split step, når modstanderen slår.',
+      'Ketsjerbenet (højre) fører. Chassé frem mod hjørnet.',
+      'Afslut med et udfald på højre ben, hvor foden peger mod fjerbolden.',
+      'Ketsjeren oppe foran, så du rammer højt.',
+      'Skub fra med højre ben, og kom tilbage med chassé eller et par '
+          'skridt.',
+    ],
+    commonMistakes: [
+      'Ender med venstre ben forrest.',
+      'For mange små skridt, så du kommer for sent.',
+      'Bliver stående ved nettet efter slaget.',
+    ],
+  ),
+  Technique(
+    id: 'backhand_net',
+    kind: TechniqueKind.footwork,
+    name: 'Til baghåndsnettet',
+    category: 'Til nettet',
+    summary:
+        'Vejen fra midten frem til det forreste venstre hjørne og tilbage '
+        'igen.',
+    whenToUse:
+        'Når modstanderen spiller drop eller netdrop til din baghåndsside.',
+    keyPoints: [
+      'Split step, når modstanderen slår.',
+      'Det frie ben (venstre) fører. Lav et hop eller pivot om venstre fod, '
+          'så kroppen drejer mod hjørnet.',
+      'Afslut med et udfald på højre ben mod hjørnet.',
+      'Skift til tommelgreb på vej frem.',
+      'Skub fra med højre ben, og kom tilbage med chassé eller et par '
+          'skridt.',
+    ],
+    commonMistakes: [
+      'Laver udfaldet på venstre ben.',
+      'Drejer ikke kroppen, så baghånden bliver kort.',
+      'Forreste knæ peger en anden vej end foden.',
+    ],
+  ),
+  Technique(
+    id: 'side_defence',
+    kind: TechniqueKind.footwork,
+    name: 'Til siderne i midtbanen',
+    category: 'Midtbane',
+    summary:
+        'Bevægelsen ud til siderne i midtbanen, fx i forsvar mod smash og '
+        'drive, og hurtigt tilbage.',
+    whenToUse:
+        'Når fjerbolden kommer til siden i midtbanen, især i forsvar i single '
+        'og når I står side om side i double.',
+    keyPoints: [
+      'Lav, bred forsvarsstilling og split step, når modstanderen slår.',
+      'Et løbeskridt eller to og et udfald ud til siden. Mod baghånd krydser '
+          'højre ben foran kroppen.',
+      'Ketsjeren foran kroppen. Ram fjerbolden foran dig, ikke bag dig.',
+      'Skub fra, og kom tilbage til midten med chassé.',
+    ],
+    commonMistakes: [
+      'Står for højt og kommer for sent.',
+      'Rækker kun med armen og rammer fjerbolden bag kroppen.',
+      'Bliver ude i siden efter slaget.',
     ],
   ),
   Technique(
@@ -468,6 +813,32 @@ const footwork = <Technique>[
     commonMistakes: [
       'Bliver stående i hjørnet efter slaget.',
       'Står for langt tilbage i "midten", så nettet bliver langt væk.',
+    ],
+  ),
+  Technique(
+    id: 'doubles_rotation',
+    kind: TechniqueKind.footwork,
+    name: 'Rotation i double',
+    category: 'Double',
+    summary:
+        'Sådan flytter makkerne sig mellem angreb (front-bag) og forsvar '
+        '(side om side).',
+    whenToUse:
+        'I double og mixed, hver gang jeres side løfter eller får en chance '
+        'for at slå nedad.',
+    keyPoints: [
+      'Angreb: front-bag. Den bagerste smasher eller dropper, og den '
+          'forreste afslutter ved nettet.',
+      'Forsvar: side om side. Hver spiller dækker sin halvdel.',
+      'Når I løfter, går I til side om side. Den, der løftede fra nettet, '
+          'går typisk bagud i samme side.',
+      'Når I får en fjerbold, der kan slås nedad, går I til front-bag.',
+      'Tal sammen, og sig "min" eller "din" ved bolde midt imellem jer.',
+    ],
+    commonMistakes: [
+      'Begge står foran eller begge bagved efter et løft.',
+      'Den forreste spiller trækker sig tilbage, mens makkeren smasher.',
+      'Ingen tager fjerbolden i midten.',
     ],
   ),
 ];
@@ -661,7 +1032,14 @@ const drills = <Drill>[
     id: 'multi_feed_rear',
     name: 'Multi-fjer i bagbanen',
     purpose: 'Mange gentagelser af slag fra begge bagerste hjørner.',
-    techniqueIds: ['clear', 'smash', 'drop', 'scissor_kick', 'backhand_corner'],
+    techniqueIds: [
+      'clear',
+      'smash',
+      'drop',
+      'around_the_head',
+      'scissor_kick',
+      'backhand_corner',
+    ],
     minPlayers: 2,
     minutes: 10,
     level: DrillLevel.intermediate,
@@ -755,7 +1133,12 @@ const drills = <Drill>[
     purpose:
         'Træner bevægelsen til baghåndshjørnet og valget mellem rundt om '
         'hovedet og baghånd.',
-    techniqueIds: ['backhand', 'backhand_corner', 'crossover'],
+    techniqueIds: [
+      'backhand',
+      'around_the_head',
+      'backhand_corner',
+      'crossover',
+    ],
     minPlayers: 2,
     minutes: 10,
     level: DrillLevel.advanced,
@@ -808,6 +1191,378 @@ const drills = <Drill>[
     tips: [
       'Første skridt frem skal komme allerede i landingen efter dropet.',
       'Ketsjeren op, mens du løber frem.',
+    ],
+  ),
+  Drill(
+    id: 'grip_wall',
+    name: 'Grebsskift mod væggen',
+    purpose:
+        'Træner hurtige grebsskift og korte slag. Kan laves alene mod en '
+        'væg.',
+    techniqueIds: ['grips', 'drive'],
+    minPlayers: 1,
+    minutes: 8,
+    level: DrillLevel.beginner,
+    steps: [
+      'Stå 2-3 meter fra en væg med ketsjeren oppe foran kroppen.',
+      'Slå fjerbolden fladt mod væggen, skiftevis med forhånd og baghånd.',
+      'Skift greb mellem hvert slag: basisgreb til forhånd og tommelgreb til '
+          'baghånd.',
+      'Tæl, hvor mange slag i træk du kan lave. Serier på 1 minut.',
+    ],
+    tips: [
+      'Hold løst mellem slagene, så fingrene kan dreje ketsjeren.',
+      'Gå tættere på væggen for at øge tempoet.',
+    ],
+  ),
+  Drill(
+    id: 'flick_or_short',
+    name: 'Kort serv eller flick',
+    purpose: 'Træner at skjule flick-serven, og at modtageren reagerer på den.',
+    techniqueIds: ['serve_short', 'serve_flick', 'push', 'split_step'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.intermediate,
+    steps: [
+      'A server fra double-positionen, og B står klar til at modtage.',
+      'A blander korte serv og flick-serv uden at sige hvad, fx 1 flick for '
+          'hver 4 serv.',
+      'B angriber den korte serv med push eller kill og går bagud på '
+          'flicken.',
+      'Spil duellen ud til 3 slag. Byt efter 12 serv.',
+    ],
+    tips: [
+      'A: film serven forfra, og se, om forberedelsen afslører flicken.',
+      'B: stå med vægten fremme, men klar til at skubbe bagud.',
+    ],
+  ),
+  Drill(
+    id: 'low_serve_game',
+    name: 'Kamp med kun kort serv',
+    purpose:
+        'En kamp med særregler, der træner kort serv, returnering og de '
+        'første slag efter serven.',
+    techniqueIds: ['serve_short', 'serve_forehand_low', 'push', 'net_kill'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Spil single eller double efter de normale regler, men kun kort serv '
+          'er tilladt (forhånd eller baghånd).',
+      'Vinder serverens side duellen på 3. eller 4. slag, giver det et '
+          'ekstra point.',
+      'Spil et sæt til 15.',
+    ],
+    tips: [
+      'Serv lavt, og varier placeringen: på midten, ud mod sidelinjen og '
+          'mod kroppen.',
+      'Modtageren skal forsøge at komme først til fjerbolden og slå nedad.',
+    ],
+  ),
+  Drill(
+    id: 'around_head_feed',
+    name: 'Rundt om hovedet med multi-fjer',
+    purpose: 'Mange gentagelser af forhåndsslag fra baghåndshjørnet.',
+    techniqueIds: ['around_the_head', 'backhand_corner', 'smash', 'drop'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Fodreren står i den modsatte forbane og slår høje fjerbolde til '
+          'spillerens baghåndshjørne.',
+      'Spilleren starter i midten, kommer bag fjerbolden og slår rundt om '
+          'hovedet.',
+      'Skift mellem smash lige, drop på kryds og clear, 3 af hver.',
+      'Tilbage til midten med split step mellem hvert slag. Serier på 12-15 '
+          'fjerbolde.',
+    ],
+    tips: [
+      'Kom bag fjerbolden, før du slår. Hellere et roligt slag end et sent.',
+      'Fodreren kan gradvist slå dybere, så spilleren må vælge baghånd.',
+    ],
+  ),
+  Drill(
+    id: 'jump_basics',
+    name: 'Hop og landing',
+    purpose:
+        'Lærer at sætte af og lande sikkert. Til begyndere og børn, og som '
+        'opvarmning for alle.',
+    techniqueIds: ['jump_landing', 'hop_pivot'],
+    minPlayers: 1,
+    minutes: 8,
+    level: DrillLevel.beginner,
+    steps: [
+      'Hop på to ben frem og tilbage over en linje i 20 sekunder.',
+      'Hop sidelæns frem og tilbage over sidegangen (mellem single- og '
+          'double-sidelinjen) i 20 sekunder.',
+      'Urhop: hop til klokkeslæt rundt om et midtpunkt (12, 3, 6 og 9) og '
+          'tilbage til midten hver gang.',
+      'Hop og drej: hop, drej en kvart omgang i luften, og land stille. '
+          'Begge veje.',
+      '30-40 sekunders pause mellem øvelserne. 2-3 runder.',
+    ],
+    tips: [
+      'Land stille. Kan du høre et bump, er landingen for hård.',
+      'Knæene peger samme vej som tæerne.',
+    ],
+  ),
+  Drill(
+    id: 'jump_smash_series',
+    name: 'Hop-smash i serier',
+    purpose: 'Træner hop-smash med god landing og hurtig vej frem. For øvede.',
+    techniqueIds: ['jump_smash', 'jump_landing', 'scissor_kick'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.advanced,
+    steps: [
+      'Fodreren slår høje, ikke for dybe fjerbolde til spillerens '
+          'forhåndsside i bagbanen.',
+      'Spilleren hopper, smasher og lander på forfoden.',
+      'Efter landingen tager spilleren 2 skridt frem, som om næste slag '
+          'kommer ved nettet.',
+      'Serier på 6-8 smash med 1 minuts pause. 3-4 serier.',
+    ],
+    tips: [
+      'Kvalitet før mængde: stop serien, når landingen bliver tung.',
+      'Vent med mange hop-smash, til landingen sidder (øvelsen Hop og '
+          'landing). Stop ved smerter i knæ eller ankel.',
+    ],
+  ),
+  Drill(
+    id: 'pulled_drop_pressure',
+    name: 'Ud af presset i bagbanen',
+    purpose: 'Træner det trukne drop, når du er presset i de bagerste hjørner.',
+    techniqueIds: ['pulled_drop', 'backhand', 'backhand_corner', 'crossover'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.advanced,
+    steps: [
+      'Fodreren slår hurtige, flade clears bag spilleren, skiftevis til '
+          'forhånds- og baghåndshjørnet.',
+      'Spilleren slår trukket drop lige eller på kryds, så det lander i '
+          'fodrerens forreste midtbane.',
+      'Fodreren løfter tilbage, mens spilleren kommer tilbage til midten.',
+      'Serier på 10-12 fjerbolde.',
+    ],
+    tips: [
+      'Brug udsvinget til at vende dig mod nettet lige efter træffet.',
+      'Hellere et sikkert drop lidt længere inde på banen end et stramt drop '
+          'i nettet.',
+    ],
+  ),
+  Drill(
+    id: 'net_variation',
+    name: 'Netspil: lige, kryds og spin',
+    purpose: 'Træner variation ved nettet, så modstanderen ikke kan læse dig.',
+    techniqueIds: ['net_shot', 'net_spin', 'net_kill', 'lift', 'lunge'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Begge står ved nettet i hver sin forbane.',
+      'Spil netdrop frem og tilbage, både lige og på kryds.',
+      'Brug spin, når du har tid. Går et slag for højt, må modstanderen '
+          'dræbe det.',
+      'Kommer du for sent, så løft til baglinjen, og start forfra.',
+    ],
+    tips: [
+      'Ram fjerbolden så tidligt og højt som muligt.',
+      'Brug samme forberedelse til netdrop og løft.',
+    ],
+  ),
+  Drill(
+    id: 'net_shadow',
+    name: 'Skygge til nettet',
+    purpose:
+        'Træner vejen til begge nethjørner med de rigtige skridt. Kan laves '
+        'alene.',
+    techniqueIds: [
+      'forehand_net',
+      'backhand_net',
+      'hop_pivot',
+      'lunge',
+      'chasse',
+    ],
+    minPlayers: 1,
+    minutes: 8,
+    level: DrillLevel.beginner,
+    steps: [
+      'Start i midten med split step.',
+      'Forhåndsnettet: højre ben fører, chassé og udfald. Lav '
+          'slagbevægelsen, og kom tilbage.',
+      'Baghåndsnettet: hop eller pivot om venstre fod, udfald på højre ben, '
+          'og tilbage.',
+      'Skift mellem de to hjørner. 30 sekunders arbejde og 30 sekunders '
+          'pause, 6-8 runder.',
+    ],
+    tips: [
+      'Tæl skridtene, så det er det samme antal hver gang.',
+      'Læg en fjerbold i hvert hjørne, og ræk ketsjeren ind over den i '
+          'udfaldet.',
+    ],
+  ),
+  Drill(
+    id: 'side_defence_feed',
+    name: 'Sideforsvar',
+    purpose: 'Træner udfald til siderne og forsvar i midtbanen.',
+    techniqueIds: ['side_defence', 'defence', 'drive'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Fodreren står ved nettet på den anden side og kaster eller slår '
+          'fjerbolde fladt og nedad, skiftevis til spillerens forhånds- og '
+          'baghåndsside.',
+      'Spilleren står i forsvarsstilling i midten, laver split step og går '
+          'ud med et udfald.',
+      'Spil et block til nettet eller et drive lige tilbage.',
+      'Serier på 15-20 fjerbolde.',
+    ],
+    tips: [
+      'Ram foran kroppen, og hold ketsjeren foran mellem slagene.',
+      'Fodreren kan blande slag mod kroppen ind. De tages med baghånd.',
+    ],
+  ),
+  Drill(
+    id: 'agility_signal',
+    name: 'Retningsskift på signal',
+    purpose: 'Træner reaktion, første skridt og forskellige skridttyper.',
+    techniqueIds: ['split_step', 'cross_behind', 'hop_pivot', 'chasse'],
+    minPlayers: 2,
+    minutes: 8,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Spilleren står i midten. Makkeren står foran og viser en retning med '
+          'armen.',
+      'Spilleren laver split step på signalet og tager 2-3 hurtige skridt i '
+          'den retning.',
+      'Brug chassé til siderne, bagom-skridt bagud mod forhåndssiden og hop '
+          'eller pivot bagud mod baghåndssiden.',
+      'Tilbage til midten. 20 sekunders arbejde og 40 sekunders pause, 6-8 '
+          'runder.',
+    ],
+    tips: [
+      'Makkeren varierer rytmen, så signalet ikke kan forudses.',
+      'Første skridt skal være eksplosivt, resten korte og lette.',
+    ],
+  ),
+  Drill(
+    id: 'doubles_attack_defence',
+    name: 'Double: fra forsvar til angreb',
+    purpose:
+        'Træner rotationen mellem side om side og front-bag i dueller, der '
+        'ligner kamp.',
+    techniqueIds: ['doubles_rotation', 'smash', 'defence', 'drive'],
+    minPlayers: 4,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Det ene par (angriberne) starter front-bag, det andet (forsvarerne) '
+          'side om side.',
+      'Forsvarerne starter med at løfte højt og dybt til et af angribernes '
+          'bagerste hjørner.',
+      'Spil duellen færdig. Kommer forsvarerne i angreb, skal de skifte til '
+          'front-bag.',
+      'Byt roller efter 10 dueller.',
+    ],
+    tips: [
+      'Sig højt, når I skifter formation, fx "angreb" og "forsvar".',
+      'Den forreste angriber bliver fremme og tager alt fladt ved nettet.',
+    ],
+  ),
+  Drill(
+    id: 'no_lift_doubles',
+    name: 'Double uden løft',
+    purpose:
+        'Double med særregler, der træner at forsvare fladt og vende forsvar '
+        'til angreb.',
+    techniqueIds: ['defence', 'drive', 'push', 'doubles_rotation'],
+    minPlayers: 4,
+    minutes: 15,
+    level: DrillLevel.advanced,
+    steps: [
+      'Spil almindelig double, men ingen må løfte på en smash.',
+      'En smash skal returneres med et block til nettet eller et fladt '
+          'drive.',
+      'Løfter man alligevel, får modstanderne point.',
+      'Spil et sæt til 15.',
+    ],
+    tips: [
+      'Lav og bred forsvarsstilling og ketsjeren foran kroppen.',
+      'Block på kryds eller drive mod smasherens baghånd giver ofte '
+          'initiativet tilbage.',
+    ],
+  ),
+  Drill(
+    id: 'corners_game',
+    name: 'Hjørnekamp i single',
+    purpose:
+        'Single med særregler, der træner præcision og at flytte '
+        'modstanderen rundt.',
+    techniqueIds: ['clear', 'drop', 'lift', 'net_shot', 'six_corner'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Markér et område i hvert af banens fire hjørner på begge sider, fx '
+          'med tape eller kegler. Gør dem store til at starte med.',
+      'Spil single. En fjerbold, der lander uden for hjørneområderne, er '
+          'ude.',
+      'Gør områderne mindre, efterhånden som det går bedre.',
+      'Spil et sæt til 15.',
+    ],
+    tips: [
+      'Kom tilbage til midten efter hvert slag. Modstanderen spiller også i '
+          'hjørnerne.',
+      'Lige slag er de sikreste. Brug kryds, når modstanderen er ude af '
+          'position.',
+    ],
+  ),
+  Drill(
+    id: 'interval_shadow',
+    name: 'Intervaller i kamptempo',
+    purpose:
+        'Kondition til kamp: korte, hårde serier med pauser som i en kamp.',
+    techniqueIds: ['six_corner', 'split_step', 'lunge', 'scissor_kick'],
+    minPlayers: 1,
+    minutes: 20,
+    level: DrillLevel.advanced,
+    steps: [
+      'Varm grundigt op.',
+      'Skyggebadminton eller multi-fjer til tilfældige hjørner i 5-10 '
+          'sekunder i fuldt tempo.',
+      'Hold 10-20 sekunders pause, så arbejde og pause er ca. 1:2 som i en '
+          'kamp.',
+      '10-20 gentagelser. Hold 3-5 minutters pause, og lav evt. en serie '
+          'mere.',
+    ],
+    tips: [
+      'Stop serien, når teknikken falder. Korte intervaller giver bedre '
+          'teknik under træthed.',
+      'Læg ikke hårde intervaller to dage i træk.',
+    ],
+  ),
+  Drill(
+    id: 'throwminton',
+    name: 'Kastebadminton',
+    purpose:
+        'Leg for børn og begyndere. Lærer kastebevægelsen fra clear og '
+        'smash og at bedømme fjerboldens flugt.',
+    techniqueIds: ['clear', 'split_step'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'Spil over nettet uden ketsjer: I kaster og griber fjerbolden.',
+      'Kast med et overhåndskast: sidelæns, armen højt og albuen først, som '
+          'når man kaster en bold langt.',
+      'Grib fjerbolden så højt som muligt, og kast derfra.',
+      'Tæl point: rammer fjerbolden gulvet inde på modstanderens side, får '
+          'du point.',
+    ],
+    tips: [
+      'Brug en mindre bane til de yngste.',
+      'Kast mod de tomme områder for at flytte modstanderen.',
     ],
   ),
 ];
