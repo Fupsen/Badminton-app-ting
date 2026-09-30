@@ -706,4 +706,126 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get statsNotTrained30 => 'Ikke trænet i over 30 dage';
+
+  @override
+  String get coachTitle => 'AI-træner';
+
+  @override
+  String get coachOpen => 'AI-træner';
+
+  @override
+  String get coachSetupTitle => 'Brug en AI som træner';
+
+  @override
+  String get coachSetupBody =>
+      'AI-træneren svarer på spørgsmål om teknik, regler, øvelser og taktik, foreslår træningspas og kommenterer din statistik. Svarene bygger på appens vidensbank.';
+
+  @override
+  String get coachSetupKeyInfo =>
+      'Den bruger Claude fra Anthropic og kræver din egen API-nøgle. Opret en konto og en nøgle på console.anthropic.com, og sæt et beløb ind. Hvert spørgsmål koster typisk under 1 kr.';
+
+  @override
+  String get coachSetupPrivacy =>
+      'Nøglen gemmes kun på denne enhed og kommer ikke med i backups. Når du spørger, sendes spørgsmålet og et overblik over dine kampe, træning og mål til Anthropic.';
+
+  @override
+  String get coachKeyLabel => 'API-nøgle';
+
+  @override
+  String get coachKeyHint => 'sk-ant-…';
+
+  @override
+  String get coachKeySave => 'Gem nøgle';
+
+  @override
+  String get coachChangeKey => 'Skift API-nøgle';
+
+  @override
+  String get coachRemoveKey => 'Fjern API-nøgle';
+
+  @override
+  String get coachNewChat => 'Ny samtale';
+
+  @override
+  String get coachModelOpus => 'Model: bedst (Opus)';
+
+  @override
+  String get coachModelSonnet => 'Model: hurtigere og billigere (Sonnet)';
+
+  @override
+  String get coachIntro =>
+      'Spørg om alt fra greb og regler til træningsplaner. Jeg kender dine kampe, din træning og dine mål.';
+
+  @override
+  String get coachInputHint => 'Skriv et spørgsmål';
+
+  @override
+  String get coachSend => 'Send';
+
+  @override
+  String get coachThinking => 'Tænker …';
+
+  @override
+  String get coachDisclaimer =>
+      'AI\'en kan tage fejl. Tjek vigtige ting med en træner, og spørg en læge eller fysioterapeut ved skader.';
+
+  @override
+  String get coachTruncated => '(Svaret blev for langt og er skåret af.)';
+
+  @override
+  String get coachQuickPlan => 'Foreslå et træningspas';
+
+  @override
+  String get coachQuickPlanPrompt =>
+      'Foreslå et træningspas til mig på 60-90 minutter ud fra mine data, mit niveau og det, jeg ikke har trænet længe. Brug øvelser fra appen, og skriv, hvor lang tid hver del tager.';
+
+  @override
+  String get coachQuickFocus => 'Hvad skal jeg træne mere?';
+
+  @override
+  String get coachQuickFocusPrompt =>
+      'Se på mine kampe og min træning. Hvad bør jeg træne mere, og hvorfor?';
+
+  @override
+  String get coachQuickForm => 'Hvordan er min form?';
+
+  @override
+  String get coachQuickFormPrompt =>
+      'Hvordan går det med min form og mine mål lige nu?';
+
+  @override
+  String get coachQuickRules => 'Forklar 3×15';
+
+  @override
+  String get coachQuickRulesPrompt =>
+      'Forklar kort pointsystemet 3×15, og hvad der ændrer sig i forhold til 3×21.';
+
+  @override
+  String get coachErrorInvalidKey =>
+      'API-nøglen virker ikke. Tjek, at du har kopieret hele nøglen, eller lav en ny på console.anthropic.com.';
+
+  @override
+  String get coachErrorNoCredit =>
+      'Der er ikke flere penge på din Anthropic-konto. Sæt et beløb ind på console.anthropic.com.';
+
+  @override
+  String get coachErrorRateLimited =>
+      'Der er sendt for mange spørgsmål på kort tid. Vent et øjeblik, og prøv igen.';
+
+  @override
+  String get coachErrorOverloaded =>
+      'Anthropic har travlt lige nu. Prøv igen om lidt.';
+
+  @override
+  String get coachErrorNetwork =>
+      'Kunne ikke få forbindelse. Tjek internettet, og prøv igen.';
+
+  @override
+  String get coachErrorRefused =>
+      'AI\'en ville ikke svare på det spørgsmål. Prøv at formulere det anderledes.';
+
+  @override
+  String coachErrorOther(String message) {
+    return 'Noget gik galt: $message';
+  }
 }

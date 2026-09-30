@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'data/backup_files.dart';
+import 'data/coach_client.dart';
 import 'data/data_store.dart';
 import 'l10n/app_localizations.dart';
 import 'state/app_state.dart';
@@ -27,10 +28,14 @@ class BadmintonApp extends StatelessWidget {
     super.key,
     required this.store,
     this.backupFiles = const PlatformBackupFiles(),
+    this.coach,
   });
 
   final DataStore store;
   final BackupFiles backupFiles;
+
+  /// AI-træneren. Tests giver en med en falsk HTTP-klient.
+  final CoachService? coach;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,7 @@ class BadmintonApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<BackupFiles>.value(value: backupFiles),
+        Provider<CoachService>(create: (_) => coach ?? CoachService()),
         ChangeNotifierProvider(create: (_) => AppState(store)..load()),
       ],
       child: MaterialApp(
@@ -59,7 +65,9 @@ class BadmintonApp extends StatelessWidget {
         ),
         darkTheme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-              seedColor: seed, brightness: Brightness.dark),
+            seedColor: seed,
+            brightness: Brightness.dark,
+          ),
           useMaterial3: true,
         ),
         home: const HomeShell(),

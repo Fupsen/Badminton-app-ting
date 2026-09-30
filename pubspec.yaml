@@ -44,6 +44,7 @@ dependencies:
   share_plus: ^13.3.0
   shared_preferences: ^2.5.5
   web: ^1.1.1
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,10 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
+
+  # Vidensbanken pakkes med, så AI-træneren kan bygge sine svar på den.
+  assets:
+    - docs/viden/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

@@ -42,6 +42,13 @@ kører på Android, iOS, Windows, macOS og Linux.
   uge (12 uger, fordelt på type), form over de seneste 10 kampe, aktuel og
   længste stime, pointforskel pr. kamp, resultater mod hver modstander og
   hvilke slag og hvilket benarbejde du træner mest eller har glemt.
+- **AI-træner** (knappen med stjernerne øverst): stil spørgsmål om teknik,
+  regler, øvelser og taktik, få forslag til et træningspas, og få din form
+  og statistik kommenteret. Svarene bygger på vidensbanken og dine egne data.
+  Den bruger Claude fra Anthropic med **din egen API-nøgle**
+  (console.anthropic.com), som kun gemmes på enheden og ikke kommer med i
+  backups. Hvert spørgsmål koster typisk under 1 kr. Spørgsmålet og et
+  overblik over dine kampe, din træning og dine mål sendes til Anthropic.
 - **Backup og gendannelse**: eksportér alle data til en JSON-fil og
   importér den igen. Du kan flette filen ind eller erstatte alt. Oversigten
   minder dig om at tage backup, hvis det er over 30 dage siden.
@@ -102,10 +109,12 @@ Windows.
 ```
 lib/
   models/      Datamodeller (spiller, kamp, træning, mål) med JSON
-  data/        DataStore (lokal JSON-fil), backup-format og fildialoger
+  data/        DataStore (lokal JSON-fil), backup-format, fildialoger og
+               klienten til Claude API'et (AI-træneren)
   state/       AppState (ChangeNotifier) som skærmene lytter på
-  content/     Teknik-bibliotek og regler (dansk)
-  logic/       Ren Dart: pointregler, statistik og mål (unit-testet)
+  content/     Teknik-bibliotek, regler og AI-trænerens instruktioner
+  logic/       Ren Dart: pointregler, statistik, mål og AI-trænerens
+               overblik over spillerens data (unit-testet)
   ui/          Skærme og widgets
   l10n/        Tekster (app_da.arb) og genereret oversættelseskode
 ```

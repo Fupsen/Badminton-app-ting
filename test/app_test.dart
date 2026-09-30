@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:badminton_app/data/backup.dart';
 import 'package:badminton_app/data/backup_files.dart';
+import 'package:badminton_app/data/coach_client.dart';
 import 'package:badminton_app/data/data_store.dart';
 import 'package:badminton_app/l10n/app_localizations.dart';
 import 'package:badminton_app/main.dart';
@@ -7,6 +10,9 @@ import 'package:badminton_app/models/models.dart';
 import 'package:badminton_app/ui/widgets/common.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/testing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Falske fildialoger: husker det gemte og returnerer [toPick] ved åbning.
 class FakeBackupFiles implements BackupFiles {
@@ -385,6 +391,66 @@ void main() {
     await tester.tap(find.text('Serv'));
     await tester.pumpAndSettle();
     expect(find.textContaining('under 1,15 m'), findsOneWidget);
+  });
+
+  testWidgets('AI coach: add key, recover from an error, get an answer',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final requests = <http.Request>[];
+    var keyWorks = false;
+    final coach = CoachService(
+      client: MockClient((request) async {
+        requests.add(request);
+        if (!keyWorks) {
+          return http.Response(
+              jsonEncode({
+                'type': 'error',
+                'error': {
+                  'type': 'authentication_error',
+                  'message': 'invalid x-api-key',
+                },
+              }),
+              401);
+        }
+        return http.Response.bytes(
+            utf8.encode(jsonEncode({
+              'content': [
+                {'type': 'text', 'text': 'Start med 10 minutters opvarmning.'},
+              ],
+              'stop_reason': 'end_turn',
+            })),
+            200);
+      }),
+    );
+    await tester.pumpWidget(
+        BadmintonApp(store: MemoryStore(onePlayer()), coach: coach));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('AI-træner'));
+    await tester.pumpAndSettle();
+    expect(find.text('Brug en AI som træner'), findsOneWidget);
+    await tester.enterText(find.byType(TextField), 'sk-ant-test');
+    await tester.tap(find.text('Gem nøgle'));
+    await tester.pumpAndSettle();
+    expect(await coach.loadApiKey(), 'sk-ant-test');
+
+    // Første forsøg fejler: fejlen vises, og spørgsmålet ligger i feltet igen.
+    await tester.tap(find.text('Foreslå et træningspas'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('API-nøglen virker ikke'), findsOneWidget);
+    final field = tester.widget<TextField>(find.byType(TextField));
+    expect(field.controller!.text, startsWith('Foreslå et træningspas til mig'));
+
+    keyWorks = true;
+    await tester.tap(find.byTooltip('Send'));
+    await tester.pumpAndSettle();
+    expect(find.text('Start med 10 minutters opvarmning.'), findsOneWidget);
+    expect(find.textContaining('API-nøglen virker ikke'), findsNothing);
+
+    expect(requests.last.headers['x-api-key'], 'sk-ant-test');
+    final body = jsonDecode(requests.last.body) as Map<String, dynamic>;
+    expect(body['system'][1]['text'], contains('Spiller: Mette'));
+    expect(body['messages'], hasLength(1));
   });
 
   testWidgets('web install hint is hidden outside the browser',

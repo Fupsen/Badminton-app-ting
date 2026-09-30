@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../state/app_state.dart';
 import 'backup_screen.dart';
+import 'coach_screen.dart';
 import 'dashboard_screen.dart';
 import 'labels.dart';
 import 'matches_screen.dart';
@@ -70,7 +71,15 @@ class _HomeShellState extends State<HomeShell> {
     final wide = MediaQuery.sizeOf(context).width >= wideLayoutBreakpoint;
     final appBar = AppBar(
       title: Text(destinations[_index].$3),
-      actions: const [PlayerSwitcher(), SizedBox(width: 8)],
+      actions: [
+        IconButton(
+          tooltip: l.coachOpen,
+          icon: const Icon(Icons.auto_awesome),
+          onPressed: () => openCoach(context),
+        ),
+        const PlayerSwitcher(),
+        const SizedBox(width: 8),
+      ],
     );
 
     if (wide) {
