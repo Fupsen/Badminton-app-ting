@@ -31,7 +31,11 @@ sessioner.
    unge. Uden markering gælder det for alle.
 4. **Højrehåndet** som standard. Venstrehåndede spejler det.
 5. **Egne ord.** Der er ingen lange citater fra kilderne.
-6. **Appen følger vidensbanken.** Indholdet i `lib/content/technique_da.dart`
+6. **AI-træneren læser vidensbanken.** Filerne pakkes med i appen og sendes
+   med hvert spørgsmål til AI-træneren (listen står i
+   `lib/content/coach_da.dart`). Det, der står her, er altså også det, AI'en
+   svarer ud fra.
+7. **Appen følger vidensbanken.** Indholdet i `lib/content/technique_da.dart`
    (slag, benarbejde og øvelser) og reglerne i `lib/logic/scoring.dart` skal
    stemme med filerne her.
    Ændres det ene, skal det andet tjekkes.

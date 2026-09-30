@@ -1209,6 +1209,216 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Ikke trænet i over 30 dage'**
   String get statsNotTrained30;
+
+  /// No description provided for @coachTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'AI-træner'**
+  String get coachTitle;
+
+  /// No description provided for @coachOpen.
+  ///
+  /// In da, this message translates to:
+  /// **'AI-træner'**
+  String get coachOpen;
+
+  /// No description provided for @coachSetupTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Brug en AI som træner'**
+  String get coachSetupTitle;
+
+  /// No description provided for @coachSetupBody.
+  ///
+  /// In da, this message translates to:
+  /// **'AI-træneren svarer på spørgsmål om teknik, regler, øvelser og taktik, foreslår træningspas og kommenterer din statistik. Svarene bygger på appens vidensbank.'**
+  String get coachSetupBody;
+
+  /// No description provided for @coachSetupKeyInfo.
+  ///
+  /// In da, this message translates to:
+  /// **'Den bruger Claude fra Anthropic og kræver din egen API-nøgle. Opret en konto og en nøgle på console.anthropic.com, og sæt et beløb ind. Hvert spørgsmål koster typisk under 1 kr.'**
+  String get coachSetupKeyInfo;
+
+  /// No description provided for @coachSetupPrivacy.
+  ///
+  /// In da, this message translates to:
+  /// **'Nøglen gemmes kun på denne enhed og kommer ikke med i backups. Når du spørger, sendes spørgsmålet og et overblik over dine kampe, træning og mål til Anthropic.'**
+  String get coachSetupPrivacy;
+
+  /// No description provided for @coachKeyLabel.
+  ///
+  /// In da, this message translates to:
+  /// **'API-nøgle'**
+  String get coachKeyLabel;
+
+  /// No description provided for @coachKeyHint.
+  ///
+  /// In da, this message translates to:
+  /// **'sk-ant-…'**
+  String get coachKeyHint;
+
+  /// No description provided for @coachKeySave.
+  ///
+  /// In da, this message translates to:
+  /// **'Gem nøgle'**
+  String get coachKeySave;
+
+  /// No description provided for @coachChangeKey.
+  ///
+  /// In da, this message translates to:
+  /// **'Skift API-nøgle'**
+  String get coachChangeKey;
+
+  /// No description provided for @coachRemoveKey.
+  ///
+  /// In da, this message translates to:
+  /// **'Fjern API-nøgle'**
+  String get coachRemoveKey;
+
+  /// No description provided for @coachNewChat.
+  ///
+  /// In da, this message translates to:
+  /// **'Ny samtale'**
+  String get coachNewChat;
+
+  /// No description provided for @coachModelOpus.
+  ///
+  /// In da, this message translates to:
+  /// **'Model: bedst (Opus)'**
+  String get coachModelOpus;
+
+  /// No description provided for @coachModelSonnet.
+  ///
+  /// In da, this message translates to:
+  /// **'Model: hurtigere og billigere (Sonnet)'**
+  String get coachModelSonnet;
+
+  /// No description provided for @coachIntro.
+  ///
+  /// In da, this message translates to:
+  /// **'Spørg om alt fra greb og regler til træningsplaner. Jeg kender dine kampe, din træning og dine mål.'**
+  String get coachIntro;
+
+  /// No description provided for @coachInputHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Skriv et spørgsmål'**
+  String get coachInputHint;
+
+  /// No description provided for @coachSend.
+  ///
+  /// In da, this message translates to:
+  /// **'Send'**
+  String get coachSend;
+
+  /// No description provided for @coachThinking.
+  ///
+  /// In da, this message translates to:
+  /// **'Tænker …'**
+  String get coachThinking;
+
+  /// No description provided for @coachDisclaimer.
+  ///
+  /// In da, this message translates to:
+  /// **'AI\'en kan tage fejl. Tjek vigtige ting med en træner, og spørg en læge eller fysioterapeut ved skader.'**
+  String get coachDisclaimer;
+
+  /// No description provided for @coachTruncated.
+  ///
+  /// In da, this message translates to:
+  /// **'(Svaret blev for langt og er skåret af.)'**
+  String get coachTruncated;
+
+  /// No description provided for @coachQuickPlan.
+  ///
+  /// In da, this message translates to:
+  /// **'Foreslå et træningspas'**
+  String get coachQuickPlan;
+
+  /// No description provided for @coachQuickPlanPrompt.
+  ///
+  /// In da, this message translates to:
+  /// **'Foreslå et træningspas til mig på 60-90 minutter ud fra mine data, mit niveau og det, jeg ikke har trænet længe. Brug øvelser fra appen, og skriv, hvor lang tid hver del tager.'**
+  String get coachQuickPlanPrompt;
+
+  /// No description provided for @coachQuickFocus.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvad skal jeg træne mere?'**
+  String get coachQuickFocus;
+
+  /// No description provided for @coachQuickFocusPrompt.
+  ///
+  /// In da, this message translates to:
+  /// **'Se på mine kampe og min træning. Hvad bør jeg træne mere, og hvorfor?'**
+  String get coachQuickFocusPrompt;
+
+  /// No description provided for @coachQuickForm.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvordan er min form?'**
+  String get coachQuickForm;
+
+  /// No description provided for @coachQuickFormPrompt.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvordan går det med min form og mine mål lige nu?'**
+  String get coachQuickFormPrompt;
+
+  /// No description provided for @coachQuickRules.
+  ///
+  /// In da, this message translates to:
+  /// **'Forklar 3×15'**
+  String get coachQuickRules;
+
+  /// No description provided for @coachQuickRulesPrompt.
+  ///
+  /// In da, this message translates to:
+  /// **'Forklar kort pointsystemet 3×15, og hvad der ændrer sig i forhold til 3×21.'**
+  String get coachQuickRulesPrompt;
+
+  /// No description provided for @coachErrorInvalidKey.
+  ///
+  /// In da, this message translates to:
+  /// **'API-nøglen virker ikke. Tjek, at du har kopieret hele nøglen, eller lav en ny på console.anthropic.com.'**
+  String get coachErrorInvalidKey;
+
+  /// No description provided for @coachErrorNoCredit.
+  ///
+  /// In da, this message translates to:
+  /// **'Der er ikke flere penge på din Anthropic-konto. Sæt et beløb ind på console.anthropic.com.'**
+  String get coachErrorNoCredit;
+
+  /// No description provided for @coachErrorRateLimited.
+  ///
+  /// In da, this message translates to:
+  /// **'Der er sendt for mange spørgsmål på kort tid. Vent et øjeblik, og prøv igen.'**
+  String get coachErrorRateLimited;
+
+  /// No description provided for @coachErrorOverloaded.
+  ///
+  /// In da, this message translates to:
+  /// **'Anthropic har travlt lige nu. Prøv igen om lidt.'**
+  String get coachErrorOverloaded;
+
+  /// No description provided for @coachErrorNetwork.
+  ///
+  /// In da, this message translates to:
+  /// **'Kunne ikke få forbindelse. Tjek internettet, og prøv igen.'**
+  String get coachErrorNetwork;
+
+  /// No description provided for @coachErrorRefused.
+  ///
+  /// In da, this message translates to:
+  /// **'AI\'en ville ikke svare på det spørgsmål. Prøv at formulere det anderledes.'**
+  String get coachErrorRefused;
+
+  /// No description provided for @coachErrorOther.
+  ///
+  /// In da, this message translates to:
+  /// **'Noget gik galt: {message}'**
+  String coachErrorOther(String message);
 }
 
 class _AppLocalizationsDelegate

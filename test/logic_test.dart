@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:badminton_app/data/data_store.dart';
+import 'package:badminton_app/logic/coach_context.dart';
 import 'package:badminton_app/logic/goals.dart';
 import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/logic/stats.dart';
@@ -396,5 +397,80 @@ void main() {
   test('newId gives unique ids', () {
     final ids = {for (var i = 0; i < 1000; i++) newId()};
     expect(ids, hasLength(1000));
+  });
+
+  group('AI coach summary', () {
+    final now = DateTime(2026, 9, 30);
+    final player = Player(id: 'p', name: 'Mette', createdAt: DateTime(2026));
+
+    test('summarises matches, training, techniques and goals', () {
+      final practice = MatchRecord(
+        id: newId(),
+        playerId: 'p',
+        date: DateTime(2026, 9, 29),
+        type: MatchType.single,
+        opponents: 'Træner',
+        games: const [GameScore(15, 2), GameScore(15, 3)],
+        practice: true,
+      );
+      final summary = coachPlayerSummary(
+        player: player,
+        matches: [
+          match(DateTime(2026, 9, 20), [[15, 12], [15, 13]], opponents: 'Bo'),
+          match(DateTime(2026, 9, 25), [[10, 15], [12, 15]], opponents: 'Ib'),
+          practice,
+        ],
+        trainings: [
+          TrainingSession(
+            id: newId(),
+            playerId: 'p',
+            date: DateTime(2026, 9, 28),
+            durationMinutes: 60,
+            type: TrainingType.footwork,
+            intensity: 4,
+            techniqueIds: const ['lunge'],
+            drillIds: const ['lunge_series'],
+          ),
+        ],
+        goals: [
+          Goal(
+            id: newId(),
+            playerId: 'p',
+            type: GoalType.sessionsPerWeek,
+            target: 3,
+            createdAt: DateTime(2026, 9, 1),
+          ),
+        ],
+        now: now,
+      );
+
+      expect(summary, contains('Spiller: Mette'));
+      expect(summary, contains('Dato i dag: 2026-09-30'));
+      // Træningskampen tæller ikke med i sejrsprocenten.
+      expect(summary, contains('2 rigtige kampe og 1 træningskampe'));
+      expect(summary, contains('Sejrsprocent i alt: 50 %'));
+      expect(summary, contains('Aktuel stime: 1 nederlag'));
+      expect(summary, contains('2026-09-25 single mod Ib: tabt 10-15, 12-15'));
+      expect(summary, isNot(contains('Træner')));
+      expect(summary, contains('fokus: Udfald (lunge), Udfaldsserier'));
+      expect(summary, contains('footwork 60'));
+      expect(summary, contains('Udfald (lunge) 1'));
+      expect(summary, contains('Ikke trænet de seneste 30 dage: Greb'));
+      expect(summary, contains('3 træningspas pr. uge: nu 1'));
+    });
+
+    test('works for a new player without data', () {
+      final summary = coachPlayerSummary(
+        player: player,
+        matches: const [],
+        trainings: const [],
+        goals: const [],
+        now: now,
+      );
+      expect(summary, contains('0 rigtige kampe og 0 træningskampe'));
+      expect(summary, contains('0 pas og 0 minutter'));
+      expect(summary, contains('Der er ikke logget slag eller benarbejde'));
+      expect(summary, isNot(contains('Mål:')));
+    });
   });
 }
