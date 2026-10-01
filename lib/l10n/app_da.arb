@@ -335,5 +335,22 @@
   "playerLevelIntermediate": "Klubspiller",
   "playerLevelElite": "Elite",
   "playerLeftHanded": "Venstrehåndet",
-  "leftHandedNote": "Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side."
+  "leftHandedNote": "Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side.",
+  "matchHasRallies": "Talt med kamptælleren",
+  "statsRallySection": "Kampforløb",
+  "statsRallyHint": "{count, plural, =1{Vundne dueller i 1 kamp talt med kamptælleren.} other{Vundne dueller i {count} kampe talt med kamptælleren.}} Tæt stilling er fra 13-13 (3×15) eller 19-19 (3×21).",
+  "@statsRallyHint": {"placeholders": {"count": {"type": "int"}}},
+  "statsRallyServe": "Egen serv",
+  "statsRallyReceive": "Modtagning",
+  "statsRallyClose": "Tæt stilling",
+  "statsRallyCount": "{won} af {played} dueller",
+  "@statsRallyCount": {"placeholders": {"won": {"type": "int"}, "played": {"type": "int"}}},
+  "statsRallyLongestRun": "Point i træk",
+  "statsRallyLongestRunDetail": "Flest i én kamp",
+  "statsRallyPoints": "{count, plural, =1{1 point} other{{count} point}}",
+  "@statsRallyPoints": {"placeholders": {"count": {"type": "int"}}},
+  "statsRallyComebacks": "Comebacks",
+  "statsRallyComebacksDetail": "Sæt vundet efter 5+ point bagud",
+  "statsRallyGames": "{count, plural, =1{1 sæt} other{{count} sæt}}",
+  "@statsRallyGames": {"placeholders": {"count": {"type": "int"}}}
 }

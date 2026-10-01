@@ -1015,4 +1015,69 @@ class AppLocalizationsDa extends AppLocalizations {
   @override
   String get leftHandedNote =>
       'Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side.';
+
+  @override
+  String get matchHasRallies => 'Talt med kamptælleren';
+
+  @override
+  String get statsRallySection => 'Kampforløb';
+
+  @override
+  String statsRallyHint(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Vundne dueller i $count kampe talt med kamptælleren.',
+      one: 'Vundne dueller i 1 kamp talt med kamptælleren.',
+    );
+    return '$_temp0 Tæt stilling er fra 13-13 (3×15) eller 19-19 (3×21).';
+  }
+
+  @override
+  String get statsRallyServe => 'Egen serv';
+
+  @override
+  String get statsRallyReceive => 'Modtagning';
+
+  @override
+  String get statsRallyClose => 'Tæt stilling';
+
+  @override
+  String statsRallyCount(int won, int played) {
+    return '$won af $played dueller';
+  }
+
+  @override
+  String get statsRallyLongestRun => 'Point i træk';
+
+  @override
+  String get statsRallyLongestRunDetail => 'Flest i én kamp';
+
+  @override
+  String statsRallyPoints(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count point',
+      one: '1 point',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get statsRallyComebacks => 'Comebacks';
+
+  @override
+  String get statsRallyComebacksDetail => 'Sæt vundet efter 5+ point bagud';
+
+  @override
+  String statsRallyGames(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sæt',
+      one: '1 sæt',
+    );
+    return '$_temp0';
+  }
 }

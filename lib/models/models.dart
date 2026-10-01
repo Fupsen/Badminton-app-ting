@@ -90,6 +90,41 @@ class GameScore {
   int get hashCode => Object.hash(own, opponent);
 }
 
+/// Forløbet af en kamp talt med kamptælleren: hvem der vandt hver duel.
+/// Gemmes kun, når sættene i kampen passer med forløbet.
+class RallyLog {
+  const RallyLog({
+    required this.system,
+    required this.weServedFirst,
+    required this.sequence,
+  });
+
+  /// Pointsystemets navn (`ScoringSystem.name`, fx "to15").
+  final String system;
+  final bool weServedFirst;
+
+  /// Ét bogstav pr. duel: 'u' = vi vandt, 't' = de vandt.
+  final String sequence;
+
+  Map<String, dynamic> toJson() => {
+    'system': system,
+    'weServedFirst': weServedFirst,
+    'sequence': sequence,
+  };
+
+  static RallyLog? fromJson(Object? json) {
+    if (json is! Map<String, dynamic>) return null;
+    final system = json['system'];
+    final sequence = json['sequence'];
+    if (system is! String || sequence is! String) return null;
+    return RallyLog(
+      system: system,
+      weServedFirst: json['weServedFirst'] as bool? ?? true,
+      sequence: sequence,
+    );
+  }
+}
+
 class MatchRecord {
   MatchRecord({
     required this.id,
@@ -101,6 +136,7 @@ class MatchRecord {
     this.partner = '',
     this.notes = '',
     this.practice = false,
+    this.rallyLog,
   });
 
   final String id;
@@ -119,6 +155,9 @@ class MatchRecord {
   final List<GameScore> games;
   final String notes;
 
+  /// Duel-forløbet fra kamptælleren, eller null.
+  final RallyLog? rallyLog;
+
   int get gamesWon => games.where((g) => g.won).length;
   int get gamesLost => games.length - gamesWon;
   bool get won => gamesWon > gamesLost;
@@ -136,6 +175,7 @@ class MatchRecord {
     'games': games.map((g) => g.toJson()).toList(),
     'notes': notes,
     'practice': practice,
+    if (rallyLog != null) 'rallyLog': rallyLog!.toJson(),
   };
 
   factory MatchRecord.fromJson(Map<String, dynamic> json) => MatchRecord(
@@ -150,6 +190,7 @@ class MatchRecord {
         .toList(),
     notes: json['notes'] as String? ?? '',
     practice: json['practice'] as bool? ?? false,
+    rallyLog: RallyLog.fromJson(json['rallyLog']),
   );
 }
 

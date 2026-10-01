@@ -1,6 +1,7 @@
 import '../content/technique.dart';
 import '../models/models.dart';
 import 'goals.dart';
+import 'rally_stats.dart';
 import 'stats.dart';
 import 'technique_stats.dart';
 
@@ -70,6 +71,20 @@ String coachPlayerSummary({
       b.writeln(
         'Aktuel stime: ${streak.length} ${streak.won ? 'sejre' : 'nederlag'} '
         'i træk. Længste sejrsstime: ${longestWinStreak(competitive)}.',
+      );
+    }
+    final rallies = rallyStats(competitive);
+    if (rallies != null) {
+      String count(RallyCount c) =>
+          '${c.won} af ${c.played} (${_percent(c.rate)})';
+      b.writeln(
+        'Fra ${rallies.matches} ${rallies.matches == 1 ? 'kamp' : 'kampe'} '
+        'talt med kamptælleren: dueller vundet '
+        'på egen serv ${count(rallies.onServe)}, på modtagning '
+        '${count(rallies.onReceive)}, ved tæt stilling (begge mindst 2 point '
+        'fra sætmålet) ${count(rallies.close)}. Flest point i træk: '
+        '${rallies.longestRun}. Sæt vundet efter 5+ point bagud: '
+        '${rallies.comebacks}.',
       );
     }
     b.writeln('Seneste kampe (nyeste først):');

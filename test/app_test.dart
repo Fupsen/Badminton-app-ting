@@ -565,9 +565,37 @@ void main() {
     final saved = (await store.load()).matches.single;
     expect(saved.games.map((g) => (g.own, g.opponent)), [(15, 0), (15, 0)]);
     expect(saved.opponents, 'Bo');
+    // Forløbet gemmes med kampen (det fortrudte point er ikke med).
+    expect(saved.rallyLog!.sequence, 'u' * 30);
+    expect(saved.rallyLog!.system, 'to15');
     // Tilbage på Kampe-fanen, og den gemte tælling er ryddet.
     expect(find.text('Kamptæller'), findsOneWidget);
     expect(await const LiveMatchStore().load('p'), isNull);
+    expect(find.textContaining('Talt med kamptælleren'), findsOneWidget);
+
+    // Statistik viser kampforløbet.
+    await tester.tap(navItem('Statistik'));
+    await tester.pumpAndSettle();
+    final section = find.text('Kampforløb');
+    await tester.scrollUntilVisible(section, 300,
+        scrollable: find.byType(Scrollable).first);
+    expect(find.textContaining('Vundne dueller i 1 kamp'), findsOneWidget);
+    expect(find.text('Egen serv'), findsOneWidget);
+    expect(find.text('30 af 30 dueller'), findsOneWidget);
+
+    // Rettes resultatet bagefter, passer forløbet ikke længere og droppes.
+    await tester.tap(navItem('Kampe'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('mod Bo'));
+    await tester.pumpAndSettle();
+    final theirScore = find.byWidgetPredicate(
+        (w) => w is TextField && w.decoration?.labelText == 'Modstander');
+    await tester.enterText(theirScore.first, '3'); // 15-3
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+    final edited = (await store.load()).matches.single;
+    expect(edited.games.first, const GameScore(15, 3));
+    expect(edited.rallyLog, isNull);
     semantics.dispose();
   });
 

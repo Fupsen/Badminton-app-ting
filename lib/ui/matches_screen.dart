@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -65,6 +66,7 @@ class MatchTile extends StatelessWidget {
       match.type.label(l),
       if (match.partner.isNotEmpty) l.matchWithPartner(match.partner),
       if (match.practice) l.practiceMatch,
+      if (match.rallyLog != null) l.matchHasRallies,
     ].join(' · ');
     return ListTile(
       // Træningskampe vises dæmpet, fordi de ikke tæller i statistikken.
@@ -89,6 +91,7 @@ Future<bool> openMatchForm(
   MatchRecord? existing,
   List<GameScore> initialGames = const [],
   MatchType? initialType,
+  RallyLog? rallyLog,
 }) async {
   final saved = await Navigator.of(context).push<bool>(
     MaterialPageRoute(
@@ -97,6 +100,7 @@ Future<bool> openMatchForm(
         existing: existing,
         initialGames: initialGames,
         initialType: initialType,
+        rallyLog: rallyLog,
       ),
     ),
   );
@@ -109,6 +113,7 @@ class MatchForm extends StatefulWidget {
     this.existing,
     this.initialGames = const [],
     this.initialType,
+    this.rallyLog,
   });
 
   final MatchRecord? existing;
@@ -116,6 +121,9 @@ class MatchForm extends StatefulWidget {
   /// Sæt der er udfyldt på forhånd, fx fra kamptælleren.
   final List<GameScore> initialGames;
   final MatchType? initialType;
+
+  /// Duel-forløbet fra kamptælleren. Gemmes kun, hvis sættene ikke ændres.
+  final RallyLog? rallyLog;
 
   @override
   State<MatchForm> createState() => _MatchFormState();
@@ -142,7 +150,7 @@ class _MatchFormState extends State<MatchForm> {
     _opponents = TextEditingController(text: m?.opponents ?? '');
     _partner = TextEditingController(text: m?.partner ?? '');
     _notes = TextEditingController(text: m?.notes ?? '');
-    final games = m?.games ?? widget.initialGames;
+    final games = _initialGames;
     _scores = List.generate(3, (i) {
       final game = i < games.length ? games[i] : null;
       return (
@@ -163,6 +171,11 @@ class _MatchFormState extends State<MatchForm> {
     }
     super.dispose();
   }
+
+  List<GameScore> get _initialGames =>
+      widget.existing?.games ?? widget.initialGames;
+
+  RallyLog? get _rallyLog => widget.existing?.rallyLog ?? widget.rallyLog;
 
   List<GameScore> _games() => [
     for (final (own, opp) in _scores)
@@ -233,6 +246,7 @@ class _MatchFormState extends State<MatchForm> {
         games: games,
         notes: _notes.text.trim(),
         practice: _practice,
+        rallyLog: listEquals(games, _initialGames) ? _rallyLog : null,
       ),
     );
     if (mounted) Navigator.pop(context, true);

@@ -1761,6 +1761,84 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side.'**
   String get leftHandedNote;
+
+  /// No description provided for @matchHasRallies.
+  ///
+  /// In da, this message translates to:
+  /// **'Talt med kamptælleren'**
+  String get matchHasRallies;
+
+  /// No description provided for @statsRallySection.
+  ///
+  /// In da, this message translates to:
+  /// **'Kampforløb'**
+  String get statsRallySection;
+
+  /// No description provided for @statsRallyHint.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{Vundne dueller i 1 kamp talt med kamptælleren.} other{Vundne dueller i {count} kampe talt med kamptælleren.}} Tæt stilling er fra 13-13 (3×15) eller 19-19 (3×21).'**
+  String statsRallyHint(int count);
+
+  /// No description provided for @statsRallyServe.
+  ///
+  /// In da, this message translates to:
+  /// **'Egen serv'**
+  String get statsRallyServe;
+
+  /// No description provided for @statsRallyReceive.
+  ///
+  /// In da, this message translates to:
+  /// **'Modtagning'**
+  String get statsRallyReceive;
+
+  /// No description provided for @statsRallyClose.
+  ///
+  /// In da, this message translates to:
+  /// **'Tæt stilling'**
+  String get statsRallyClose;
+
+  /// No description provided for @statsRallyCount.
+  ///
+  /// In da, this message translates to:
+  /// **'{won} af {played} dueller'**
+  String statsRallyCount(int won, int played);
+
+  /// No description provided for @statsRallyLongestRun.
+  ///
+  /// In da, this message translates to:
+  /// **'Point i træk'**
+  String get statsRallyLongestRun;
+
+  /// No description provided for @statsRallyLongestRunDetail.
+  ///
+  /// In da, this message translates to:
+  /// **'Flest i én kamp'**
+  String get statsRallyLongestRunDetail;
+
+  /// No description provided for @statsRallyPoints.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 point} other{{count} point}}'**
+  String statsRallyPoints(int count);
+
+  /// No description provided for @statsRallyComebacks.
+  ///
+  /// In da, this message translates to:
+  /// **'Comebacks'**
+  String get statsRallyComebacks;
+
+  /// No description provided for @statsRallyComebacksDetail.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt vundet efter 5+ point bagud'**
+  String get statsRallyComebacksDetail;
+
+  /// No description provided for @statsRallyGames.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 sæt} other{{count} sæt}}'**
+  String statsRallyGames(int count);
 }
 
 class _AppLocalizationsDelegate

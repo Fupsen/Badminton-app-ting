@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../content/technique.dart';
+import '../logic/rally_stats.dart';
 import '../logic/stats.dart';
 import '../logic/technique_stats.dart';
 import '../models/models.dart';
@@ -34,6 +35,7 @@ class _StatsScreenState extends State<StatsScreen> {
     final byType = winStatsByType(matches);
     final streak = currentStreak(matches);
     final opponents = headToHead(matches).take(10).toList();
+    final rallies = rallyStats(matches);
 
     return ContentWidth(
       child: ListView(
@@ -116,6 +118,12 @@ class _StatsScreenState extends State<StatsScreen> {
                 ],
               ),
             ),
+          if (rallies != null)
+            SectionCard(
+              title: l.statsRallySection,
+              subtitle: l.statsRallyHint(rallies.matches),
+              child: RallyStatsGrid(stats: rallies),
+            ),
           if (opponents.isNotEmpty)
             SectionCard(
               title: l.statsOpponentsSection,
@@ -150,6 +158,51 @@ class _StatsScreenState extends State<StatsScreen> {
 }
 
 /// Stablet søjlediagram med træningsminutter pr. uge fordelt på type.
+/// Tal fra kampe talt med kamptælleren.
+class RallyStatsGrid extends StatelessWidget {
+  const RallyStatsGrid({super.key, required this.stats});
+
+  final RallyStats stats;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    return ResponsiveGrid(
+      minItemWidth: 160,
+      children: [
+        StatTile(
+          label: l.statsRallyServe,
+          value: percent(stats.onServe.rate, l.noData),
+          detail: l.statsRallyCount(stats.onServe.won, stats.onServe.played),
+        ),
+        StatTile(
+          label: l.statsRallyReceive,
+          value: percent(stats.onReceive.rate, l.noData),
+          detail: l.statsRallyCount(
+            stats.onReceive.won,
+            stats.onReceive.played,
+          ),
+        ),
+        StatTile(
+          label: l.statsRallyClose,
+          value: percent(stats.close.rate, l.noData),
+          detail: l.statsRallyCount(stats.close.won, stats.close.played),
+        ),
+        StatTile(
+          label: l.statsRallyLongestRun,
+          value: l.statsRallyPoints(stats.longestRun),
+          detail: l.statsRallyLongestRunDetail,
+        ),
+        StatTile(
+          label: l.statsRallyComebacks,
+          value: l.statsRallyGames(stats.comebacks),
+          detail: l.statsRallyComebacksDetail,
+        ),
+      ],
+    );
+  }
+}
+
 class TrainingChart extends StatelessWidget {
   const TrainingChart({super.key, required this.weeks});
 
