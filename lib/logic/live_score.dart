@@ -57,13 +57,14 @@ class LiveMatch {
     return hi == system.cap || (hi >= system.target && hi - lo >= 2);
   }
 
-  _State _replay(List<Side> rallies) {
+  _State _replay(List<Side> rallies, [void Function(RallyInfo)? onRally]) {
     final games = <GameScore>[];
     var us = 0, them = 0;
     var server = firstServer;
     LiveEvent? event;
     for (final winner in rallies) {
       if (_finished(games)) break;
+      onRally?.call(RallyInfo(games.length, us, them, server, winner));
       event = null;
       final before = us > them ? us : them;
       if (winner == Side.us) {
@@ -125,6 +126,13 @@ class LiveMatch {
 
   bool get canUndo => rallies.isNotEmpty;
 
+  /// Stillingen før hver duel, og hvem der servede og vandt.
+  List<RallyInfo> get rallyInfo {
+    final list = <RallyInfo>[];
+    _replay(rallies, list.add);
+    return list;
+  }
+
   /// Sættene til en kampformular: de færdige sæt plus det igangværende, hvis
   /// der er spillet point i det.
   List<GameScore> get gamesForSaving {
@@ -160,6 +168,30 @@ class LiveMatch {
     'rallies': rallies.map((s) => s == Side.us ? 'u' : 't').join(),
   };
 
+  /// Forløbet, som det gemmes med kampen.
+  RallyLog toRallyLog() => RallyLog(
+    system: system.name,
+    weServedFirst: firstServer == Side.us,
+    sequence: toJson()['rallies'] as String,
+  );
+
+  /// Genskaber kampen fra et gemt forløb, eller null hvis forløbet ikke kan
+  /// læses (fx et ukendt pointsystem).
+  static LiveMatch? fromRallyLog(RallyLog log, MatchType type) {
+    final system = ScoringSystem.values
+        .where((s) => s.name == log.system)
+        .firstOrNull;
+    if (system == null || !RegExp(r'^[ut]*$').hasMatch(log.sequence)) {
+      return null;
+    }
+    return LiveMatch.fromJson({
+      'system': system.name,
+      'type': type.name,
+      'firstServer': (log.weServedFirst ? Side.us : Side.them).name,
+      'rallies': log.sequence,
+    });
+  }
+
   factory LiveMatch.fromJson(Map<String, dynamic> json) => LiveMatch(
     system: ScoringSystem.values.byName(json['system'] as String),
     type: MatchType.values.byName(json['type'] as String),
@@ -169,6 +201,18 @@ class LiveMatch {
         c == 'u' ? Side.us : Side.them,
     ],
   );
+}
+
+/// Én duel: sættet (0, 1, 2), stillingen før duellen, hvem der servede, og
+/// hvem der vandt.
+class RallyInfo {
+  const RallyInfo(this.game, this.us, this.them, this.server, this.winner);
+
+  final int game;
+  final int us;
+  final int them;
+  final Side server;
+  final Side winner;
 }
 
 class _State {

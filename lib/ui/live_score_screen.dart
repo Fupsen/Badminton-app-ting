@@ -71,6 +71,7 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
       context,
       initialGames: match.gamesForSaving,
       initialType: match.type,
+      rallyLog: match.toRallyLog(),
     );
     if (!saved || !mounted) return;
     await _store.clear(_playerId);

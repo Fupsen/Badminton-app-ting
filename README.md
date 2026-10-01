@@ -23,7 +23,11 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Kamptæller** (Kampe-fanen): tæl point under kampen med ét tryk pr.
   duel. Den følger 3×15 eller 3×21, viser hvem der server fra hvilket felt,
   minder om pausen ved 8 (11) og sideskift, kan fortryde et point og husker
-  stillingen, hvis telefonen låser. Bagefter gemmes kampen med alle sæt.
+  stillingen, hvis telefonen låser. Bagefter gemmes kampen med alle sæt og
+  forløbet af hver duel. Statistik viser så **Kampforløb**: hvor mange
+  dueller du vinder på egen serv og på modtagning, ved tæt stilling (fra
+  13-13 i 3×15), flest point i træk og sæt vundet efter 5+ point bagud.
+  Retter du resultatet bagefter, droppes forløbet, så tallene altid passer.
 - **Træningskampe**: markér en kamp som træningskamp. Den giver ingen
   advarsel om pointsystemet og tæller ikke med i sejrsprocent, form og mål.
   På Statistik kan du vælge at medtage træningskampe.

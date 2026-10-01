@@ -6,6 +6,7 @@ import 'package:badminton_app/content/technique.dart';
 import 'package:badminton_app/logic/goals.dart';
 import 'package:badminton_app/logic/interval_timer.dart';
 import 'package:badminton_app/logic/live_score.dart';
+import 'package:badminton_app/logic/rally_stats.dart';
 import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/logic/stats.dart';
 import 'package:badminton_app/logic/technique_stats.dart';
@@ -611,6 +612,122 @@ void main() {
       expect(copy.firstServer, Side.them);
       expect(copy.rallies, m.rallies);
       expect((copy.ourPoints, copy.theirPoints), (3, 2));
+    });
+  });
+
+  group('rally stats (kampforløb)', () {
+    MatchRecord counted(String sequence, List<List<int>> games,
+            {bool weServedFirst = true, String system = 'to15'}) =>
+        MatchRecord(
+          id: newId(),
+          playerId: 'p',
+          date: DateTime(2026, 10, 1),
+          type: MatchType.single,
+          opponents: 'Bo',
+          games: [for (final g in games) GameScore(g[0], g[1])],
+          rallyLog: RallyLog(
+            system: system,
+            weServedFirst: weServedFirst,
+            sequence: sequence,
+          ),
+        );
+
+    test('serve, receive, longest run and comeback', () {
+      // 15-0, så 0-5 og 15-5.
+      final m = counted('${'u' * 15}${'t' * 5}${'u' * 15}', [
+        [15, 0],
+        [15, 5],
+      ]);
+      final s = rallyStats([m])!;
+      expect(s.matches, 1);
+      // Vi server hele 1. sæt og starter 2. sæt (vinderen server først).
+      expect((s.onServe.won, s.onServe.played), (29, 30));
+      expect((s.onReceive.won, s.onReceive.played), (1, 5));
+      expect(s.close.played, 0);
+      expect(s.close.rate, isNull);
+      expect(s.longestRun, 15);
+      expect(s.comebacks, 1);
+    });
+
+    test('close score counts from 13-13 in 3x15', () {
+      final m = counted('${'ut' * 14}uu', [
+        [16, 14],
+      ]);
+      final s = rallyStats([m])!;
+      // 13-13 u, 14-13 t, 14-14 u, 15-14 u.
+      expect((s.close.won, s.close.played), (3, 4));
+      expect(s.comebacks, 0);
+    });
+
+    test('a log that does not match the saved games is ignored', () {
+      final edited = counted('u' * 30, [
+        [15, 3],
+        [15, 0],
+      ]);
+      expect(replayOf(edited), isNull);
+      final unknown = counted('u' * 30, [
+        [15, 0],
+        [15, 0],
+      ], system: 'to11');
+      expect(replayOf(unknown), isNull);
+      expect(rallyStats([edited, unknown, match(DateTime(2026), [[15, 0]])]),
+          isNull);
+    });
+
+    test('rally log is optional in json', () {
+      final m = counted('ut', [
+        [1, 1],
+      ], weServedFirst: false);
+      final copy = MatchRecord.fromJson(m.toJson());
+      expect(copy.rallyLog!.sequence, 'ut');
+      expect(copy.rallyLog!.weServedFirst, isFalse);
+      expect(copy.rallyLog!.system, 'to15');
+
+      final plain = match(DateTime(2026), [[15, 0], [15, 0]]);
+      expect(plain.toJson().containsKey('rallyLog'), isFalse);
+      expect(MatchRecord.fromJson(plain.toJson()).rallyLog, isNull);
+      final broken = plain.toJson()..['rallyLog'] = 'x';
+      expect(MatchRecord.fromJson(broken).rallyLog, isNull);
+    });
+
+    test('live match converts to a rally log and back', () {
+      var live = const LiveMatch(
+        system: ScoringSystem.to21,
+        type: MatchType.double,
+        firstServer: Side.them,
+      );
+      for (final c in 'uttu'.split('')) {
+        live = live.pointTo(c == 'u' ? Side.us : Side.them);
+      }
+      final log = live.toRallyLog();
+      expect((log.system, log.weServedFirst, log.sequence),
+          ('to21', false, 'uttu'));
+      final back = LiveMatch.fromRallyLog(log, MatchType.double)!;
+      expect(back.rallies, live.rallies);
+      expect(back.firstServer, Side.them);
+      expect(live.rallyInfo.map((r) => (r.us, r.them, r.server)), [
+        (0, 0, Side.them),
+        (1, 0, Side.us),
+        (1, 1, Side.them),
+        (1, 2, Side.them),
+      ]);
+    });
+
+    test('AI coach summary mentions the rally stats', () {
+      final text = coachPlayerSummary(
+        player: Player(id: 'p', name: 'Mia', createdAt: DateTime(2026)),
+        matches: [
+          counted('u' * 30, [
+            [15, 0],
+            [15, 0],
+          ]),
+        ],
+        trainings: const [],
+        goals: const [],
+        now: DateTime(2026, 10, 1),
+      );
+      expect(text, contains('Fra 1 kamp talt med kamptælleren'));
+      expect(text, contains('på egen serv 30 af 30 (100 %)'));
     });
   });
 
