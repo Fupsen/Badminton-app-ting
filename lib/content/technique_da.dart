@@ -48,8 +48,9 @@ const strokes = <Technique>[
         'En lav serv, der lige går over nettet og lander i forreste del af '
         'modstanderens servefelt. Den mest brugte serv i double.',
     whenToUse:
-        'Standard i double og mixed, og som variation i single, så '
-        'modstanderen ikke kan angribe serven.',
+        'Standard i double og mixed og meget brugt i herresingle, så '
+        'modstanderen ikke kan angribe serven. I damesingle bruges den mest '
+        'som variation til den høje serv.',
     keyPoints: [
       'Kort tommelgreb: tommelfingeren på skaftets brede, flade side, og hold '
           'højt oppe på grebet.',
@@ -78,8 +79,8 @@ const strokes = <Technique>[
         'En lav serv med forhånd, der lige går over nettet og lander forrest '
         'i modstanderens servefelt.',
     whenToUse:
-        'Mest i single, hvor den er et alternativ til den høje serv. I double '
-        'bruges næsten altid den korte baghåndsserv.',
+        'Mest i damesingle, hvor den er et alternativ til den høje serv. I '
+        'double bruges næsten altid den korte baghåndsserv.',
     keyPoints: [
       'Stå sidelæns i servefeltet med vægten på bagerste ben. Basisgreb, og '
           'hold ketsjer og fjerbold højt.',
@@ -135,9 +136,10 @@ const strokes = <Technique>[
         'En høj forhåndsserv, der lander tæt på den bagerste linje og falder '
         'lodret ned.',
     whenToUse:
-        'Mest i single, hvor den presser modstanderen helt tilbage. I '
-        'double bruges en fladere, hurtigere variant (flick) som '
-        'overraskelse.',
+        'Mest i damesingle, hvor den presser modstanderen helt tilbage og '
+        'giver dig tid. I herresingle bruges den mindre, fordi den kan '
+        'angribes hårdt. I double bruges en fladere, hurtigere variant '
+        '(flick) som overraskelse.',
     keyPoints: [
       'Stå sidelæns med venstre fod forrest og vægten på højre ben.',
       'Slip fjerbolden, og sving ketsjeren i en lang bue under og op. Ram '
@@ -145,7 +147,10 @@ const strokes = <Technique>[
       'Hele fjerbolden skal være under 1,15 m, når du rammer den.',
       'Flyt vægten fremad under svinget, og drej hofte og skulder med.',
       'Afslut svinget højt over venstre skulder.',
-      'Sigt højt, så fjerbolden falder lodret ned ved baglinjen.',
+      'Sigt højt og mod midten af baglinjen, så fjerbolden falder lodret '
+          'ned, og vinklerne bliver små.',
+      'Stil dig bagefter lidt til samme side, som du servede til. Så dækker '
+          'du de lige returneringer.',
     ],
     commonMistakes: [
       'For kort serv, som modstanderen kan smashe.',
@@ -531,6 +536,8 @@ const footwork = <Technique>[
           'fjerbolden bliver ramt.',
       'Land lidt bredere end du stod, og skub fra i den retning, fjerbolden '
           'går.',
+      'Den fod, der lander først, bestemmer retningen: venstre først for at '
+          'gå til højre, højre først for at gå til venstre.',
     ],
     commonMistakes: [
       'Hopper for tidligt eller for sent.',
@@ -573,13 +580,14 @@ const footwork = <Technique>[
         'Sideskridt hvor den bagerste fod lukker op til den forreste, uden at '
         'fødderne krydser.',
     whenToUse:
-        'Til at bevæge sig hurtigt sidelæns og til de fleste bevægelser frem '
-        'og tilbage på banen.',
+        'Til korte bevægelser sidelæns, frem og tilbage. Normalt ét eller to '
+        'chasséer ad gangen. Over lange afstande, fx på tværs af banen, er '
+        'løbeskridt hurtigere.',
     keyPoints: [
       'Hold kroppen lav og hovedet i samme højde. Glid, og spring ikke op.',
       'Den ene fod "jager" den anden uden helt at nå den, og derefter skubber '
           'den forreste fod videre.',
-      'Kort jordkontakt i hvert skridt.',
+      'Kort jordkontakt i hvert skridt, som om gulvet er varmt.',
       'Små, hurtige skridt frem for store.',
     ],
     commonMistakes: [
@@ -667,6 +675,7 @@ const footwork = <Technique>[
     keyPoints: [
       'Land på hælen, og rul frem på foden.',
       'Forreste fod peger mod fjerbolden, og knæet peger samme vej som foden.',
+      'Drej bagerste fod lidt udad. Det giver balance og rækkevidde.',
       'Bøj bagerste knæ. Bagerste fod bliver på gulvet og trækkes med.',
       'Stræk den bagerste arm ud for at holde balancen.',
       'Overkroppen er rank; ræk med ketsjeren, ikke med ryggen.',
@@ -690,7 +699,9 @@ const footwork = <Technique>[
         'Når modstanderen spiller drop eller netdrop til din forhåndsside.',
     keyPoints: [
       'Split step, når modstanderen slår.',
-      'Ketsjerbenet (højre) fører. Chassé frem mod hjørnet.',
+      'Ketsjerbenet (højre) fører. Chassé frem mod hjørnet. Et løbeskridt '
+          'eller et bagom-skridt er også almindeligt. Mønstrene er lidt '
+          'personlige.',
       'Afslut med et udfald på højre ben, hvor foden peger mod fjerbolden.',
       'Ketsjeren oppe foran, så du rammer højt.',
       'Skub fra med højre ben, og kom tilbage med chassé eller et par '
@@ -722,7 +733,7 @@ const footwork = <Technique>[
           'skridt.',
     ],
     commonMistakes: [
-      'Laver udfaldet på venstre ben.',
+      'Glemmer at skifte til tommelgreb på vej frem.',
       'Drejer ikke kroppen, så baghånden bliver kort.',
       'Forreste knæ peger en anden vej end foden.',
     ],
@@ -1206,8 +1217,10 @@ const drills = <Drill>[
     steps: [
       'Stå 2-3 meter fra en væg med ketsjeren oppe foran kroppen.',
       'Slå fjerbolden fladt mod væggen, skiftevis med forhånd og baghånd.',
-      'Skift greb mellem hvert slag: basisgreb til forhånd og tommelgreb til '
-          'baghånd.',
+      'Start med 5 slag med basisgreb (forhånd) og 5 med tommelgreb '
+          '(baghånd).',
+      'Skær ned til 4, 3, 2 og 1, så du til sidst skifter greb efter hvert '
+          'slag.',
       'Tæl, hvor mange slag i træk du kan lave. Serier på 1 minut.',
     ],
     tips: [
@@ -1249,8 +1262,8 @@ const drills = <Drill>[
     steps: [
       'Spil single eller double efter de normale regler, men kun kort serv '
           'er tilladt (forhånd eller baghånd).',
-      'Vinder serverens side duellen på 3. eller 4. slag, giver det et '
-          'ekstra point.',
+      'Serverens side får 2 point, hvis den vinder duellen på 3. slag. '
+          'Modtagerens side får 2 point, hvis den vinder på 4. slag.',
       'Spil et sæt til 15.',
     ],
     tips: [
@@ -1537,8 +1550,9 @@ const drills = <Drill>[
           'mere.',
     ],
     tips: [
-      'Stop serien, når teknikken falder. Korte intervaller giver bedre '
-          'teknik under træthed.',
+      'Hold intervallerne korte, højst ca. 30 sekunder. Længere intervaller '
+          'giver mere mælkesyre, og du bevæger dig mindre.',
+      'Stop serien, når teknikken falder.',
       'Læg ikke hårde intervaller to dage i træk.',
     ],
   ),
@@ -1563,6 +1577,53 @@ const drills = <Drill>[
     tips: [
       'Brug en mindre bane til de yngste.',
       'Kast mod de tomme områder for at flytte modstanderen.',
+    ],
+  ),
+  Drill(
+    id: 'balloon_play',
+    name: 'Ballonbadminton',
+    purpose:
+        'Til de yngste og helt nye. En ballon er langsom, så der er tid til at '
+        'tænke på greb og slagets form og få succes fra starten.',
+    techniqueIds: ['grips', 'clear'],
+    minPlayers: 1,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'Hold ballonen i luften med ketsjeren. Først med håndfladen opad '
+          '(basisgreb), så med håndryggen forrest (tommelgreb).',
+      'Skift mellem forhånd og baghånd: 5 af hver, så 4, 3, 2 og 1.',
+      'Slå ballonen over hovedet med en kastebevægelse, så den rammes lidt '
+          'foran slagskulderen.',
+      'Spil med en makker over en snor eller et lavt net.',
+    ],
+    tips: [
+      'Brug en kort ketsjer til de mindste.',
+      'Skift til fjerbold, når slagene sidder.',
+    ],
+  ),
+  Drill(
+    id: 'fast_feet',
+    name: 'Fast feet på signal',
+    purpose:
+        'Træner reaktion og hurtige fødder. God i opvarmningen og kan laves '
+        'alene, men er sjovest som konkurrence.',
+    techniqueIds: ['split_step', 'chasse'],
+    minPlayers: 1,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Stil dig med begge fødder i sidegangen, med front mod en makker.',
+      'På et signal (et klap eller en fjerbold mod ketsjeren) flytter du '
+          'fødderne ud på hver side af sidegangen og ind igen 3 gange så '
+          'hurtigt som muligt.',
+      'Variant: efter 3. gang sætter du af og spurter 3-4 skridt frem eller '
+          'tilbage.',
+      'Hvil 20-30 sekunder mellem forsøgene. 6-8 forsøg.',
+    ],
+    tips: [
+      'Den, der bliver først færdig, vinder.',
+      'Små, hurtige skridt på forfoden.',
     ],
   ),
 ];
