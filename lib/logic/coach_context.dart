@@ -165,3 +165,62 @@ String coachPlayerSummary({
   }
   return b.toString().trimRight();
 }
+
+/// Et træningspas fundet i et svar fra AI-træneren.
+class CoachPlan {
+  const CoachPlan({
+    required this.drillIds,
+    required this.techniqueIds,
+    required this.minutes,
+  });
+
+  final List<String> drillIds;
+  final List<String> techniqueIds;
+  final int minutes;
+}
+
+final _minutesPattern = RegExp(r'(\d{1,3})\s*min', caseSensitive: false);
+
+/// Finder appens øvelser i et svar fra AI-træneren, så passet kan logges med
+/// ét tryk. Returnerer null, hvis svaret ikke nævner nogen øvelse.
+///
+/// Tiden er summen af minuttal i svarets listepunkter (fx "- Clear-duel
+/// (10 min)"). Står der ingen tider, bruges øvelsernes standardtid.
+CoachPlan? coachPlanFromReply(String reply) {
+  final text = reply.toLowerCase();
+  // Længste navne først, så et kort navn ikke tæller i et længere.
+  final byLength = [...drills]
+    ..sort((a, b) => b.name.length.compareTo(a.name.length));
+  var remaining = text;
+  final found = <Drill>[];
+  for (final d in byLength) {
+    final name = d.name.toLowerCase();
+    if (remaining.contains(name)) {
+      found.add(d);
+      remaining = remaining.replaceAll(name, ' ');
+    }
+  }
+  if (found.isEmpty) return null;
+  // Rækkefølgen som i svaret.
+  found.sort(
+    (a, b) => text
+        .indexOf(a.name.toLowerCase())
+        .compareTo(text.indexOf(b.name.toLowerCase())),
+  );
+
+  var minutes = 0;
+  for (final line in reply.split('\n')) {
+    if (!line.trimLeft().startsWith('-')) continue;
+    final match = _minutesPattern.firstMatch(line);
+    if (match != null) minutes += int.parse(match.group(1)!);
+  }
+  if (minutes == 0 || minutes > 300) {
+    minutes = found.fold(0, (sum, d) => sum + d.minutes);
+  }
+
+  return CoachPlan(
+    drillIds: [for (final d in found) d.id],
+    techniqueIds: {for (final d in found) ...d.techniqueIds}.toList(),
+    minutes: minutes,
+  );
+}

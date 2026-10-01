@@ -58,6 +58,21 @@ class CoachMessage {
     'role': fromUser ? 'user' : 'assistant',
     'content': text,
   };
+
+  factory CoachMessage.fromJson(Map<String, dynamic> json) => CoachMessage(
+    fromUser: json['role'] == 'user',
+    text: json['content'] as String,
+  );
+}
+
+/// En gemt samtale: beskederne og det spilleroverblik, der blev sendt med.
+/// Overblikket gemmes også, så begyndelsen af forespørgslen er uændret, når
+/// samtalen fortsættes, og cachen hos Anthropic kan genbruges.
+class CoachChat {
+  const CoachChat({required this.summary, required this.messages});
+
+  final String summary;
+  final List<CoachMessage> messages;
 }
 
 class CoachReply {
@@ -81,6 +96,10 @@ class CoachService {
 
   static const _keyPref = 'coach_api_key';
   static const _modelPref = 'coach_model';
+  static String _chatPref(String playerId) => 'coach_chat_$playerId';
+
+  /// Så mange beskeder gemmes højst pr. spiller.
+  static const maxSavedMessages = 40;
   static const _endpoint = 'https://api.anthropic.com/v1/messages';
 
   final http.Client _client;
@@ -116,6 +135,50 @@ class CoachService {
     await prefs.setString(_modelPref, model.name);
   }
 
+  Future<CoachChat?> loadChat(String playerId) async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_chatPref(playerId));
+    if (raw == null) return null;
+    try {
+      final json = jsonDecode(raw) as Map<String, dynamic>;
+      return CoachChat(
+        summary: json['summary'] as String,
+        messages: [
+          for (final m in json['messages'] as List<dynamic>)
+            CoachMessage.fromJson(m as Map<String, dynamic>),
+        ],
+      );
+    } on Object {
+      await prefs.remove(_chatPref(playerId));
+      return null;
+    }
+  }
+
+  /// Gemmer samtalen. Er den for lang, fjernes de ældste beskeder, så den
+  /// stadig starter med et spørgsmål fra brugeren.
+  Future<void> saveChat(String playerId, CoachChat chat) async {
+    var messages = chat.messages;
+    if (messages.length > maxSavedMessages) {
+      messages = messages.sublist(messages.length - maxSavedMessages);
+      while (messages.isNotEmpty && !messages.first.fromUser) {
+        messages = messages.sublist(1);
+      }
+    }
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(
+      _chatPref(playerId),
+      jsonEncode({
+        'summary': chat.summary,
+        'messages': [for (final m in messages) m.toJson()],
+      }),
+    );
+  }
+
+  Future<void> clearChat(String playerId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_chatPref(playerId));
+  }
+
   /// Instruktioner, appens bibliotek og vidensbanken. Teksten er den samme
   /// i alle samtaler, så den kan caches hos Anthropic.
   Future<String> knowledge() async {
@@ -127,7 +190,8 @@ class CoachService {
       ..writeln(coachLibrary())
       ..writeln('# Vidensbank (docs/viden/)');
     for (final file in coachKnowledgeFiles) {
-      final text = await _bundle.loadString('docs/viden/$file');
+      // Tjenesten husker selv teksten, så bundlens cache er ikke nødvendig.
+      final text = await _bundle.loadString('docs/viden/$file', cache: false);
       b
         ..writeln()
         ..writeln('<fil navn="$file">')

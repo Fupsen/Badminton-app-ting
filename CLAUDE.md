@@ -38,8 +38,9 @@ lib/data     DataStore (lokal JSON-fil), backup-format, fildialoger,
              coach_client.dart (AI-træner: Claude API med brugerens egen
              nøgle, kaldt direkte fra appen, også på web)
 lib/state    AppState (ChangeNotifier)
-lib/logic    ren Dart: pointregler (scoring.dart), statistik, mål,
-             coach_context.dart (spillerdata til AI-træneren)
+lib/logic    ren Dart: pointregler (scoring.dart), kamptæller
+             (live_score.dart), statistik, mål, coach_context.dart
+             (spillerdata til AI-træneren)
 lib/content  teknik-bibliotek (technique*.dart; id'er må ikke ændres),
              regler (rules*.dart, skal stemme med docs/viden/regler.md) og
              AI-trænerens instruktioner (coach_da.dart)

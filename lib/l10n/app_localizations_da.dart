@@ -828,4 +828,108 @@ class AppLocalizationsDa extends AppLocalizations {
   String coachErrorOther(String message) {
     return 'Noget gik galt: $message';
   }
+
+  @override
+  String get liveScoreTitle => 'Kamptæller';
+
+  @override
+  String get liveScoreOpen => 'Kamptæller';
+
+  @override
+  String get liveScoreIntro =>
+      'Tæl point under kampen. Appen holder styr på, hvem der server fra hvilket felt, pauser og sideskift, og gemmer kampen bagefter.';
+
+  @override
+  String get liveScoreSystem => 'Pointsystem';
+
+  @override
+  String get liveScoreSystem15 => '3×15';
+
+  @override
+  String get liveScoreSystem21 => '3×21';
+
+  @override
+  String get liveScoreType => 'Kamptype';
+
+  @override
+  String get liveScoreFirstServer => 'Hvem server først?';
+
+  @override
+  String get liveScoreMe => 'Mig';
+
+  @override
+  String get liveScoreOpponent => 'Modstander';
+
+  @override
+  String get liveScoreUs => 'Os';
+
+  @override
+  String get liveScoreThem => 'Modstanderne';
+
+  @override
+  String get liveScoreBegin => 'Start kampen';
+
+  @override
+  String get liveScoreTapHint => 'Tryk på den side, der vinder duellen.';
+
+  @override
+  String get liveScoreServesRight => 'Server · højre felt';
+
+  @override
+  String get liveScoreServesLeft => 'Server · venstre felt';
+
+  @override
+  String liveScoreGameNumber(int number) {
+    return 'Sæt $number';
+  }
+
+  @override
+  String liveScoreGamesWon(int us, int them) {
+    return 'Sæt $us-$them';
+  }
+
+  @override
+  String get liveScoreUndo => 'Fortryd sidste point';
+
+  @override
+  String get liveScoreInterval => 'Pause: højst 60 sekunder.';
+
+  @override
+  String get liveScoreIntervalChangeEnds =>
+      'Pause: højst 60 sekunder. Skift side.';
+
+  @override
+  String get liveScoreGameEnded =>
+      'Sættet er slut. Pause: højst 120 sekunder. Skift side.';
+
+  @override
+  String liveScoreWon(String result) {
+    return 'Kampen er slut: sejr $result.';
+  }
+
+  @override
+  String liveScoreLost(String result) {
+    return 'Kampen er slut: nederlag $result.';
+  }
+
+  @override
+  String get liveScoreSave => 'Gem kampen';
+
+  @override
+  String get liveScoreSaveNow => 'Gem stillingen som kamp';
+
+  @override
+  String get liveScoreAbort => 'Afbryd kampen';
+
+  @override
+  String get liveScoreAbortTitle => 'Afbryd kampen?';
+
+  @override
+  String get liveScoreAbortBody => 'Stillingen bliver slettet og ikke gemt.';
+
+  @override
+  String get liveScoreAbortConfirm => 'Afbryd';
+
+  @override
+  String get coachLogPlan => 'Log som træningspas';
 }

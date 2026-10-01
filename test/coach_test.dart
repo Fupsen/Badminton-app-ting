@@ -189,4 +189,30 @@ void main() {
       expect(library, contains(d.name));
     }
   });
+
+  test('conversation is saved per player and trimmed from the start', () async {
+    SharedPreferences.setMockInitialValues({});
+    final service = CoachService(client: MockClient((_) async => apiReply([])));
+    expect(await service.loadChat('p'), isNull);
+
+    final messages = [
+      for (var i = 0; i < CoachService.maxSavedMessages + 3; i++)
+        CoachMessage(fromUser: i.isEven, text: 'besked $i'),
+    ];
+    await service.saveChat(
+      'p',
+      CoachChat(summary: 'Spiller: Mette', messages: messages),
+    );
+    final chat = (await service.loadChat('p'))!;
+    expect(chat.summary, 'Spiller: Mette');
+    expect(chat.messages.length, lessThanOrEqualTo(CoachService.maxSavedMessages));
+    // Samtalen starter altid med et spørgsmål fra brugeren.
+    expect(chat.messages.first.fromUser, isTrue);
+    expect(chat.messages.last.text, messages.last.text);
+    expect(await service.loadChat('anden'), isNull);
+
+    await service.clearChat('p');
+    expect(await service.loadChat('p'), isNull);
+  });
 }
+
