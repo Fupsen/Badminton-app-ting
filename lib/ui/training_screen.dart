@@ -7,8 +7,10 @@ import '../logic/stats.dart';
 import '../models/models.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
+import 'plans_screen.dart';
 import 'widgets/common.dart';
 import 'widgets/date_field.dart';
+import 'widgets/drill_picker.dart';
 
 class TrainingScreen extends StatelessWidget {
   const TrainingScreen({super.key});
@@ -17,8 +19,26 @@ class TrainingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final sessions = context.watch<AppState>().activeTrainings;
     final l = context.l10n;
+    final plans = Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+      child: FilledButton.tonalIcon(
+        icon: const Icon(Icons.list_alt),
+        label: Text(l.plansOpen),
+        onPressed: () => openPlans(context),
+      ),
+    );
     if (sessions.isEmpty) {
-      return EmptyState(icon: Icons.fitness_center, message: l.noTrainings);
+      return Column(
+        children: [
+          plans,
+          Expanded(
+            child: EmptyState(
+              icon: Icons.fitness_center,
+              message: l.noTrainings,
+            ),
+          ),
+        ],
+      );
     }
     final thisWeek = weeklyTraining(sessions, weeks: 1, now: DateTime.now());
     return ContentWidth(
@@ -29,15 +49,21 @@ class TrainingScreen extends StatelessWidget {
             i == 0 ? const SizedBox.shrink() : const Divider(height: 1),
         itemBuilder: (context, i) {
           if (i == 0) {
-            return Padding(
-              padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-              child: Text(
-                l.thisWeekSummary(
-                  thisWeek.single.sessions,
-                  thisWeek.single.totalMinutes,
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                plans,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                  child: Text(
+                    l.thisWeekSummary(
+                      thisWeek.single.sessions,
+                      thisWeek.single.totalMinutes,
+                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                 ),
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
+              ],
             );
           }
           return TrainingTile(session: sessions[i - 1]);
@@ -84,7 +110,25 @@ class TrainingPrefill {
     this.drillIds = const [],
     this.type,
     this.minutes,
+    this.notes,
   });
+
+  /// De øvelser fra en plan, der blev gennemført, samlet til ét pas.
+  factory TrainingPrefill.forPlan(TrainingPlan plan, List<PlanItem> done) {
+    final found = [
+      for (final item in done)
+        if (drillById(item.drillId) case final drill?) (item, drill),
+    ];
+    final techniqueIds = {for (final (_, drill) in found) ...drill.techniqueIds}
+        .toList();
+    return TrainingPrefill(
+      techniqueIds: techniqueIds,
+      drillIds: [for (final (_, drill) in found) drill.id],
+      type: _typeFor(techniqueIds),
+      minutes: done.fold<int>(0, (sum, i) => sum + i.minutes),
+      notes: plan.name,
+    );
+  }
 
   factory TrainingPrefill.forDrill(Drill drill) => TrainingPrefill(
     techniqueIds: drill.techniqueIds,
@@ -102,6 +146,7 @@ class TrainingPrefill {
   final List<String> drillIds;
   final TrainingType? type;
   final int? minutes;
+  final String? notes;
 
   /// Rent benarbejde logges som footwork, alt andet som teknik.
   static TrainingType _typeFor(List<String> ids) =>
@@ -158,44 +203,13 @@ class _TrainingFormState extends State<TrainingForm> {
     _duration = TextEditingController(
       text: (t?.durationMinutes ?? p?.minutes ?? 90).toString(),
     );
-    _notes = TextEditingController(text: t?.notes ?? '');
+    _notes = TextEditingController(text: t?.notes ?? p?.notes ?? '');
     _techniqueIds = {...?t?.techniqueIds, ...?p?.techniqueIds};
     _drillIds = {...?t?.drillIds, ...?p?.drillIds};
   }
 
   Future<void> _pickDrill() async {
-    final l = context.l10n;
-    final drill = await showModalBottomSheet<Drill>(
-      context: context,
-      isScrollControlled: true,
-      showDragHandle: true,
-      builder: (context) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.7,
-        maxChildSize: 0.95,
-        builder: (context, controller) => ListView(
-          controller: controller,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
-              child: Text(
-                l.chooseDrill,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
-            for (final d in drills)
-              ListTile(
-                title: Text(d.name),
-                subtitle: Text(techniqueNames(d.techniqueIds).join(', ')),
-                trailing: _drillIds.contains(d.id)
-                    ? const Icon(Icons.check)
-                    : null,
-                onTap: () => Navigator.pop(context, d),
-              ),
-          ],
-        ),
-      ),
-    );
+    final drill = await pickDrill(context, selected: _drillIds);
     if (drill == null) return;
     setState(() {
       _drillIds.add(drill.id);

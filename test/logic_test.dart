@@ -766,6 +766,14 @@ void main() {
       readySeconds: 5,
     );
 
+    test('clock shows seconds, and minutes from 60 seconds', () {
+      expect(formatClock(5), '5');
+      expect(formatClock(59), '59');
+      expect(formatClock(60), '1:00');
+      expect(formatClock(660), '11:00');
+      expect(formatClock(245), '4:05');
+    });
+
     test('ready, work, rest, last work without rest, done', () {
       expect(at(0), const TimerState(TimerPhase.ready, 0, 5));
       expect(at(4.2), const TimerState(TimerPhase.ready, 0, 1));

@@ -599,6 +599,82 @@ void main() {
     semantics.dispose();
   });
 
+  testWidgets('training plan: create, run with next and skip, and log it',
+      (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Træning'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Træningsplaner'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Sæt et træningspas sammen'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Ny plan'));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Navn'), 'Tirsdag');
+    // Uden øvelser kan planen ikke gemmes.
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+    expect(find.text('Tilføj mindst én øvelse.'), findsOneWidget);
+
+    Future<void> add(String search, String name) async {
+      await tester.tap(find.text('Tilføj øvelse'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+          find.descendant(
+              of: find.byType(BottomSheet),
+              matching: find.byType(TextField)),
+          search);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text(name));
+      await tester.pumpAndSettle();
+    }
+
+    await add('stige', 'Stigeøvelse: afsæt-1-2'); // 6 min, med timer
+    await add('clear-duel', 'Clear-duel'); // 10 min, uden timer
+    expect(find.text('2 øvelser · 16 min'), findsOneWidget);
+    await tester.tap(find.byTooltip('Et minut længere').last);
+    await tester.pumpAndSettle();
+    expect(find.text('2 øvelser · 17 min'), findsOneWidget);
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    final plan = (await store.load()).plans.single;
+    expect(plan.name, 'Tirsdag');
+    expect(plan.items.map((i) => (i.drillId, i.minutes)),
+        [('ladder_feet', 6), ('clear_duel', 11)]);
+    expect(find.text('2 øvelser · 17 min'), findsOneWidget);
+
+    // Kør planen: første øvelse gennemføres, den anden springes over.
+    await tester.tap(find.byTooltip('Start planen'));
+    await tester.pumpAndSettle();
+    expect(find.text('Øvelse 1 af 2'), findsOneWidget);
+    expect(find.text('Stigeøvelse: afsæt-1-2'), findsOneWidget);
+    expect(find.text('Gør klar'), findsOneWidget);
+    expect(find.byTooltip('Start'), findsOneWidget);
+    await tester.tap(find.text('Næste øvelse'));
+    await tester.pumpAndSettle();
+    expect(find.text('Øvelse 2 af 2'), findsOneWidget);
+    expect(find.text('11 min'), findsOneWidget);
+    await tester.tap(find.text('Spring over'));
+    await tester.pumpAndSettle();
+    expect(find.text('Planen er færdig'), findsOneWidget);
+    expect(find.text('1 af 2 øvelser gennemført · 6 min'), findsOneWidget);
+
+    await tester.tap(find.text('Log som træningspas'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+    final logged = (await store.load()).trainings.single;
+    expect(logged.drillIds, ['ladder_feet']);
+    expect(logged.durationMinutes, 6);
+    expect(logged.notes, 'Tirsdag');
+    expect(logged.type, TrainingType.footwork);
+  });
+
   testWidgets('drills: search, filter and start the timer', (tester) async {
     final store = MemoryStore(onePlayer());
     await tester.pumpWidget(BadmintonApp(store: store));

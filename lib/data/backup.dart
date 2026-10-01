@@ -67,6 +67,7 @@ AppData mergeData(AppData current, AppData incoming) {
     matches: merge(current.matches, incoming.matches, (m) => m.id),
     trainings: merge(current.trainings, incoming.trainings, (t) => t.id),
     goals: merge(current.goals, incoming.goals, (g) => g.id),
+    plans: merge(current.plans, incoming.plans, (p) => p.id),
     activePlayerId: current.activePlayerId ?? incoming.activePlayerId,
     lastBackupAt: current.lastBackupAt,
   );

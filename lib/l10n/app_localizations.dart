@@ -1839,6 +1839,162 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'{count, plural, =1{1 sæt} other{{count} sæt}}'**
   String statsRallyGames(int count);
+
+  /// No description provided for @timerStartTooltip.
+  ///
+  /// In da, this message translates to:
+  /// **'Start'**
+  String get timerStartTooltip;
+
+  /// No description provided for @plansOpen.
+  ///
+  /// In da, this message translates to:
+  /// **'Træningsplaner'**
+  String get plansOpen;
+
+  /// No description provided for @plansTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Træningsplaner'**
+  String get plansTitle;
+
+  /// No description provided for @plansEmpty.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt et træningspas sammen af øvelser, og kør det med timeren bagefter. Planerne kan bruges til alle spillere.'**
+  String get plansEmpty;
+
+  /// No description provided for @newPlan.
+  ///
+  /// In da, this message translates to:
+  /// **'Ny plan'**
+  String get newPlan;
+
+  /// No description provided for @editPlan.
+  ///
+  /// In da, this message translates to:
+  /// **'Rediger plan'**
+  String get editPlan;
+
+  /// No description provided for @deletePlanTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Slet planen?'**
+  String get deletePlanTitle;
+
+  /// No description provided for @planName.
+  ///
+  /// In da, this message translates to:
+  /// **'Navn'**
+  String get planName;
+
+  /// No description provided for @planNameRequired.
+  ///
+  /// In da, this message translates to:
+  /// **'Giv planen et navn.'**
+  String get planNameRequired;
+
+  /// No description provided for @planSummary.
+  ///
+  /// In da, this message translates to:
+  /// **'{count, plural, =1{1 øvelse} other{{count} øvelser}} · {minutes} min'**
+  String planSummary(int count, int minutes);
+
+  /// No description provided for @planReorderHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Træk i en øvelse for at ændre rækkefølgen.'**
+  String get planReorderHint;
+
+  /// No description provided for @planAddDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Tilføj øvelse'**
+  String get planAddDrill;
+
+  /// No description provided for @planNoDrills.
+  ///
+  /// In da, this message translates to:
+  /// **'Tilføj mindst én øvelse.'**
+  String get planNoDrills;
+
+  /// No description provided for @planMinutesLess.
+  ///
+  /// In da, this message translates to:
+  /// **'Et minut kortere'**
+  String get planMinutesLess;
+
+  /// No description provided for @planMinutesMore.
+  ///
+  /// In da, this message translates to:
+  /// **'Et minut længere'**
+  String get planMinutesMore;
+
+  /// No description provided for @planRemoveDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Fjern øvelsen'**
+  String get planRemoveDrill;
+
+  /// No description provided for @planStart.
+  ///
+  /// In da, this message translates to:
+  /// **'Start planen'**
+  String get planStart;
+
+  /// No description provided for @planStep.
+  ///
+  /// In da, this message translates to:
+  /// **'Øvelse {number} af {total}'**
+  String planStep(int number, int total);
+
+  /// No description provided for @planNext.
+  ///
+  /// In da, this message translates to:
+  /// **'Næste øvelse'**
+  String get planNext;
+
+  /// No description provided for @planFinish.
+  ///
+  /// In da, this message translates to:
+  /// **'Afslut planen'**
+  String get planFinish;
+
+  /// No description provided for @planSkip.
+  ///
+  /// In da, this message translates to:
+  /// **'Spring over'**
+  String get planSkip;
+
+  /// No description provided for @planShowDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Vis øvelsen'**
+  String get planShowDrill;
+
+  /// No description provided for @planFinished.
+  ///
+  /// In da, this message translates to:
+  /// **'Planen er færdig'**
+  String get planFinished;
+
+  /// No description provided for @planFinishedSummary.
+  ///
+  /// In da, this message translates to:
+  /// **'{done} af {total} øvelser gennemført · {minutes} min'**
+  String planFinishedSummary(int done, int total, int minutes);
+
+  /// No description provided for @planNothingDone.
+  ///
+  /// In da, this message translates to:
+  /// **'Ingen øvelser blev gennemført, så der er intet at logge.'**
+  String get planNothingDone;
+
+  /// No description provided for @planLog.
+  ///
+  /// In da, this message translates to:
+  /// **'Log som træningspas'**
+  String get planLog;
 }
 
 class _AppLocalizationsDelegate

@@ -297,6 +297,58 @@ class Goal {
   );
 }
 
+/// Én øvelse i en træningsplan.
+class PlanItem {
+  const PlanItem({required this.drillId, required this.minutes});
+
+  final String drillId;
+  final int minutes;
+
+  PlanItem copyWith({int? minutes}) =>
+      PlanItem(drillId: drillId, minutes: minutes ?? this.minutes);
+
+  Map<String, dynamic> toJson() => {'drill': drillId, 'minutes': minutes};
+
+  factory PlanItem.fromJson(Map<String, dynamic> json) => PlanItem(
+    drillId: json['drill'] as String,
+    minutes: json['minutes'] as int? ?? 10,
+  );
+}
+
+/// Et træningspas sat sammen af øvelser i rækkefølge. Planer hører ikke til
+/// én spiller, så en træner kan bruge den samme plan til flere.
+class TrainingPlan {
+  TrainingPlan({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    this.items = const [],
+  });
+
+  final String id;
+  final String name;
+  final DateTime createdAt;
+  final List<PlanItem> items;
+
+  int get totalMinutes => items.fold(0, (sum, i) => sum + i.minutes);
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'name': name,
+    'createdAt': createdAt.toIso8601String(),
+    'items': items.map((i) => i.toJson()).toList(),
+  };
+
+  factory TrainingPlan.fromJson(Map<String, dynamic> json) => TrainingPlan(
+    id: json['id'] as String,
+    name: json['name'] as String? ?? '',
+    createdAt: DateTime.parse(json['createdAt'] as String),
+    items: (json['items'] as List<dynamic>? ?? [])
+        .map((e) => PlanItem.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
 /// Hele appens data samlet ét sted.
 class AppData {
   AppData({
@@ -304,12 +356,14 @@ class AppData {
     List<MatchRecord>? matches,
     List<TrainingSession>? trainings,
     List<Goal>? goals,
+    List<TrainingPlan>? plans,
     this.activePlayerId,
     this.lastBackupAt,
   }) : players = players ?? [],
        matches = matches ?? [],
        trainings = trainings ?? [],
-       goals = goals ?? [];
+       goals = goals ?? [],
+       plans = plans ?? [];
 
   static const schemaVersion = 1;
 
@@ -317,6 +371,9 @@ class AppData {
   final List<MatchRecord> matches;
   final List<TrainingSession> trainings;
   final List<Goal> goals;
+
+  /// Træningsplaner. Fælles for alle spillere.
+  final List<TrainingPlan> plans;
   String? activePlayerId;
 
   /// Hvornår der sidst blev eksporteret en backup fra denne enhed.
@@ -330,6 +387,7 @@ class AppData {
     'matches': matches.map((m) => m.toJson()).toList(),
     'trainings': trainings.map((t) => t.toJson()).toList(),
     'goals': goals.map((g) => g.toJson()).toList(),
+    if (plans.isNotEmpty) 'plans': plans.map((p) => p.toJson()).toList(),
   };
 
   factory AppData.fromJson(Map<String, dynamic> json) {
@@ -345,6 +403,7 @@ class AppData {
       matches: list('matches', MatchRecord.fromJson),
       trainings: list('trainings', TrainingSession.fromJson),
       goals: list('goals', Goal.fromJson),
+      plans: list('plans', TrainingPlan.fromJson),
     );
   }
 }

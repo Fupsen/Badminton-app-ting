@@ -44,6 +44,12 @@ kører på Android, iOS, Windows, macOS og Linux.
   kampe med særregler og intervaltræning. En øvelse kan logges direkte som
   træningspas. Teksterne tager udgangspunkt i højrehåndede spillere og er
   generel træningsviden. De erstatter ikke en træner.
+- **Træningsplaner** (Træning-fanen): sæt et pas sammen af øvelser i
+  rækkefølge med minutter, og kør det bagefter én øvelse ad gangen med
+  timeren (intervaltimer for øvelser med intervaller, ellers en nedtælling).
+  "Næste øvelse" kan trykkes når som helst, og "Spring over" tæller ikke
+  med. Bagefter logges passet som ét træningspas. Planerne er fælles for
+  alle spillere og kommer med i backup.
 - **Søgning og filtre** i Teknik: søg i slag, benarbejde og øvelser, og
   filtrér øvelser efter niveau, "Alene", "Med makker", "Gruppe" og "Højst
   10 min".
