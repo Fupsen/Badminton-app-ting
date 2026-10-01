@@ -304,5 +304,36 @@
   "liveScoreAbortBody": "Stillingen bliver slettet og ikke gemt.",
   "liveScoreAbortConfirm": "Afbryd",
 
-  "coachLogPlan": "Log som træningspas"
+  "coachLogPlan": "Log som træningspas",
+
+  "timerStart": "Start timer",
+  "timerTitle": "Timer",
+  "timerReady": "Gør klar",
+  "timerWork": "Arbejd",
+  "timerRest": "Pause",
+  "timerDone": "Færdig!",
+  "timerRound": "Runde {round} af {rounds}",
+  "@timerRound": {"placeholders": {"round": {"type": "int"}, "rounds": {"type": "int"}}},
+  "timerPlan": "{work} sek. arbejde, {rest} sek. pause, {rounds} runder",
+  "@timerPlan": {"placeholders": {"work": {"type": "int"}, "rest": {"type": "int"}, "rounds": {"type": "int"}}},
+  "timerPauseTooltip": "Sæt på pause",
+  "timerResumeTooltip": "Fortsæt",
+  "timerRestartTooltip": "Start forfra",
+  "timerLogDrill": "Log øvelsen",
+
+  "searchHint": "Søg",
+  "searchNoResults": "Intet fundet.",
+  "drillFilterSolo": "Alene",
+  "drillFilterPair": "Med makker",
+  "drillFilterGroup": "Gruppe (3+)",
+  "drillFilterShort": "Højst 10 min",
+
+  "editPlayer": "Rediger spiller",
+  "playerLevel": "Niveau",
+  "playerLevelNone": "Ikke valgt",
+  "playerLevelBeginner": "Begynder",
+  "playerLevelIntermediate": "Klubspiller",
+  "playerLevelElite": "Elite",
+  "playerLeftHanded": "Venstrehåndet",
+  "leftHandedNote": "Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side."
 }

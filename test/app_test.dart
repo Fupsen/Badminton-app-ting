@@ -315,8 +315,11 @@ void main() {
     expect(find.text('Greb'), findsOneWidget);
     expect(find.text('Kort serv'), findsOneWidget);
 
+    // Listen (ikke søgefeltet, som også kan scrolles).
     await tester.scrollUntilVisible(find.text('Clear'), 200,
-        scrollable: find.byType(Scrollable).last);
+        scrollable: find
+            .ancestor(of: find.text('Greb'), matching: find.byType(Scrollable))
+            .first);
     await tester.tap(find.text('Clear'));
     await tester.pumpAndSettle();
     expect(find.text('Teknikpunkter'), findsOneWidget);
@@ -566,6 +569,93 @@ void main() {
     expect(find.text('Kamptæller'), findsOneWidget);
     expect(await const LiveMatchStore().load('p'), isNull);
     semantics.dispose();
+  });
+
+  testWidgets('drills: search, filter and start the timer', (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Teknik'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.widgetWithText(Tab, 'Øvelser'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(Tab, 'Øvelser'));
+    await tester.pumpAndSettle();
+    expect(find.text('Clear-duel'), findsOneWidget);
+
+    // Filteret "Alene" fjerner øvelser, der kræver en makker.
+    await tester.tap(find.widgetWithText(FilterChip, 'Alene'));
+    await tester.pumpAndSettle();
+    expect(find.text('Clear-duel'), findsNothing);
+    expect(find.text('Serv på mål'), findsOneWidget);
+
+    // Søgning.
+    await tester.enterText(find.widgetWithText(TextField, 'Søg'), 'stige');
+    await tester.pumpAndSettle();
+    expect(find.text('Stigeøvelse: afsæt-1-2'), findsOneWidget);
+    expect(find.text('Serv på mål'), findsNothing);
+
+    await tester.tap(find.text('Stigeøvelse: afsæt-1-2'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Start timer'));
+    // Timeren tikker hele tiden, så pumpAndSettle ville aldrig blive færdig.
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('Gør klar'), findsOneWidget);
+    expect(find.text('20 sek. arbejde, 40 sek. pause, 6 runder'),
+        findsOneWidget);
+    await tester.tap(find.byTooltip('Sæt på pause'));
+    await tester.pump();
+    expect(find.byTooltip('Fortsæt'), findsOneWidget);
+    await tester.tap(find.byTooltip('Tilbage'));
+    await tester.pump(const Duration(milliseconds: 500));
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('Gør klar'), findsNothing);
+  });
+
+  testWidgets('player profile: level and left hand are saved and used',
+      (tester) async {
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Aktiv spiller'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Administrér spillere'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Rediger spiller'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Ikke valgt'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Begynder').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Venstrehåndet'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    final player = (await store.load()).players.single;
+    expect(player.level, PlayerLevel.beginner);
+    expect(player.leftHanded, isTrue);
+    expect(find.text('Aktiv spiller · Begynder · Venstrehåndet'),
+        findsOneWidget);
+
+    await tester.tap(find.byTooltip('Tilbage'));
+    await tester.pumpAndSettle();
+    await tester.tap(navItem('Teknik'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Du skal spejle dem'), findsOneWidget);
+
+    // Øvelserne starter på spillerens niveau.
+    await tester.ensureVisible(find.widgetWithText(Tab, 'Øvelser'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(Tab, 'Øvelser'));
+    await tester.pumpAndSettle();
+    final chip = tester.widget<ChoiceChip>(
+        find.widgetWithText(ChoiceChip, 'Begynder'));
+    expect(chip.selected, isTrue);
   });
 
   testWidgets('web install hint is hidden outside the browser',

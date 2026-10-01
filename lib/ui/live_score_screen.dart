@@ -10,6 +10,7 @@ import '../models/models.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
 import 'matches_screen.dart';
+import 'widgets/keep_screen_on.dart';
 
 Future<void> openLiveScore(BuildContext context) =>
     Navigator.of(context)
@@ -103,39 +104,42 @@ class _LiveScoreScreenState extends State<LiveScoreScreen> {
   Widget build(BuildContext context) {
     final l = context.l10n;
     final match = _match;
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(l.liveScoreTitle),
-        actions: [
-          if (match != null) ...[
-            IconButton(
-              tooltip: l.liveScoreUndo,
-              icon: const Icon(Icons.undo),
-              onPressed: match.canUndo ? () => _update(match.undo()) : null,
-            ),
-            PopupMenuButton<_Menu>(
-              onSelected: _onMenu,
-              itemBuilder: (context) => [
-                if (match.gamesForSaving.isNotEmpty && !match.isFinished)
+    // Skærmen må ikke slukke midt i en kamp.
+    return KeepScreenOn(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(l.liveScoreTitle),
+          actions: [
+            if (match != null) ...[
+              IconButton(
+                tooltip: l.liveScoreUndo,
+                icon: const Icon(Icons.undo),
+                onPressed: match.canUndo ? () => _update(match.undo()) : null,
+              ),
+              PopupMenuButton<_Menu>(
+                onSelected: _onMenu,
+                itemBuilder: (context) => [
+                  if (match.gamesForSaving.isNotEmpty && !match.isFinished)
+                    PopupMenuItem(
+                      value: _Menu.saveNow,
+                      child: Text(l.liveScoreSaveNow),
+                    ),
                   PopupMenuItem(
-                    value: _Menu.saveNow,
-                    child: Text(l.liveScoreSaveNow),
+                    value: _Menu.abort,
+                    child: Text(l.liveScoreAbort),
                   ),
-                PopupMenuItem(
-                  value: _Menu.abort,
-                  child: Text(l.liveScoreAbort),
-                ),
-              ],
-            ),
+                ],
+              ),
+            ],
           ],
-        ],
-      ),
-      body: SafeArea(
-        child: _loading
-            ? const Center(child: CircularProgressIndicator())
-            : match == null
-            ? _setup(context)
-            : _scoreboard(context, match),
+        ),
+        body: SafeArea(
+          child: _loading
+              ? const Center(child: CircularProgressIndicator())
+              : match == null
+              ? _setup(context)
+              : _scoreboard(context, match),
+        ),
       ),
     );
   }

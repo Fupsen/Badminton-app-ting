@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:badminton_app/data/data_store.dart';
 import 'package:badminton_app/logic/coach_context.dart';
+import 'package:badminton_app/content/technique.dart';
 import 'package:badminton_app/logic/goals.dart';
+import 'package:badminton_app/logic/interval_timer.dart';
 import 'package:badminton_app/logic/live_score.dart';
 import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/logic/stats.dart';
@@ -636,6 +638,103 @@ void main() {
 
     test('returns null when no drill is mentioned', () {
       expect(coachPlanFromReply('Spil mere på baghånden.'), isNull);
+    });
+  });
+
+  group('interval timer', () {
+    const plan = DrillTimer(workSeconds: 10, restSeconds: 20, rounds: 2);
+    TimerState at(double seconds) => timerStateAt(
+      plan,
+      Duration(milliseconds: (seconds * 1000).round()),
+      readySeconds: 5,
+    );
+
+    test('ready, work, rest, last work without rest, done', () {
+      expect(at(0), const TimerState(TimerPhase.ready, 0, 5));
+      expect(at(4.2), const TimerState(TimerPhase.ready, 0, 1));
+      expect(at(5), const TimerState(TimerPhase.work, 1, 10));
+      expect(at(14.5), const TimerState(TimerPhase.work, 1, 1));
+      expect(at(15), const TimerState(TimerPhase.rest, 1, 20));
+      expect(at(35), const TimerState(TimerPhase.work, 2, 10));
+      // Ingen pause efter sidste runde.
+      expect(at(45), const TimerState(TimerPhase.done, 2, 0));
+      expect(at(500).phase, TimerPhase.done);
+      expect(totalDuration(plan), const Duration(seconds: 40));
+    });
+  });
+
+  group('drill search and filters', () {
+    test('search matches name, purpose and technique names', () {
+      expect(filterDrills(query: 'clear-duel').map((d) => d.id),
+          contains('clear_duel'));
+      // Ord kan stå i vilkårlig rækkefølge, og store/små bogstaver er lige.
+      expect(filterDrills(query: 'DUEL clear').map((d) => d.id),
+          contains('clear_duel'));
+      expect(filterDrills(query: 'findes ikke xyz'), isEmpty);
+      expect(filterDrills(), hasLength(drills.length));
+    });
+
+    test('group, level and time filters', () {
+      expect(filterDrills(group: DrillGroup.solo).every((d) => d.minPlayers == 1),
+          isTrue);
+      expect(filterDrills(group: DrillGroup.pair).every((d) => d.minPlayers <= 2),
+          isTrue);
+      expect(filterDrills(group: DrillGroup.group).every((d) => d.minPlayers >= 3),
+          isTrue);
+      final short = filterDrills(maxMinutes: 10, level: DrillLevel.beginner);
+      expect(short, isNotEmpty);
+      expect(short.every((d) => d.minutes <= 10 && d.level == DrillLevel.beginner),
+          isTrue);
+    });
+
+    test('technique search', () {
+      expect(techniqueMatches(techniqueById('net_kill')!, 'kill'), isTrue);
+      expect(techniqueMatches(techniqueById('net_kill')!, 'smash'), isFalse);
+    });
+  });
+
+  group('player profile', () {
+    test('old player json without level or hand still loads', () {
+      final p = Player.fromJson(
+          {'id': 'p', 'name': 'Mette', 'createdAt': '2026-01-01T00:00:00.000'});
+      expect(p.level, isNull);
+      expect(p.leftHanded, isFalse);
+      expect(p.toJson().containsKey('level'), isFalse);
+    });
+
+    test('level and hand round trip, and unknown level is ignored', () {
+      final p = Player(
+        id: 'p',
+        name: 'Mette',
+        createdAt: DateTime(2026),
+        level: PlayerLevel.elite,
+        leftHanded: true,
+      );
+      final copy = Player.fromJson(p.toJson());
+      expect(copy.level, PlayerLevel.elite);
+      expect(copy.leftHanded, isTrue);
+      expect(
+          Player.fromJson({...p.toJson(), 'level': 'verdensmester'}).level,
+          isNull);
+      expect(p.copyWith(level: () => null).level, isNull);
+    });
+
+    test('AI summary includes level and hand', () {
+      final summary = coachPlayerSummary(
+        player: Player(
+          id: 'p',
+          name: 'Mette',
+          createdAt: DateTime(2026),
+          level: PlayerLevel.beginner,
+          leftHanded: true,
+        ),
+        matches: const [],
+        trainings: const [],
+        goals: const [],
+        now: DateTime(2026, 9, 30),
+      );
+      expect(summary, contains('Niveau: begynder'));
+      expect(summary, contains('Hånd: venstrehåndet'));
     });
   });
 }

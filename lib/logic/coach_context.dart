@@ -36,6 +36,15 @@ String coachPlayerSummary({
 }) {
   final b = StringBuffer()
     ..writeln('Spiller: ${player.name}')
+    ..writeln(
+      'Niveau: ${switch (player.level) {
+        null => 'ikke valgt',
+        PlayerLevel.beginner => 'begynder',
+        PlayerLevel.intermediate => 'klubspiller',
+        PlayerLevel.elite => 'elite',
+      }}',
+    )
+    ..writeln('Hånd: ${player.leftHanded ? 'venstrehåndet' : 'højrehåndet'}')
     ..writeln('Dato i dag: ${_date(now)}');
 
   // Kampe

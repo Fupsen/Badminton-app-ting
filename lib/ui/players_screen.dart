@@ -5,6 +5,7 @@ import '../logic/stats.dart';
 import '../models/models.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
+import 'player_editor.dart';
 import 'widgets/common.dart';
 
 class PlayersScreen extends StatelessWidget {
@@ -86,23 +87,24 @@ class PlayersScreen extends StatelessWidget {
                       : Icons.radio_button_unchecked,
                 ),
                 title: Text(p.name),
-                subtitle: p.id == active?.id ? Text(l.activePlayer) : null,
+                subtitle: switch ([
+                  if (p.id == active?.id) l.activePlayer,
+                  if (p.level != null) p.level!.label(l),
+                  if (p.leftHanded) l.playerLeftHanded,
+                ]) {
+                  [] => null,
+                  final parts => Text(parts.join(' · ')),
+                },
                 onTap: () => state.setActivePlayer(p.id),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      tooltip: l.renamePlayer,
+                      tooltip: l.editPlayer,
                       icon: const Icon(Icons.edit_outlined),
                       onPressed: () async {
-                        final name = await _askName(
-                          context,
-                          l.renamePlayer,
-                          initial: p.name,
-                        );
-                        if (name != null && name.trim().isNotEmpty) {
-                          await state.renamePlayer(p.id, name);
-                        }
+                        final edited = await showPlayerEditor(context, p);
+                        if (edited != null) await state.updatePlayer(edited);
                       },
                     ),
                     IconButton(

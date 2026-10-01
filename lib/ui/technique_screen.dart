@@ -7,6 +7,7 @@ import '../logic/stats.dart';
 import '../logic/technique_stats.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
+import 'timer_screen.dart';
 import 'training_screen.dart';
 import 'widgets/common.dart';
 
@@ -27,13 +28,77 @@ class _TechniqueScreenState extends State<TechniqueScreen>
     vsync: this,
   )..addListener(() => setState(() {}));
   DrillLevel? _level;
+  bool _levelFromProfile = false;
+  DrillGroup? _group;
+  bool _short = false;
+  final _search = TextEditingController();
+  String _query = '';
 
   _Section get _section => _Section.values[_tabs.index];
 
   @override
   void dispose() {
     _tabs.dispose();
+    _search.dispose();
     super.dispose();
+  }
+
+  Widget _searchField() {
+    final l = context.l10n;
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
+      child: TextField(
+        controller: _search,
+        decoration: InputDecoration(
+          hintText: l.searchHint,
+          prefixIcon: const Icon(Icons.search),
+          suffixIcon: _query.isEmpty
+              ? null
+              : IconButton(
+                  tooltip: l.cancel,
+                  icon: const Icon(Icons.clear),
+                  onPressed: () => setState(() {
+                    _search.clear();
+                    _query = '';
+                  }),
+                ),
+          border: const OutlineInputBorder(),
+          isDense: true,
+        ),
+        onChanged: (v) => setState(() => _query = v),
+      ),
+    );
+  }
+
+  Widget _noResults() => Padding(
+    padding: const EdgeInsets.all(24),
+    child: Text(context.l10n.searchNoResults, textAlign: TextAlign.center),
+  );
+
+  Widget _leftHandedNote() {
+    final theme = Theme.of(context);
+    return Card(
+      margin: const EdgeInsets.fromLTRB(12, 4, 12, 4),
+      color: theme.colorScheme.secondaryContainer,
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Row(
+          children: [
+            Icon(
+              Icons.swap_horiz,
+              color: theme.colorScheme.onSecondaryContainer,
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                context.l10n.leftHandedNote,
+                style: TextStyle(color: theme.colorScheme.onSecondaryContainer),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -41,11 +106,26 @@ class _TechniqueScreenState extends State<TechniqueScreen>
     final l = context.l10n;
     final state = context.watch<AppState>();
     final usage = techniqueUsage(state.activeTrainings);
+    final player = state.activePlayer;
+    // Øvelserne starter på spillerens niveau, hvis det er valgt.
+    if (!_levelFromProfile) {
+      _levelFromProfile = true;
+      _level = player?.level?.drillLevel;
+    }
+    final leftHanded = player?.leftHanded ?? false;
 
     final List<Widget> items = switch (_section) {
-      _Section.strokes => _techniqueList(TechniqueKind.stroke, usage),
-      _Section.footwork => _techniqueList(TechniqueKind.footwork, usage),
-      _Section.drills => _drillList(),
+      _Section.strokes => [
+        if (leftHanded) _leftHandedNote(),
+        _searchField(),
+        ..._techniqueList(TechniqueKind.stroke, usage),
+      ],
+      _Section.footwork => [
+        if (leftHanded) _leftHandedNote(),
+        _searchField(),
+        ..._techniqueList(TechniqueKind.footwork, usage),
+      ],
+      _Section.drills => [_searchField(), ..._drillList()],
       _Section.rules => _ruleList(),
     };
     final theme = Theme.of(context);
@@ -159,7 +239,12 @@ class _TechniqueScreenState extends State<TechniqueScreen>
     final theme = Theme.of(context);
     final result = <Widget>[];
     String? category;
-    for (final t in techniquesOfKind(kind)) {
+    final list = [
+      for (final t in techniquesOfKind(kind))
+        if (techniqueMatches(t, _query)) t,
+    ];
+    if (list.isEmpty) return [_noResults()];
+    for (final t in list) {
       if (t.category != category) {
         category = t.category;
         result.add(
@@ -193,11 +278,18 @@ class _TechniqueScreenState extends State<TechniqueScreen>
 
   List<Widget> _drillList() {
     final l = context.l10n;
+    final list = filterDrills(
+      query: _query,
+      level: _level,
+      group: _group,
+      maxMinutes: _short ? 10 : null,
+    );
     return [
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Wrap(
           spacing: 8,
+          runSpacing: 4,
           children: [
             ChoiceChip(
               label: Text(l.drillAllLevels),
@@ -213,14 +305,41 @@ class _TechniqueScreenState extends State<TechniqueScreen>
           ],
         ),
       ),
-      for (final d in drills)
-        if (_level == null || d.level == _level)
-          ListTile(
-            title: Text(d.name),
-            subtitle: Text(_drillFacts(context, d)),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => openDrill(context, d),
-          ),
+      Padding(
+        padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+        child: Wrap(
+          spacing: 8,
+          runSpacing: 4,
+          children: [
+            for (final (group, label) in [
+              (DrillGroup.solo, l.drillFilterSolo),
+              (DrillGroup.pair, l.drillFilterPair),
+              (DrillGroup.group, l.drillFilterGroup),
+            ])
+              FilterChip(
+                label: Text(label),
+                selected: _group == group,
+                onSelected: (on) => setState(() => _group = on ? group : null),
+              ),
+            FilterChip(
+              avatar: const Icon(Icons.timer_outlined, size: 18),
+              label: Text(l.drillFilterShort),
+              selected: _short,
+              onSelected: (on) => setState(() => _short = on),
+            ),
+          ],
+        ),
+      ),
+      if (list.isEmpty) _noResults(),
+      for (final d in list)
+        ListTile(
+          title: Text(d.name),
+          subtitle: Text(_drillFacts(context, d)),
+          trailing: d.timer == null
+              ? const Icon(Icons.chevron_right)
+              : const Icon(Icons.timer_outlined),
+          onTap: () => openDrill(context, d),
+        ),
     ];
   }
 }
@@ -365,7 +484,17 @@ class DrillDetailScreen extends StatelessWidget {
     final d = drill;
 
     return Scaffold(
-      appBar: AppBar(title: Text(d.name)),
+      appBar: AppBar(
+        title: Text(d.name),
+        actions: [
+          if (d.timer != null)
+            TextButton.icon(
+              icon: const Icon(Icons.timer_outlined),
+              label: Text(l.timerStart),
+              onPressed: () => openTimer(context, d),
+            ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () =>
             openTrainingForm(context, prefill: TrainingPrefill.forDrill(d)),
@@ -399,6 +528,14 @@ class DrillDetailScreen extends StatelessWidget {
                     avatar: const Icon(Icons.timer_outlined, size: 18),
                     label: Text(l.minutesShort(d.minutes)),
                   ),
+                  if (d.timer case final t?)
+                    ActionChip(
+                      avatar: const Icon(Icons.play_arrow, size: 18),
+                      label: Text(
+                        l.timerPlan(t.workSeconds, t.restSeconds, t.rounds),
+                      ),
+                      onPressed: () => openTimer(context, d),
+                    ),
                 ],
               ),
             ),

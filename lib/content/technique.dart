@@ -10,6 +10,32 @@ enum TechniqueKind { stroke, footwork }
 
 enum DrillLevel { beginner, intermediate, advanced }
 
+/// Intervaller til øvelsens timer: arbejde og pause i sekunder og antal
+/// runder.
+class DrillTimer {
+  const DrillTimer({
+    required this.workSeconds,
+    required this.restSeconds,
+    required this.rounds,
+  });
+
+  final int workSeconds;
+  final int restSeconds;
+  final int rounds;
+}
+
+/// Hvor mange der skal til en øvelse, set fra den der leder efter en.
+enum DrillGroup {
+  /// Kan laves alene.
+  solo,
+
+  /// Kan laves med én makker (eller alene).
+  pair,
+
+  /// Kræver mindst 3.
+  group,
+}
+
 class Technique {
   const Technique({
     required this.id,
@@ -46,6 +72,7 @@ class Drill {
     required this.level,
     required this.steps,
     required this.tips,
+    this.timer,
   });
 
   /// Stabilt id, der gemmes i træningsloggen. Må ikke ændres.
@@ -62,6 +89,9 @@ class Drill {
   final DrillLevel level;
   final List<String> steps;
   final List<String> tips;
+
+  /// Intervaller til timeren, hvis øvelsen laves i runder.
+  final DrillTimer? timer;
 }
 
 /// Alle slag og alt benarbejde, i den rækkefølge de vises.
@@ -87,3 +117,40 @@ List<Technique> techniquesOfKind(TechniqueKind kind) =>
 /// Øvelser der træner [techniqueId].
 List<Drill> drillsFor(String techniqueId) =>
     drills.where((d) => d.techniqueIds.contains(techniqueId)).toList();
+
+/// True hvis [text] indeholder alle ord i [query] (uden at skelne mellem
+/// store og små bogstaver). En tom søgning passer på alt.
+bool matchesQuery(String query, Iterable<String> text) {
+  final words = query.toLowerCase().split(RegExp(r'\s+'))
+    ..removeWhere((w) => w.isEmpty);
+  if (words.isEmpty) return true;
+  final haystack = text.join(' ').toLowerCase();
+  return words.every(haystack.contains);
+}
+
+bool techniqueMatches(Technique t, String query) =>
+    matchesQuery(query, [t.name, t.category, t.summary]);
+
+/// Øvelser efter søgning og filtre. Null betyder "alle".
+List<Drill> filterDrills({
+  String query = '',
+  DrillLevel? level,
+  DrillGroup? group,
+  int? maxMinutes,
+}) => [
+  for (final d in drills)
+    if ((level == null || d.level == level) &&
+        (maxMinutes == null || d.minutes <= maxMinutes) &&
+        switch (group) {
+          null => true,
+          DrillGroup.solo => d.minPlayers == 1,
+          DrillGroup.pair => d.minPlayers <= 2,
+          DrillGroup.group => d.minPlayers >= 3,
+        } &&
+        matchesQuery(query, [
+          d.name,
+          d.purpose,
+          for (final id in d.techniqueIds) ?techniqueById(id)?.name,
+        ]))
+      d,
+];

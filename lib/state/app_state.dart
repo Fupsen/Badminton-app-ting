@@ -85,6 +85,14 @@ class AppState extends ChangeNotifier {
     await _commit();
   }
 
+  /// Opdaterer navn, niveau og hånd for en spiller.
+  Future<void> updatePlayer(Player player) async {
+    final i = _data.players.indexWhere((p) => p.id == player.id);
+    if (i < 0) return;
+    _data.players[i] = player.copyWith(name: player.name.trim());
+    await _commit();
+  }
+
   /// Sletter spilleren og alle spillerens kampe, træninger og mål.
   Future<void> deletePlayer(String id) async {
     _data.players.removeWhere((p) => p.id == id);

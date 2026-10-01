@@ -35,11 +35,19 @@ kører på Android, iOS, Windows, macOS og Linux.
   benarbejde (fx hop og landing, vejen til hvert nethjørne og rotation i
   double), samt de gældende **regler** (3×15, serv, fejl, let m.m.). Hvert
   punkt har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
-  hvornår du sidst trænede det. Dertil kommer 34 øvelser med niveau, antal
+  hvornår du sidst trænede det. Dertil kommer 51 øvelser med niveau, antal
   spillere, tid, trin og tips, fra øvelser for børn og øvelser alene til
   kampe med særregler og intervaltræning. En øvelse kan logges direkte som
   træningspas. Teksterne tager udgangspunkt i højrehåndede spillere og er
   generel træningsviden. De erstatter ikke en træner.
+- **Søgning og filtre** i Teknik: søg i slag, benarbejde og øvelser, og
+  filtrér øvelser efter niveau, "Alene", "Med makker", "Gruppe" og "Højst
+  10 min".
+- **Timer** til øvelser med intervaller (arbejde, pause og runder) med
+  vibration og lyd. Skærmen holdes tændt i timeren og i kamptælleren.
+- **Spillerprofil**: niveau (begynder, klubspiller, elite) og om man er
+  venstrehåndet. Øvelserne starter på ens niveau, venstrehåndede får en
+  påmindelse om at spejle beskrivelserne, og AI-træneren får det at vide.
 - **Mål**: træningspas pr. uge, træningsminutter pr. uge eller sejrsprocent,
   med fremskridtsbjælke. Mål oprettes og vises på Oversigten.
 - **Statistik**: sejrsprocent samlet og pr. kamptype, træningsminutter pr.
