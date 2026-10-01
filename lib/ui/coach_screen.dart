@@ -5,13 +5,15 @@ import '../data/coach_client.dart';
 import '../logic/coach_context.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
+import 'training_screen.dart';
 import 'widgets/common.dart';
 
 Future<void> openCoach(BuildContext context) =>
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => const CoachScreen()));
 
-/// Chat med AI-træneren. Samtalen gemmes ikke, når skærmen lukkes.
+/// Chat med AI-træneren. Samtalen gemmes pr. spiller på enheden, indtil
+/// brugeren vælger "Ny samtale".
 class CoachScreen extends StatefulWidget {
   const CoachScreen({super.key});
 
@@ -47,14 +49,31 @@ class _CoachScreenState extends State<CoachScreen> {
 
   Future<void> _loadSettings() async {
     final service = _service;
+    final playerId = context.read<AppState>().activePlayer?.id;
     final key = await service.loadApiKey();
     final model = await service.loadModel();
+    final chat = playerId == null ? null : await service.loadChat(playerId);
     if (!mounted) return;
     setState(() {
       _apiKey = key;
       _model = model;
+      if (chat != null) {
+        _messages.addAll(chat.messages);
+        _summary = chat.summary;
+      }
       _loading = false;
     });
+    _scrollToEnd();
+  }
+
+  Future<void> _saveChat() async {
+    final playerId = context.read<AppState>().activePlayer?.id;
+    final summary = _summary;
+    if (playerId == null || summary == null) return;
+    await _service.saveChat(
+      playerId,
+      CoachChat(summary: summary, messages: List.of(_messages)),
+    );
   }
 
   @override
@@ -80,11 +99,13 @@ class _CoachScreenState extends State<CoachScreen> {
   Future<void> _onMenu(_Menu item) async {
     switch (item) {
       case _Menu.newChat:
+        final playerId = context.read<AppState>().activePlayer?.id;
         setState(() {
           _messages.clear();
           _summary = null;
           _error = null;
         });
+        if (playerId != null) await _service.clearChat(playerId);
       case _Menu.opus || _Menu.sonnet:
         final model = item == _Menu.opus ? CoachModel.opus : CoachModel.sonnet;
         await _service.saveModel(model);
@@ -137,6 +158,7 @@ class _CoachScreenState extends State<CoachScreen> {
           ),
         );
       });
+      await _saveChat();
     } on CoachException catch (e) {
       if (!mounted) return;
       // Spørgsmålet lægges tilbage i feltet, så det kan sendes igen.
@@ -379,6 +401,7 @@ class _Bubble extends StatelessWidget {
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
     final user = message.fromUser;
+    final plan = user ? null : coachPlanFromReply(message.text);
     return Align(
       alignment: user ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -389,11 +412,33 @@ class _Bubble extends StatelessWidget {
           color: user ? scheme.primaryContainer : scheme.surfaceContainerHigh,
           borderRadius: BorderRadius.circular(12),
         ),
-        child: SelectableText(
-          message.text,
-          style: TextStyle(
-            color: user ? scheme.onPrimaryContainer : scheme.onSurface,
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SelectableText(
+              message.text,
+              style: TextStyle(
+                color: user ? scheme.onPrimaryContainer : scheme.onSurface,
+              ),
+            ),
+            if (plan != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: FilledButton.tonalIcon(
+                  icon: const Icon(Icons.fitness_center),
+                  label: Text(context.l10n.coachLogPlan),
+                  onPressed: () => openTrainingForm(
+                    context,
+                    prefill: TrainingPrefill(
+                      drillIds: plan.drillIds,
+                      techniqueIds: plan.techniqueIds,
+                      minutes: plan.minutes,
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );

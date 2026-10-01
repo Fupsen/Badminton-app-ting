@@ -20,6 +20,10 @@ kører på Android, iOS, Windows, macOS og Linux.
   Resultatet tjekkes mod de officielle pointsystemer: **3×15** (standard i
   Danmark fra 1. juli 2026 og hos BWF fra 2027) og **3×21** (tidligere
   standard). Et afvigende resultat giver en advarsel, men kan stadig gemmes.
+- **Kamptæller** (Kampe-fanen): tæl point under kampen med ét tryk pr.
+  duel. Den følger 3×15 eller 3×21, viser hvem der server fra hvilket felt,
+  minder om pausen ved 8 (11) og sideskift, kan fortryde et point og husker
+  stillingen, hvis telefonen låser. Bagefter gemmes kampen med alle sæt.
 - **Træningskampe**: markér en kamp som træningskamp. Den giver ingen
   advarsel om pointsystemet og tæller ikke med i sejrsprocent, form og mål.
   På Statistik kan du vælge at medtage træningskampe.
@@ -45,6 +49,8 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **AI-træner** (knappen med stjernerne øverst): stil spørgsmål om teknik,
   regler, øvelser og taktik, få forslag til et træningspas, og få din form
   og statistik kommenteret. Svarene bygger på vidensbanken og dine egne data.
+  Samtalen gemmes på enheden, og et foreslået træningspas kan logges med ét
+  tryk.
   Den bruger Claude fra Anthropic med **din egen API-nøgle**
   (console.anthropic.com), som kun gemmes på enheden og ikke kommer med i
   backups. Hvert spørgsmål koster typisk under 1 kr. Spørgsmålet og et

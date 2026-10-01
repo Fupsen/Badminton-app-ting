@@ -4,6 +4,7 @@ import 'package:badminton_app/data/backup.dart';
 import 'package:badminton_app/data/backup_files.dart';
 import 'package:badminton_app/data/coach_client.dart';
 import 'package:badminton_app/data/data_store.dart';
+import 'package:badminton_app/data/live_match_store.dart';
 import 'package:badminton_app/l10n/app_localizations.dart';
 import 'package:badminton_app/main.dart';
 import 'package:badminton_app/models/models.dart';
@@ -451,6 +452,120 @@ void main() {
     final body = jsonDecode(requests.last.body) as Map<String, dynamic>;
     expect(body['system'][1]['text'], contains('Spiller: Mette'));
     expect(body['messages'], hasLength(1));
+  });
+
+  testWidgets('AI coach: plan can be logged and the chat is kept',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({'coach_api_key': 'sk-ant-test'});
+    final coach = CoachService(
+      client: MockClient((request) async => http.Response.bytes(
+          utf8.encode(jsonEncode({
+            'content': [
+              {
+                'type': 'text',
+                'text': 'Forslag:\n- Opvarmning (10 min)\n'
+                    '- Clear-duel (15 min)\n- Nedvarmning (5 min)',
+              },
+            ],
+            'stop_reason': 'end_turn',
+          })),
+          200)),
+    );
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store, coach: coach));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('AI-træner'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Foreslå et træningspas'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Clear-duel (15 min)'), findsOneWidget);
+
+    // Samtalen er der stadig, når skærmen åbnes igen.
+    await tester.tap(find.byTooltip('Tilbage'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('AI-træner'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Clear-duel (15 min)'), findsOneWidget);
+
+    await tester.tap(find.text('Log som træningspas'));
+    await tester.pumpAndSettle();
+    expect(find.text('Nyt træningspas'), findsOneWidget);
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+    final saved = (await store.load()).trainings.single;
+    expect(saved.drillIds, ['clear_duel']);
+    expect(saved.durationMinutes, 30);
+
+    // Ny samtale sletter den gemte samtale.
+    await tester.tap(find.byTooltip('Vis menu'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ny samtale'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('Clear-duel (15 min)'), findsNothing);
+    expect(await coach.loadChat('p'), isNull);
+  });
+
+  testWidgets('live score: count a match, undo, and save it', (tester) async {
+    final semantics = tester.ensureSemantics();
+    SharedPreferences.setMockInitialValues({});
+    final store = MemoryStore(onePlayer());
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Kampe'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kamptæller'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Start kampen'));
+    await tester.pumpAndSettle();
+
+    final me = find.bySemanticsLabel(RegExp(r'^Mig \d+$'));
+    final them = find.bySemanticsLabel(RegExp(r'^Modstander \d+$'));
+    expect(find.text('Server · højre felt'), findsOneWidget);
+
+    Future<void> points(Finder side, int n) async {
+      for (var i = 0; i < n; i++) {
+        await tester.tap(side);
+        await tester.pump();
+      }
+    }
+
+    await points(me, 8);
+    expect(find.text('Pause: højst 60 sekunder.'), findsOneWidget);
+    // Et forkert point fortrydes.
+    await points(them, 1);
+    await tester.tap(find.byTooltip('Fortryd sidste point'));
+    await tester.pump();
+    expect(find.bySemanticsLabel('Modstander 0'), findsOneWidget);
+
+    // Kampen tælles stadig, hvis skærmen lukkes og åbnes igen.
+    await tester.tap(find.byTooltip('Tilbage'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Kamptæller'));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel('Mig 8'), findsOneWidget);
+
+    await points(me, 7); // 15-0
+    expect(find.textContaining('Sættet er slut'), findsOneWidget);
+    await points(me, 15); // 15-0, 15-0
+    expect(find.textContaining('sejr 15-0, 15-0'), findsOneWidget);
+
+    await tester.tap(find.text('Gem kampen'));
+    await tester.pumpAndSettle();
+    expect(find.text('Ny kamp'), findsOneWidget);
+    await tester.enterText(
+        find.widgetWithText(TextFormField, 'Modstander(e)'), 'Bo');
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+
+    final saved = (await store.load()).matches.single;
+    expect(saved.games.map((g) => (g.own, g.opponent)), [(15, 0), (15, 0)]);
+    expect(saved.opponents, 'Bo');
+    // Tilbage på Kampe-fanen, og den gemte tælling er ryddet.
+    expect(find.text('Kamptæller'), findsOneWidget);
+    expect(await const LiveMatchStore().load('p'), isNull);
+    semantics.dispose();
   });
 
   testWidgets('web install hint is hidden outside the browser',

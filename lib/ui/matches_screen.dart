@@ -6,6 +6,7 @@ import '../logic/scoring.dart';
 import '../models/models.dart';
 import '../state/app_state.dart';
 import 'labels.dart';
+import 'live_score_screen.dart';
 import 'widgets/common.dart';
 import 'widgets/date_field.dart';
 import 'widgets/suggest_field.dart';
@@ -17,15 +18,32 @@ class MatchesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final matches = context.watch<AppState>().activeMatches;
     final l = context.l10n;
+    final liveScore = Padding(
+      padding: const EdgeInsets.fromLTRB(16, 12, 16, 4),
+      child: FilledButton.tonalIcon(
+        icon: const Icon(Icons.scoreboard_outlined),
+        label: Text(l.liveScoreOpen),
+        onPressed: () => openLiveScore(context),
+      ),
+    );
     if (matches.isEmpty) {
-      return EmptyState(icon: Icons.sports_tennis, message: l.noMatches);
+      return Column(
+        children: [
+          liveScore,
+          Expanded(
+            child: EmptyState(icon: Icons.sports_tennis, message: l.noMatches),
+          ),
+        ],
+      );
     }
     return ContentWidth(
       child: ListView.separated(
-        padding: const EdgeInsets.only(top: 8, bottom: 88),
-        itemCount: matches.length,
-        separatorBuilder: (_, _) => const Divider(height: 1),
-        itemBuilder: (context, i) => MatchTile(match: matches[i]),
+        padding: const EdgeInsets.only(top: 0, bottom: 88),
+        itemCount: matches.length + 1,
+        separatorBuilder: (_, i) =>
+            i == 0 ? const SizedBox.shrink() : const Divider(height: 1),
+        itemBuilder: (context, i) =>
+            i == 0 ? liveScore : MatchTile(match: matches[i - 1]),
       ),
     );
   }
@@ -65,18 +83,39 @@ class MatchTile extends StatelessWidget {
   }
 }
 
-Future<void> openMatchForm(BuildContext context, {MatchRecord? existing}) =>
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        fullscreenDialog: true,
-        builder: (_) => MatchForm(existing: existing),
+/// Åbner kampformularen. Returnerer true, hvis kampen blev gemt.
+Future<bool> openMatchForm(
+  BuildContext context, {
+  MatchRecord? existing,
+  List<GameScore> initialGames = const [],
+  MatchType? initialType,
+}) async {
+  final saved = await Navigator.of(context).push<bool>(
+    MaterialPageRoute(
+      fullscreenDialog: true,
+      builder: (_) => MatchForm(
+        existing: existing,
+        initialGames: initialGames,
+        initialType: initialType,
       ),
-    );
+    ),
+  );
+  return saved ?? false;
+}
 
 class MatchForm extends StatefulWidget {
-  const MatchForm({super.key, this.existing});
+  const MatchForm({
+    super.key,
+    this.existing,
+    this.initialGames = const [],
+    this.initialType,
+  });
 
   final MatchRecord? existing;
+
+  /// Sæt der er udfyldt på forhånd, fx fra kamptælleren.
+  final List<GameScore> initialGames;
+  final MatchType? initialType;
 
   @override
   State<MatchForm> createState() => _MatchFormState();
@@ -98,13 +137,14 @@ class _MatchFormState extends State<MatchForm> {
     super.initState();
     final m = widget.existing;
     _date = m?.date ?? DateTime.now();
-    _type = m?.type ?? MatchType.single;
+    _type = m?.type ?? widget.initialType ?? MatchType.single;
     _practice = m?.practice ?? false;
     _opponents = TextEditingController(text: m?.opponents ?? '');
     _partner = TextEditingController(text: m?.partner ?? '');
     _notes = TextEditingController(text: m?.notes ?? '');
+    final games = m?.games ?? widget.initialGames;
     _scores = List.generate(3, (i) {
-      final game = m != null && i < m.games.length ? m.games[i] : null;
+      final game = i < games.length ? games[i] : null;
       return (
         TextEditingController(text: game?.own.toString() ?? ''),
         TextEditingController(text: game?.opponent.toString() ?? ''),
@@ -195,7 +235,7 @@ class _MatchFormState extends State<MatchForm> {
         practice: _practice,
       ),
     );
-    if (mounted) Navigator.pop(context);
+    if (mounted) Navigator.pop(context, true);
   }
 
   Future<void> _delete() async {

@@ -1419,6 +1419,192 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Noget gik galt: {message}'**
   String coachErrorOther(String message);
+
+  /// No description provided for @liveScoreTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Kamptæller'**
+  String get liveScoreTitle;
+
+  /// No description provided for @liveScoreOpen.
+  ///
+  /// In da, this message translates to:
+  /// **'Kamptæller'**
+  String get liveScoreOpen;
+
+  /// No description provided for @liveScoreIntro.
+  ///
+  /// In da, this message translates to:
+  /// **'Tæl point under kampen. Appen holder styr på, hvem der server fra hvilket felt, pauser og sideskift, og gemmer kampen bagefter.'**
+  String get liveScoreIntro;
+
+  /// No description provided for @liveScoreSystem.
+  ///
+  /// In da, this message translates to:
+  /// **'Pointsystem'**
+  String get liveScoreSystem;
+
+  /// No description provided for @liveScoreSystem15.
+  ///
+  /// In da, this message translates to:
+  /// **'3×15'**
+  String get liveScoreSystem15;
+
+  /// No description provided for @liveScoreSystem21.
+  ///
+  /// In da, this message translates to:
+  /// **'3×21'**
+  String get liveScoreSystem21;
+
+  /// No description provided for @liveScoreType.
+  ///
+  /// In da, this message translates to:
+  /// **'Kamptype'**
+  String get liveScoreType;
+
+  /// No description provided for @liveScoreFirstServer.
+  ///
+  /// In da, this message translates to:
+  /// **'Hvem server først?'**
+  String get liveScoreFirstServer;
+
+  /// No description provided for @liveScoreMe.
+  ///
+  /// In da, this message translates to:
+  /// **'Mig'**
+  String get liveScoreMe;
+
+  /// No description provided for @liveScoreOpponent.
+  ///
+  /// In da, this message translates to:
+  /// **'Modstander'**
+  String get liveScoreOpponent;
+
+  /// No description provided for @liveScoreUs.
+  ///
+  /// In da, this message translates to:
+  /// **'Os'**
+  String get liveScoreUs;
+
+  /// No description provided for @liveScoreThem.
+  ///
+  /// In da, this message translates to:
+  /// **'Modstanderne'**
+  String get liveScoreThem;
+
+  /// No description provided for @liveScoreBegin.
+  ///
+  /// In da, this message translates to:
+  /// **'Start kampen'**
+  String get liveScoreBegin;
+
+  /// No description provided for @liveScoreTapHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Tryk på den side, der vinder duellen.'**
+  String get liveScoreTapHint;
+
+  /// No description provided for @liveScoreServesRight.
+  ///
+  /// In da, this message translates to:
+  /// **'Server · højre felt'**
+  String get liveScoreServesRight;
+
+  /// No description provided for @liveScoreServesLeft.
+  ///
+  /// In da, this message translates to:
+  /// **'Server · venstre felt'**
+  String get liveScoreServesLeft;
+
+  /// No description provided for @liveScoreGameNumber.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt {number}'**
+  String liveScoreGameNumber(int number);
+
+  /// No description provided for @liveScoreGamesWon.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt {us}-{them}'**
+  String liveScoreGamesWon(int us, int them);
+
+  /// No description provided for @liveScoreUndo.
+  ///
+  /// In da, this message translates to:
+  /// **'Fortryd sidste point'**
+  String get liveScoreUndo;
+
+  /// No description provided for @liveScoreInterval.
+  ///
+  /// In da, this message translates to:
+  /// **'Pause: højst 60 sekunder.'**
+  String get liveScoreInterval;
+
+  /// No description provided for @liveScoreIntervalChangeEnds.
+  ///
+  /// In da, this message translates to:
+  /// **'Pause: højst 60 sekunder. Skift side.'**
+  String get liveScoreIntervalChangeEnds;
+
+  /// No description provided for @liveScoreGameEnded.
+  ///
+  /// In da, this message translates to:
+  /// **'Sættet er slut. Pause: højst 120 sekunder. Skift side.'**
+  String get liveScoreGameEnded;
+
+  /// No description provided for @liveScoreWon.
+  ///
+  /// In da, this message translates to:
+  /// **'Kampen er slut: sejr {result}.'**
+  String liveScoreWon(String result);
+
+  /// No description provided for @liveScoreLost.
+  ///
+  /// In da, this message translates to:
+  /// **'Kampen er slut: nederlag {result}.'**
+  String liveScoreLost(String result);
+
+  /// No description provided for @liveScoreSave.
+  ///
+  /// In da, this message translates to:
+  /// **'Gem kampen'**
+  String get liveScoreSave;
+
+  /// No description provided for @liveScoreSaveNow.
+  ///
+  /// In da, this message translates to:
+  /// **'Gem stillingen som kamp'**
+  String get liveScoreSaveNow;
+
+  /// No description provided for @liveScoreAbort.
+  ///
+  /// In da, this message translates to:
+  /// **'Afbryd kampen'**
+  String get liveScoreAbort;
+
+  /// No description provided for @liveScoreAbortTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Afbryd kampen?'**
+  String get liveScoreAbortTitle;
+
+  /// No description provided for @liveScoreAbortBody.
+  ///
+  /// In da, this message translates to:
+  /// **'Stillingen bliver slettet og ikke gemt.'**
+  String get liveScoreAbortBody;
+
+  /// No description provided for @liveScoreAbortConfirm.
+  ///
+  /// In da, this message translates to:
+  /// **'Afbryd'**
+  String get liveScoreAbortConfirm;
+
+  /// No description provided for @coachLogPlan.
+  ///
+  /// In da, this message translates to:
+  /// **'Log som træningspas'**
+  String get coachLogPlan;
 }
 
 class _AppLocalizationsDelegate

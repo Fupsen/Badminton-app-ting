@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:badminton_app/data/data_store.dart';
 import 'package:badminton_app/logic/coach_context.dart';
 import 'package:badminton_app/logic/goals.dart';
+import 'package:badminton_app/logic/live_score.dart';
 import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/logic/stats.dart';
 import 'package:badminton_app/logic/technique_stats.dart';
@@ -473,4 +474,169 @@ void main() {
       expect(summary, isNot(contains('Mål:')));
     });
   });
+
+  group('live score (kamptæller)', () {
+    LiveMatch play(LiveMatch m, String rallies) {
+      for (final c in rallies.split('')) {
+        m = m.pointTo(c == 'u' ? Side.us : Side.them);
+      }
+      return m;
+    }
+
+    const start = LiveMatch(
+      system: ScoringSystem.to15,
+      type: MatchType.single,
+      firstServer: Side.us,
+    );
+
+    test('a game to 15 ends at 15-0 and the winner serves next', () {
+      final m = play(start, 'u' * 15);
+      expect(m.games, [const GameScore(15, 0)]);
+      expect(m.ourPoints, 0);
+      expect(m.server, Side.us);
+      expect(m.lastEvent, LiveEvent.gameEnded);
+      expect(m.isFinished, isFalse);
+    });
+
+    test('14-14 needs two points, and 20-20 is decided by the next point', () {
+      var m = play(start, 'ut' * 14); // 14-14
+      expect((m.ourPoints, m.theirPoints), (14, 14));
+      m = play(m, 'u'); // 15-14: ikke slut
+      expect(m.games, isEmpty);
+      m = play(m, 'u'); // 16-14
+      expect(m.games, [const GameScore(16, 14)]);
+
+      var cap = play(start, 'ut' * 20); // 20-20
+      expect(cap.games, isEmpty);
+      cap = play(cap, 't');
+      expect(cap.games, [const GameScore(20, 21)]);
+      expect(cap.server, Side.them);
+    });
+
+    test('3x21 is capped at 30', () {
+      const m21 = LiveMatch(
+        system: ScoringSystem.to21,
+        type: MatchType.double,
+        firstServer: Side.them,
+      );
+      final m = play(m21, '${'ut' * 29}u');
+      expect(m.games, [const GameScore(30, 29)]);
+    });
+
+    test('server and service court follow the rally winner and score', () {
+      var m = start;
+      expect((m.server, m.serviceCourt), (Side.us, Court.right)); // 0-0
+      m = play(m, 'u'); // 1-0
+      expect((m.server, m.serviceCourt), (Side.us, Court.left));
+      m = play(m, 't'); // 1-1
+      expect((m.server, m.serviceCourt), (Side.them, Court.left));
+      m = play(m, 't'); // 1-2
+      expect((m.server, m.serviceCourt), (Side.them, Court.right));
+    });
+
+    test('interval at 8 only once, with change of ends in game 3', () {
+      var m = play(start, 'u' * 7);
+      expect(m.lastEvent, isNull);
+      m = play(m, 'u'); // 8-0
+      expect(m.lastEvent, LiveEvent.interval);
+      m = play(m, 't'); // 8-1
+      expect(m.lastEvent, isNull);
+      // Til 8-8 og 9-8: ingen ny pause.
+      m = play(m, 't' * 7);
+      expect(m.lastEvent, isNull);
+
+      // 1-1 i sæt, så i 3. sæt er der sideskift ved 8.
+      var decider = play(start, '${'u' * 15}${'t' * 15}${'t' * 7}');
+      expect(decider.games, hasLength(2));
+      decider = play(decider, 't');
+      expect(decider.lastEvent, LiveEvent.intervalAndChangeEnds);
+    });
+
+    test('3x21 has the interval at 11', () {
+      const m21 = LiveMatch(
+        system: ScoringSystem.to21,
+        type: MatchType.single,
+        firstServer: Side.us,
+      );
+      expect(play(m21, 'u' * 8).lastEvent, isNull);
+      expect(play(m21, 'u' * 11).lastEvent, LiveEvent.interval);
+    });
+
+    test('match ends after two games and ignores further points', () {
+      var m = play(start, '${'u' * 15}${'t' * 15}${'u' * 15}');
+      expect(m.isFinished, isTrue);
+      expect(m.winner, Side.us);
+      expect(m.lastEvent, LiveEvent.matchEnded);
+      expect(m.gamesForSaving, const [
+        GameScore(15, 0),
+        GameScore(0, 15),
+        GameScore(15, 0),
+      ]);
+      expect(identical(m.pointTo(Side.them), m), isTrue);
+
+      final lost = play(start, 't' * 30);
+      expect(lost.winner, Side.them);
+      expect(lost.games, hasLength(2));
+    });
+
+    test('undo removes the last point, also across a finished game', () {
+      var m = play(start, 'u' * 15);
+      expect(m.games, hasLength(1));
+      m = m.undo();
+      expect(m.games, isEmpty);
+      expect((m.ourPoints, m.theirPoints), (14, 0));
+      expect(start.undo(), same(start));
+      expect(start.canUndo, isFalse);
+    });
+
+    test('unfinished game is included when saving early', () {
+      final m = play(start, '${'u' * 15}uttuu');
+      expect(m.gamesForSaving, const [GameScore(15, 0), GameScore(3, 2)]);
+    });
+
+    test('json round trip keeps settings and every rally', () {
+      final m = play(
+        const LiveMatch(
+          system: ScoringSystem.to21,
+          type: MatchType.mixed,
+          firstServer: Side.them,
+        ),
+        'uttuu',
+      );
+      final copy = LiveMatch.fromJson(m.toJson());
+      expect(copy.system, ScoringSystem.to21);
+      expect(copy.type, MatchType.mixed);
+      expect(copy.firstServer, Side.them);
+      expect(copy.rallies, m.rallies);
+      expect((copy.ourPoints, copy.theirPoints), (3, 2));
+    });
+  });
+
+  group('AI coach plan from reply', () {
+    test('finds app drills in order and sums the listed minutes', () {
+      final plan = coachPlanFromReply(
+        'Her er et forslag:\n'
+        '- Opvarmning (10 min): let løb og Hop og landing\n'
+        '- Clear-duel (15 min)\n'
+        '- Kamp med kun kort serv (20 min)\n'
+        '- Nedvarmning (5 min)\n'
+        'I alt 50 minutter.',
+      )!;
+      expect(plan.drillIds, ['jump_basics', 'clear_duel', 'low_serve_game']);
+      expect(plan.minutes, 50);
+      expect(plan.techniqueIds, containsAll(['clear', 'serve_short']));
+      expect(plan.techniqueIds.toSet(), hasLength(plan.techniqueIds.length));
+    });
+
+    test('uses the drills\' own minutes when no times are given', () {
+      final plan = coachPlanFromReply('Prøv Clear-duel og Net-duel.')!;
+      expect(plan.drillIds, ['clear_duel', 'net_duel']);
+      expect(plan.minutes, 10 + 8);
+    });
+
+    test('returns null when no drill is mentioned', () {
+      expect(coachPlanFromReply('Spil mere på baghånden.'), isNull);
+    });
+  });
 }
+
