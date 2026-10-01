@@ -932,4 +932,87 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get coachLogPlan => 'Log som træningspas';
+
+  @override
+  String get timerStart => 'Start timer';
+
+  @override
+  String get timerTitle => 'Timer';
+
+  @override
+  String get timerReady => 'Gør klar';
+
+  @override
+  String get timerWork => 'Arbejd';
+
+  @override
+  String get timerRest => 'Pause';
+
+  @override
+  String get timerDone => 'Færdig!';
+
+  @override
+  String timerRound(int round, int rounds) {
+    return 'Runde $round af $rounds';
+  }
+
+  @override
+  String timerPlan(int work, int rest, int rounds) {
+    return '$work sek. arbejde, $rest sek. pause, $rounds runder';
+  }
+
+  @override
+  String get timerPauseTooltip => 'Sæt på pause';
+
+  @override
+  String get timerResumeTooltip => 'Fortsæt';
+
+  @override
+  String get timerRestartTooltip => 'Start forfra';
+
+  @override
+  String get timerLogDrill => 'Log øvelsen';
+
+  @override
+  String get searchHint => 'Søg';
+
+  @override
+  String get searchNoResults => 'Intet fundet.';
+
+  @override
+  String get drillFilterSolo => 'Alene';
+
+  @override
+  String get drillFilterPair => 'Med makker';
+
+  @override
+  String get drillFilterGroup => 'Gruppe (3+)';
+
+  @override
+  String get drillFilterShort => 'Højst 10 min';
+
+  @override
+  String get editPlayer => 'Rediger spiller';
+
+  @override
+  String get playerLevel => 'Niveau';
+
+  @override
+  String get playerLevelNone => 'Ikke valgt';
+
+  @override
+  String get playerLevelBeginner => 'Begynder';
+
+  @override
+  String get playerLevelIntermediate => 'Klubspiller';
+
+  @override
+  String get playerLevelElite => 'Elite';
+
+  @override
+  String get playerLeftHanded => 'Venstrehåndet';
+
+  @override
+  String get leftHandedNote =>
+      'Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side.';
 }

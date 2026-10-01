@@ -1084,6 +1084,7 @@ const drills = <Drill>[
     minPlayers: 1,
     minutes: 10,
     level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 30, restSeconds: 30, rounds: 8),
     steps: [
       'Start i midten med split step.',
       'Bevæg dig til et hjørne, lav slag-bevægelsen, og kom tilbage.',
@@ -1304,6 +1305,7 @@ const drills = <Drill>[
     minPlayers: 1,
     minutes: 8,
     level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 20, restSeconds: 40, rounds: 8),
     steps: [
       'Hop på to ben frem og tilbage over en linje i 20 sekunder.',
       'Hop sidelæns frem og tilbage over sidegangen (mellem single- og '
@@ -1399,6 +1401,7 @@ const drills = <Drill>[
     minPlayers: 1,
     minutes: 8,
     level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 30, restSeconds: 30, rounds: 6),
     steps: [
       'Start i midten med split step.',
       'Forhåndsnettet: højre ben fører, chassé og udfald. Lav '
@@ -1444,6 +1447,7 @@ const drills = <Drill>[
     minPlayers: 2,
     minutes: 8,
     level: DrillLevel.intermediate,
+    timer: DrillTimer(workSeconds: 20, restSeconds: 40, rounds: 6),
     steps: [
       'Spilleren står i midten. Makkeren står foran og viser en retning med '
           'armen.',
@@ -1540,6 +1544,7 @@ const drills = <Drill>[
     minPlayers: 1,
     minutes: 20,
     level: DrillLevel.advanced,
+    timer: DrillTimer(workSeconds: 10, restSeconds: 20, rounds: 15),
     steps: [
       'Varm grundigt op.',
       'Skyggebadminton eller multi-fjer til tilfældige hjørner i 5-10 '
@@ -1612,6 +1617,7 @@ const drills = <Drill>[
     minPlayers: 1,
     minutes: 5,
     level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 10, restSeconds: 20, rounds: 8),
     steps: [
       'Stil dig med begge fødder i sidegangen, med front mod en makker.',
       'På et signal (et klap eller en fjerbold mod ketsjeren) flytter du '
@@ -1624,6 +1630,379 @@ const drills = <Drill>[
     tips: [
       'Den, der bliver først færdig, vinder.',
       'Små, hurtige skridt på forfoden.',
+    ],
+  ),
+  Drill(
+    id: 'split_step_signal',
+    name: 'Split step på signal',
+    purpose:
+        'Lærer split steppet og at vælge retning ud fra modstanderens slag. '
+        'Godt til grupper og børn.',
+    techniqueIds: ['split_step'],
+    minPlayers: 2,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Spillerne marcherer på stedet. Træneren står foran med ketsjer og '
+          'fjerbold.',
+      'Træneren slår let på fjerbolden lige foran sig: split step med '
+          'fødderne ud til siderne.',
+      'Træneren slår på fjerbolden ude til venstre: split step med højre fod '
+          'forrest. Ude til højre: venstre fod forrest.',
+      'Byg på: efter split steppet tager spillerne 2-3 skridt i den retning.',
+    ],
+    tips: [
+      'Lad spillerne skiftes til at være den, der giver signalet.',
+      'Hoppet skal være lavt og kort.',
+    ],
+  ),
+  Drill(
+    id: 'tramline_split',
+    name: 'Split step i sidegangen',
+    purpose:
+        'Hurtige fødder og kort jordkontakt i split step, frem og tilbage.',
+    techniqueIds: ['split_step', 'hop_pivot'],
+    minPlayers: 1,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 20, restSeconds: 40, rounds: 5),
+    steps: [
+      'Lav et split step med højre fod forrest, så du lander i den bagerste '
+          'sidegang.',
+      'Sæt af fra venstre fod, og sæt den ned i sidegangen ved siden af højre.',
+      'Flyt højre fod ud af sidegangen.',
+      'Lav et lille hop med drejning, så du lander i et nyt split step med '
+          'venstre fod i sidegangen. Fortsæt frem og tilbage.',
+    ],
+    tips: [
+      'Start langsomt, og sæt så tempoet op. Forestil dig, at gulvet er varmt.',
+      'En makker kan klappe eller råbe "skift", når du skal skifte retning.',
+    ],
+  ),
+  Drill(
+    id: 'split_step_catch',
+    name: 'Split step og grib',
+    purpose:
+        'Split step, første skridt og at bruge benene i stedet for at læne '
+        'sig. Godt til børn og begyndere.',
+    techniqueIds: ['split_step', 'chasse'],
+    minPlayers: 2,
+    minutes: 8,
+    level: DrillLevel.beginner,
+    steps: [
+      'A og B står over for hinanden. A har en fjerbold.',
+      'A kaster fjerbolden underhånd ud til siden af B.',
+      'B laver split step, skubber fra og tager et chassé hen til fjerbolden.',
+      'B griber fjerbolden med begge hænder foran kroppen. Byt efter 10 kast.',
+    ],
+    tips: [
+      'Griber man med begge hænder foran kroppen, bruger man benene og læner '
+          'sig ikke.',
+      'Senere kan der gribes med én hånd ude i siden, men hold split steppet, '
+          'og læn dig ikke for meget.',
+    ],
+  ),
+  Drill(
+    id: 'cross_behind_z',
+    name: 'Z-mønster med bagom-skridt',
+    purpose: 'Træner bagom-skridtet frem og tilbage. Passer i opvarmningen.',
+    techniqueIds: ['cross_behind', 'chasse'],
+    minPlayers: 1,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Bevæg dig hen ad banen i en række Z-former med bagom-skridt.',
+      'Lav mønstret både fremad og baglæns.',
+      'Træn begge sider. I kamp er det næsten altid ketsjerbenet, der krydser '
+          'bagom, men træn begge ben.',
+    ],
+    tips: [
+      'Står du med front mod nettet, så se på netkanten, så hovedet holdes '
+          'stille.',
+    ],
+  ),
+  Drill(
+    id: 'pivot_pickup',
+    name: 'Pivot og saml fjerbolde',
+    purpose:
+        'Træner hop og pivot om én fod kombineret med udfald. Kan laves som '
+        'stafet.',
+    techniqueIds: ['hop_pivot', 'lunge'],
+    minPlayers: 1,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Sæt én fod på en markering.',
+      'Læg tre fjerbolde på gulvet, så du kan nå dem med et udfald.',
+      'Saml en fjerbold op, drej (pivot) rundt om foden på markeringen, og læg '
+          'fjerbolden bag dig.',
+      'Drej tilbage, og tag den næste. Fortsæt, til alle tre ligger bag dig.',
+    ],
+    tips: [
+      'Øv pivot på begge ben og i begge retninger.',
+      'I grupper på tre kan man række fjerboldene videre i stedet for at samle '
+          'dem op, og det kan blive til et kapløb.',
+    ],
+  ),
+  Drill(
+    id: 'lunge_form',
+    name: 'Udfald: form, balance og slag',
+    purpose:
+        'Lærer et godt udfald trin for trin: stilling, holdning, rækkevidde '
+        'og til sidst et slag.',
+    techniqueIds: ['lunge', 'net_shot'],
+    minPlayers: 1,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'Stilling: bred fodstilling med forreste tæer mod en væg og bagerste fod '
+          'på tværs. Sænk dig ved at bøje begge knæ. 3 gange på hvert ben.',
+      'Holdning: stå med samlede fødder og en fjerbold på hovedet. Træd frem i '
+          'et udfald og tilbage, uden at fjerbolden falder af.',
+      'Rækkevidde: stå over for en makker, gå begge i udfald, og ræk '
+          'fjerbolden til hinanden. Skift ben.',
+      'Slag: makkeren kaster blødt, og du går i udfald og slår fjerbolden '
+          'tilbage. Både forhånd og baghånd, frem og til siden.',
+    ],
+    tips: [
+      'Væggen forhindrer, at knæet kommer for langt frem.',
+      'Stræk den bagerste arm ud for balancen, og hold overkroppen rank.',
+    ],
+  ),
+  Drill(
+    id: 'net_chain',
+    name: 'Kædning til forhåndsnettet',
+    purpose:
+        'Bygger bevægelsen til forhåndsnettet op trin for trin, med et '
+        'netdrop til sidst.',
+    techniqueIds: ['forehand_net', 'split_step', 'chasse', 'lunge', 'net_shot'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'Stå lige bag den korte servelinje, træd ud i et udfald, og spil et '
+          'netdrop på en kastet fjerbold.',
+      'Start med bred fodstilling: chassé, træd ud i udfaldet, og slå, idet '
+          'udfaldet er færdigt.',
+      'Gå roligt frem, lav split step med højre fod forrest, chassé, udfald og '
+          'slag.',
+      'Til sidst også chassé tilbage. Kast videre, når returen er god.',
+    ],
+    tips: [
+      'Chasséet skal være hurtigt med kort jordkontakt.',
+      'Knæ og fod på det forreste ben peger mod fjerbolden.',
+    ],
+  ),
+  Drill(
+    id: 'ladder_feet',
+    name: 'Stigeøvelse: afsæt-1-2',
+    purpose:
+        'Hurtige fødder og afsæt. Kan laves med en stige eller sidegangen.',
+    techniqueIds: ['chasse', 'split_step'],
+    minPlayers: 1,
+    minutes: 6,
+    level: DrillLevel.beginner,
+    timer: DrillTimer(workSeconds: 20, restSeconds: 40, rounds: 6),
+    steps: [
+      'Stå på højre fod ved siden af stigen (eller sidegangen).',
+      'Sæt af fra højre fod, træd ind i stigen (venstre-højre), og træd ud på '
+          'venstre fod.',
+      'Sæt af fra venstre fod, træd ind (højre-venstre), og træd ud på højre.',
+      'Sig rytmen højt: "afsæt-1-2". Lav det også baglæns.',
+    ],
+    tips: [
+      'Uden stige kan sidegangen bruges.',
+      'Find selv på flere mønstre, når det her sidder.',
+    ],
+  ),
+  Drill(
+    id: 'hand_hit_reaction',
+    name: 'Slå fjerbolden med hånden',
+    purpose: 'Reaktion og hurtige hænder. Sjov for børn.',
+    techniqueIds: ['split_step'],
+    minPlayers: 2,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Stå over for en makker eller træneren, som har 8-12 fjerbolde.',
+      'Makkeren kaster fjerboldene hurtigt efter hinanden, og du slår dem med '
+          'hånden.',
+      'Variant: farv nogle fjerbolde sorte. Slå de hvide, og flyt dig væk fra '
+          'de sorte.',
+    ],
+    tips: ['Stå klar med let bøjede knæ og hænderne oppe.'],
+  ),
+  Drill(
+    id: 'lie_down_sprint',
+    name: 'Lig ned, rejs dig, løb!',
+    purpose: 'Agility: hurtigt op og afsted. God leg i opvarmningen.',
+    techniqueIds: ['crossover'],
+    minPlayers: 1,
+    minutes: 5,
+    level: DrillLevel.beginner,
+    steps: [
+      'Lig fladt på ryggen i forbanen med fødderne mod den korte servelinje.',
+      'På et signal: rejs dig, og spurt til baglinjen.',
+      'Varianter: armene over kors (må ikke bruges til at rejse sig), eller lig '
+          'på maven.',
+    ],
+    tips: ['Lav det som et kapløb mod de andre.'],
+  ),
+  Drill(
+    id: 'net_shot_targets',
+    name: 'Netdrop på point',
+    purpose: 'Begynderøvelse til baghånds-netdrop med point og senere spin.',
+    techniqueIds: ['net_shot', 'net_spin', 'grips'],
+    minPlayers: 2,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'A står i bagbanen og kaster en fjerbold over nettet til B.',
+      'B spiller et baghånds-netdrop (tommelgreb) ned i forbanen.',
+      'A må først løbe frem og gribe fjerbolden, når B har ramt den.',
+      'B har 10 forsøg: 1 point, hvis A må træde ind i forbanen, og 3 point, '
+          'hvis fjerbolden lander i forbanen. Byt roller.',
+      'Derefter: netduel baghånd mod baghånd, og prøv at give fjerbolden spin.',
+    ],
+    tips: [
+      'Hold ketsjeren ude foran kroppen, og skub fjerbolden blødt over.',
+      'Med flere spillere: to hold på hver sin side, der skiftes til at spille '
+          'netdrop.',
+    ],
+  ),
+  Drill(
+    id: 'overhead_suspended',
+    name: 'Overhåndsslag mod hængende fjerbold',
+    purpose:
+        'Lærer kastebevægelsen i clear, smash og drop trin for trin, uden at '
+        'skulle ramme en flyvende fjerbold.',
+    techniqueIds: ['clear', 'smash', 'drop', 'grips'],
+    minPlayers: 1,
+    minutes: 10,
+    level: DrillLevel.beginner,
+    steps: [
+      'Hæng en fjerbold op i en snor i en behagelig slaghøjde.',
+      'Basisgreb: læg ketsjerfladen mod fjerbolden, drej underarmen, så '
+          'grebets ende peger mod fjerbolden, og drej tilbage i slaget.',
+      'Tilføj sidelæns stilling: skub bagerste hofte frem, og før albuen op og '
+          'frem.',
+      'Tilføj skridt tilbage, afsæt og "kast" ketsjerhovedet mod fjerbolden. '
+          'Til drop: brems ketsjeren lige før træffet.',
+      'Gentag med en fjerbold, som en makker kaster højt op.',
+    ],
+    tips: [
+      'Ram over og lidt foran slagskulderen.',
+      'Skyg først slaget, og prøv det med lukkede øjne for at mærke bevægelsen.',
+    ],
+  ),
+  Drill(
+    id: 'backhand_clear_intro',
+    name: 'Baghånds-clear med ryggen til nettet',
+    purpose: 'Begynderøvelse til baghånds-clear: slag, vending og retur.',
+    techniqueIds: ['backhand', 'backhand_corner'],
+    minPlayers: 1,
+    minutes: 10,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Skyg slaget: først efter træneren, så alene og så med lukkede øjne.',
+      'Hængende fjerbold: stå med ryggen til nettet og fjerbolden lidt bag dig. '
+          'Slå, og vend dig mod nettet igen.',
+      'Med ryggen til en væg: en makker kaster, og du slår fjerbolden ind i '
+          'væggen og vender dig.',
+      'Makkeren slår en fjerbold over nettet. Vend ryggen til, slå, og vend '
+          'tilbage.',
+    ],
+    tips: [
+      'Albuen nede og ketsjerhovedet oppe, når du kommer frem. Slaget er et kort '
+          '"punch".',
+      'Prøv at ændre greb og håndled for at slå både lige og på kryds.',
+    ],
+  ),
+  Drill(
+    id: 'smash_block_lift',
+    name: 'Smash, block, block, løft',
+    purpose:
+        'Fast rutine for angreb og forsvar, og en kamp med bonuspoint for '
+        'smash.',
+    techniqueIds: ['smash', 'defence', 'net_shot', 'lift'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'A smasher. B blocker kort. A spiller netdrop (block). B løfter højt '
+          'tilbage. Forfra.',
+      'Kør 5 minutter, og byt roller.',
+      'Kamp: vindes duellen med en smash eller slaget lige efter en smash, '
+          'giver det 3 point i stedet for 1.',
+      'Variant: drop-løft-drop-løft, og 3 point for at vinde på et drop.',
+    ],
+    tips: [
+      'Varier smashens fart, og sigt mod det tomme område eller mod kroppen.',
+      'Læg mål på banen for at få stejlere og mere præcise slag.',
+    ],
+  ),
+  Drill(
+    id: 'high_serve_targets',
+    name: 'Single med høj serv på mål',
+    purpose: 'Træner en lang, høj serv mod midten af baglinjen.',
+    techniqueIds: ['serve_long'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.beginner,
+    steps: [
+      'Markér et mål bagerst og midt på banen med tape.',
+      'Spil single, hvor kun høj serv er tilladt. I skiftes til at serve, så '
+          'begge får lige meget træning.',
+      'Lander serven uden for målet, taber serveren duellen.',
+      'Gør målet mindre og dybere for de øvede.',
+    ],
+    tips: ['Stil dig efter serven lidt til den side, du servede til.'],
+  ),
+  Drill(
+    id: 'return_high_serve',
+    name: 'Returnering af høj serv',
+    purpose:
+        'Single, hvor man øver at vælge den rigtige returnering af en høj '
+        'serv.',
+    techniqueIds: ['clear', 'smash', 'drop'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'Den ene server 10 gange, så den anden 10 gange.',
+      'Duellerne spilles som normalt, men vindes duellen, når en bestemt '
+          'returnering blev brugt (fx lige clear), giver det 2 point.',
+      'Variant: hver spiller må kun bruge to returneringer, fx lige clear og '
+          'drop på kryds. Tal bagefter om, hvad der virkede.',
+    ],
+    tips: [
+      'En god, dyb serv returneres med en flad angrebsclear. Er serven kort, '
+          'så smash.',
+      'Lige slag er nemmere at følge op på end kryds.',
+    ],
+  ),
+  Drill(
+    id: 'drop_gates',
+    name: 'Drop gennem porte',
+    purpose:
+        'Double med særregler, der træner præcise drop fra bagbanen mellem '
+        'forsvarerne.',
+    techniqueIds: ['drop', 'doubles_rotation'],
+    minPlayers: 4,
+    minutes: 15,
+    level: DrillLevel.advanced,
+    steps: [
+      'Del nettet i tre lige store dele med to markeringer, og sæt en '
+          'markering midt på nettet.',
+      'Spil almindelig double.',
+      'Drop fra bagbanen skal gå gennem en af de to midterste "porte" '
+          '(mellem midtermarkeringen og en af de andre), så de lander mellem '
+          'forsvarerne.',
+    ],
+    tips: [
+      'Drop mellem de to forsvarere gør vinklerne små.',
+      'Giv bonuspoint for slag fra bagbanen, der vinder duellen eller giver '
+          'den forreste spiller en afslutning.',
     ],
   ),
 ];

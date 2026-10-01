@@ -1605,6 +1605,162 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Log som træningspas'**
   String get coachLogPlan;
+
+  /// No description provided for @timerStart.
+  ///
+  /// In da, this message translates to:
+  /// **'Start timer'**
+  String get timerStart;
+
+  /// No description provided for @timerTitle.
+  ///
+  /// In da, this message translates to:
+  /// **'Timer'**
+  String get timerTitle;
+
+  /// No description provided for @timerReady.
+  ///
+  /// In da, this message translates to:
+  /// **'Gør klar'**
+  String get timerReady;
+
+  /// No description provided for @timerWork.
+  ///
+  /// In da, this message translates to:
+  /// **'Arbejd'**
+  String get timerWork;
+
+  /// No description provided for @timerRest.
+  ///
+  /// In da, this message translates to:
+  /// **'Pause'**
+  String get timerRest;
+
+  /// No description provided for @timerDone.
+  ///
+  /// In da, this message translates to:
+  /// **'Færdig!'**
+  String get timerDone;
+
+  /// No description provided for @timerRound.
+  ///
+  /// In da, this message translates to:
+  /// **'Runde {round} af {rounds}'**
+  String timerRound(int round, int rounds);
+
+  /// No description provided for @timerPlan.
+  ///
+  /// In da, this message translates to:
+  /// **'{work} sek. arbejde, {rest} sek. pause, {rounds} runder'**
+  String timerPlan(int work, int rest, int rounds);
+
+  /// No description provided for @timerPauseTooltip.
+  ///
+  /// In da, this message translates to:
+  /// **'Sæt på pause'**
+  String get timerPauseTooltip;
+
+  /// No description provided for @timerResumeTooltip.
+  ///
+  /// In da, this message translates to:
+  /// **'Fortsæt'**
+  String get timerResumeTooltip;
+
+  /// No description provided for @timerRestartTooltip.
+  ///
+  /// In da, this message translates to:
+  /// **'Start forfra'**
+  String get timerRestartTooltip;
+
+  /// No description provided for @timerLogDrill.
+  ///
+  /// In da, this message translates to:
+  /// **'Log øvelsen'**
+  String get timerLogDrill;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In da, this message translates to:
+  /// **'Søg'**
+  String get searchHint;
+
+  /// No description provided for @searchNoResults.
+  ///
+  /// In da, this message translates to:
+  /// **'Intet fundet.'**
+  String get searchNoResults;
+
+  /// No description provided for @drillFilterSolo.
+  ///
+  /// In da, this message translates to:
+  /// **'Alene'**
+  String get drillFilterSolo;
+
+  /// No description provided for @drillFilterPair.
+  ///
+  /// In da, this message translates to:
+  /// **'Med makker'**
+  String get drillFilterPair;
+
+  /// No description provided for @drillFilterGroup.
+  ///
+  /// In da, this message translates to:
+  /// **'Gruppe (3+)'**
+  String get drillFilterGroup;
+
+  /// No description provided for @drillFilterShort.
+  ///
+  /// In da, this message translates to:
+  /// **'Højst 10 min'**
+  String get drillFilterShort;
+
+  /// No description provided for @editPlayer.
+  ///
+  /// In da, this message translates to:
+  /// **'Rediger spiller'**
+  String get editPlayer;
+
+  /// No description provided for @playerLevel.
+  ///
+  /// In da, this message translates to:
+  /// **'Niveau'**
+  String get playerLevel;
+
+  /// No description provided for @playerLevelNone.
+  ///
+  /// In da, this message translates to:
+  /// **'Ikke valgt'**
+  String get playerLevelNone;
+
+  /// No description provided for @playerLevelBeginner.
+  ///
+  /// In da, this message translates to:
+  /// **'Begynder'**
+  String get playerLevelBeginner;
+
+  /// No description provided for @playerLevelIntermediate.
+  ///
+  /// In da, this message translates to:
+  /// **'Klubspiller'**
+  String get playerLevelIntermediate;
+
+  /// No description provided for @playerLevelElite.
+  ///
+  /// In da, this message translates to:
+  /// **'Elite'**
+  String get playerLevelElite;
+
+  /// No description provided for @playerLeftHanded.
+  ///
+  /// In da, this message translates to:
+  /// **'Venstrehåndet'**
+  String get playerLeftHanded;
+
+  /// No description provided for @leftHandedNote.
+  ///
+  /// In da, this message translates to:
+  /// **'Beskrivelserne er skrevet til højrehåndede. Du skal spejle dem: dit ketsjerben er venstre, og baghånd og forhånd bytter side.'**
+  String get leftHandedNote;
 }
 
 class _AppLocalizationsDelegate

@@ -64,6 +64,21 @@ extension GoalTypeLabel on GoalType {
   };
 }
 
+extension PlayerLevelLabel on PlayerLevel {
+  String label(AppLocalizations l) => switch (this) {
+    PlayerLevel.beginner => l.playerLevelBeginner,
+    PlayerLevel.intermediate => l.playerLevelIntermediate,
+    PlayerLevel.elite => l.playerLevelElite,
+  };
+
+  /// Det øvelsesniveau, der passer til spilleren.
+  DrillLevel get drillLevel => switch (this) {
+    PlayerLevel.beginner => DrillLevel.beginner,
+    PlayerLevel.intermediate => DrillLevel.intermediate,
+    PlayerLevel.elite => DrillLevel.advanced,
+  };
+}
+
 extension DrillLevelLabel on DrillLevel {
   String label(AppLocalizations l) => switch (this) {
     DrillLevel.beginner => l.drillLevelBeginner,

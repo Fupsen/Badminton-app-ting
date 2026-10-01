@@ -55,7 +55,17 @@ void main() {
     ]) {
       expect(techniqueById(id), isNotNull, reason: id);
     }
-    for (final id in ['balloon_play', 'fast_feet', 'throwminton']) {
+    for (final id in [
+      'balloon_play',
+      'fast_feet',
+      'throwminton',
+      'split_step_signal',
+      'tramline_split',
+      'net_shot_targets',
+      'overhead_suspended',
+      'smash_block_lift',
+      'drop_gates',
+    ]) {
       expect(drillById(id), isNotNull, reason: id);
     }
     // Der skal være øvelser på alle niveauer, og nogle der kan laves alene.
@@ -85,6 +95,17 @@ void main() {
     final drillTable = File('docs/viden/ovelser.md').readAsStringSync();
     for (final d in drills) {
       expect(drillTable, contains('| `${d.id}` | ${d.name} |'), reason: d.id);
+    }
+  });
+
+  test('drill timers are sensible', () {
+    final timed = drills.where((d) => d.timer != null).toList();
+    expect(timed.length, greaterThanOrEqualTo(6));
+    for (final d in timed) {
+      final t = d.timer!;
+      expect(t.workSeconds, greaterThan(0), reason: d.id);
+      expect(t.restSeconds, greaterThanOrEqualTo(0), reason: d.id);
+      expect(t.rounds, greaterThan(0), reason: d.id);
     }
   });
 

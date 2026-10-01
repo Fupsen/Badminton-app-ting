@@ -15,26 +15,54 @@ String newId() {
   return '$time${part()}${part()}';
 }
 
+/// Spillerens niveau. Bruges til at foreslå øvelser og af AI-træneren.
+enum PlayerLevel { beginner, intermediate, elite }
+
 class Player {
-  Player({required this.id, required this.name, required this.createdAt});
+  Player({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    this.level,
+    this.leftHanded = false,
+  });
 
   final String id;
   final String name;
   final DateTime createdAt;
 
-  Player copyWith({String? name}) =>
-      Player(id: id, name: name ?? this.name, createdAt: createdAt);
+  /// Valgfrit. Null betyder, at spilleren ikke har valgt.
+  final PlayerLevel? level;
+  final bool leftHanded;
+
+  Player copyWith({
+    String? name,
+    PlayerLevel? Function()? level,
+    bool? leftHanded,
+  }) => Player(
+    id: id,
+    name: name ?? this.name,
+    createdAt: createdAt,
+    level: level == null ? this.level : level(),
+    leftHanded: leftHanded ?? this.leftHanded,
+  );
 
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
     'createdAt': createdAt.toIso8601String(),
+    if (level != null) 'level': level!.name,
+    if (leftHanded) 'leftHanded': true,
   };
 
   factory Player.fromJson(Map<String, dynamic> json) => Player(
     id: json['id'] as String,
     name: json['name'] as String,
     createdAt: DateTime.parse(json['createdAt'] as String),
+    // Nye felter er valgfrie, så gamle data og backups kan læses. Et ukendt
+    // niveau (fx fra en nyere version) ignoreres.
+    level: PlayerLevel.values.where((l) => l.name == json['level']).firstOrNull,
+    leftHanded: json['leftHanded'] as bool? ?? false,
   );
 }
 

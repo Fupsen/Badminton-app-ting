@@ -72,6 +72,31 @@ forkerte sidetal fra et automatisk sammendrag. De er rettet.
 | `throwminton` | Kastebadminton | B | 2 | Kaste- og gribelege, "Throwminton" [BWF-L1, s. 76] |
 | `balloon_play` | Ballonbadminton | B | 1 | Balloner og korte ketsjere til børn [BWF-L1, s. 45], greb i luften med håndfladen op/håndryggen frem og 5-4-3-2-1-skift [s. 80-83] |
 | `fast_feet` | Fast feet på signal | B | 1 | "Fast feet" og "fast feet/move off" [BWF-L1, s. 191] |
+| `split_step_signal` | Split step på signal | B | 2 | Split step på signal fra en fjerbold [BWF-L1, s. 54] |
+| `tramline_split` | Split step i sidegangen | B | 1 | Split step i sidegangen [BWF-L1, s. 55] |
+| `split_step_catch` | Split step og grib | B | 2 | Split step og grib med begge hænder [BWF-L1, s. 55] |
+| `cross_behind_z` | Z-mønster med bagom-skridt | B | 1 | Z-former med bagom-skridt [BWF-L1, s. 60] |
+| `pivot_pickup` | Pivot og saml fjerbolde | B | 1 | Pivot om fod på markering [BWF-L1, s. 60] |
+| `lunge_form` | Udfald: form, balance og slag | B | 1 | Fire udfaldsøvelser [BWF-L1, s. 62] |
+| `net_chain` | Kædning til forhåndsnettet | B | 2 | Kædning af bevægelsesmønstre [BWF-L1, s. 68-69] |
+| `ladder_feet` | Stigeøvelse: afsæt-1-2 | B | 1 | Stigeøvelse [BWF-L1, s. 191] |
+| `hand_hit_reaction` | Slå fjerbolden med hånden | B | 2 | Reaktion med hånden [BWF-L1, s. 192] |
+| `lie_down_sprint` | Lig ned, rejs dig, løb! | B | 1 | Agility-leg [BWF-L1, s. 192] |
+| `net_shot_targets` | Netdrop på point | B | 2 | Begynderøvelser til baghånds-netdrop og spin [BWF-L1, s. 98] |
+| `overhead_suspended` | Overhåndsslag mod hængende fjerbold | B | 1 | Begynderøvelser til clear, smash og drop [BWF-L1, s. 118, 120, 122] |
+| `backhand_clear_intro` | Baghånds-clear med ryggen til nettet | Ø | 1 | Begynderøvelser til baghånds-clear [BWF-L1, s. 126] |
+| `smash_block_lift` | Smash, block, block, løft | Ø | 2 | Smash-block-block-lift og 3 point for smash [BWF-L1, s. 120], drop-løft [s. 122] |
+| `high_serve_targets` | Single med høj serv på mål | B | 2 | Kun høj serv mod mål [BWF-L1, s. 136] |
+| `return_high_serve` | Returnering af høj serv | Ø | 2 | 2 point for en bestemt returnering, eller kun to returneringer [BWF-L1, s. 137] |
+| `drop_gates` | Drop gennem porte | E | 4 | Drop gennem markerede porte i nettet [BWF-L1, s. 154]. Figuren om, hvilken port der hører til hvilken side, kan ikke læses i PDF-teksten |
+
+**Timer:** øvelser med intervaller (fx `interval_shadow`, `shadow_six`,
+`tramline_split`, `ladder_feet`) har en timer i appen med arbejde, pause og
+runder. Tiderne er taget fra øvelsens trin. De fleste er *(praksis)*.
+
+**Ikke med:** skåret drop og baghånds-smash er kun nævnt som et tip i
+manualen (s. 122 og 126), og modtagestilling ved serv er ikke beskrevet.
+Derfor er de ikke eget punkt i appen.
 
 *Tolkning:* tider, antal gentagelser og serielængder i appen er forslag
 (praksis), som passer til de fleste klubspillere. Trænere bør tilpasse dem
