@@ -62,3 +62,8 @@ Duration totalDuration(DrillTimer plan) => Duration(
   seconds:
       plan.workSeconds * plan.rounds + plan.restSeconds * (plan.rounds - 1),
 );
+
+/// Sekunder vises som "45", og et minut eller mere som "4:05".
+String formatClock(int seconds) => seconds < 60
+    ? '$seconds'
+    : '${seconds ~/ 60}:${(seconds % 60).toString().padLeft(2, '0')}';

@@ -116,6 +116,37 @@ void main() {
     expect(mergeData(merged, incoming).matches, hasLength(3));
   });
 
+  test('training plans round trip, merge and are optional', () {
+    TrainingPlan plan(String id, String name) => TrainingPlan(
+          id: id,
+          name: name,
+          createdAt: DateTime(2026, 10, 1),
+          items: const [
+            PlanItem(drillId: 'ladder_feet', minutes: 6),
+            PlanItem(drillId: 'clear_duel', minutes: 12),
+          ],
+        );
+    final data = AppData(plans: [plan('t1', 'Tirsdag')]);
+    final copy = AppData.fromJson(
+        jsonDecode(jsonEncode(data.toJson())) as Map<String, dynamic>);
+    final p = copy.plans.single;
+    expect(p.name, 'Tirsdag');
+    expect(p.items.map((i) => (i.drillId, i.minutes)),
+        [('ladder_feet', 6), ('clear_duel', 12)]);
+    expect(p.totalMinutes, 18);
+
+    // Gamle filer uden planer kan læses, og tomme planer skrives ikke.
+    expect(AppData().toJson().containsKey('plans'), isFalse);
+    expect(AppData.fromJson({'players': []}).plans, isEmpty);
+
+    final merged = mergeData(
+      AppData(plans: [plan('t1', 'Tirsdag'), plan('t2', 'Torsdag')]),
+      AppData(plans: [plan('t2', 'Torsdag (ny)'), plan('t3', 'Lørdag')]),
+    );
+    expect(merged.plans.map((p) => p.name),
+        ['Tirsdag', 'Torsdag (ny)', 'Lørdag']);
+  });
+
   test('file name contains the date', () {
     expect(backupFileName(DateTime(2026, 3, 7)),
         'badminton-backup-2026-03-07.json');

@@ -41,6 +41,10 @@ class AppState extends ChangeNotifier {
       _data.goals.where((g) => g.playerId == playerId).toList()
         ..sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
+  /// Træningsplaner sorteret efter navn.
+  List<TrainingPlan> get plans => [..._data.plans]
+    ..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+
   List<MatchRecord> get activeMatches =>
       activePlayer == null ? [] : matchesFor(activePlayer!.id);
 
@@ -117,7 +121,11 @@ class AppState extends ChangeNotifier {
 
   /// Sand når der er data, som ikke er taget backup af i over 30 dage.
   bool needsBackupReminder(DateTime now) {
-    if (_data.matches.isEmpty && _data.trainings.isEmpty) return false;
+    if (_data.matches.isEmpty &&
+        _data.trainings.isEmpty &&
+        _data.plans.isEmpty) {
+      return false;
+    }
     final last = _data.lastBackupAt;
     return last == null || now.difference(last).inDays > 30;
   }
@@ -165,6 +173,11 @@ class AppState extends ChangeNotifier {
   Future<void> saveGoal(Goal goal) => _upsert(_data.goals, goal, (g) => g.id);
 
   Future<void> deleteGoal(String id) => _remove(_data.goals, (g) => g.id == id);
+
+  Future<void> savePlan(TrainingPlan plan) =>
+      _upsert(_data.plans, plan, (p) => p.id);
+
+  Future<void> deletePlan(String id) => _remove(_data.plans, (p) => p.id == id);
 
   Future<void> _upsert<T>(List<T> list, T item, String Function(T) id) {
     final i = list.indexWhere((e) => id(e) == id(item));

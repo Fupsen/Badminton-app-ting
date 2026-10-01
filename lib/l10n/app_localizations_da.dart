@@ -1080,4 +1080,96 @@ class AppLocalizationsDa extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get timerStartTooltip => 'Start';
+
+  @override
+  String get plansOpen => 'Træningsplaner';
+
+  @override
+  String get plansTitle => 'Træningsplaner';
+
+  @override
+  String get plansEmpty =>
+      'Sæt et træningspas sammen af øvelser, og kør det med timeren bagefter. Planerne kan bruges til alle spillere.';
+
+  @override
+  String get newPlan => 'Ny plan';
+
+  @override
+  String get editPlan => 'Rediger plan';
+
+  @override
+  String get deletePlanTitle => 'Slet planen?';
+
+  @override
+  String get planName => 'Navn';
+
+  @override
+  String get planNameRequired => 'Giv planen et navn.';
+
+  @override
+  String planSummary(int count, int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count øvelser',
+      one: '1 øvelse',
+    );
+    return '$_temp0 · $minutes min';
+  }
+
+  @override
+  String get planReorderHint => 'Træk i en øvelse for at ændre rækkefølgen.';
+
+  @override
+  String get planAddDrill => 'Tilføj øvelse';
+
+  @override
+  String get planNoDrills => 'Tilføj mindst én øvelse.';
+
+  @override
+  String get planMinutesLess => 'Et minut kortere';
+
+  @override
+  String get planMinutesMore => 'Et minut længere';
+
+  @override
+  String get planRemoveDrill => 'Fjern øvelsen';
+
+  @override
+  String get planStart => 'Start planen';
+
+  @override
+  String planStep(int number, int total) {
+    return 'Øvelse $number af $total';
+  }
+
+  @override
+  String get planNext => 'Næste øvelse';
+
+  @override
+  String get planFinish => 'Afslut planen';
+
+  @override
+  String get planSkip => 'Spring over';
+
+  @override
+  String get planShowDrill => 'Vis øvelsen';
+
+  @override
+  String get planFinished => 'Planen er færdig';
+
+  @override
+  String planFinishedSummary(int done, int total, int minutes) {
+    return '$done af $total øvelser gennemført · $minutes min';
+  }
+
+  @override
+  String get planNothingDone =>
+      'Ingen øvelser blev gennemført, så der er intet at logge.';
+
+  @override
+  String get planLog => 'Log som træningspas';
 }
