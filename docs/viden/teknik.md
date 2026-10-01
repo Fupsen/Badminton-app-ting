@@ -1,7 +1,7 @@
 # Teknik: greb og slag
 
 Hovedkilde: BWF Coach Education *Level 1 Coaches' Manual*, modul 7 "Technical
-(Hitting Skills)", s. 79-116 [BWF-L1]. Alt er beskrevet for en højrehåndet
+(Hitting Skills)", s. 73-131 [BWF-L1]. Alt er beskrevet for en højrehåndet
 spiller. Er man venstrehåndet, spejles det hele. Id'er i `kode` svarer til
 `lib/content/technique_da.dart`.
 
@@ -19,7 +19,7 @@ BWF deler hvert slag op i fire faser, og de er gode at træne og rette ud fra:
    Træffet sker foran kroppen, hvis intet andet står.
 4. **Follow-through** (udsving og hurtig retur til klarposition).
 
-## Greb (s. 79-82) (`grips`)
+## Greb (s. 80-83) (`grips`)
 
 | Greb | Bruges til |
 | --- | --- |
@@ -32,7 +32,14 @@ Typisk fejl [B]: man holder ketsjeren i stegepandegreb til alt. Det begrænser
 især baghånden og slag bagfra. *(praksis)* Hold løst mellem slagene, så
 fingrene kan skifte greb hurtigt.
 
-## Serv (s. 84-94)
+**Træn grebsskift** [BWF-L1, s. 83]: hold bolden i luften 5 gange med
+basisgreb (forhånd) og 5 gange med tommelgreb (baghånd), og skær ned til 4,
+3, 2 og 1, så du til sidst skifter greb efter hvert slag. Samme progression
+kan bruges med en makker, der kaster. Børn og begyndere kan starte med at
+holde bolden i luften med håndfladen opad (basisgreb) eller håndryggen forrest
+(tommelgreb) [s. 80-81]. Appens øvelse `grip_wall` bygger på det.
+
+## Serv (s. 85-95)
 
 Husk reglerne: hele bolden skal være under 1,15 m, bolden må ikke få spin, og
 ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
@@ -55,9 +62,11 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
 - **Høj forhåndsserv** (`serve_long`): sidelæns, basisgreb, vægten på bagerste
   ben. Flyt vægten frem, slip bolden, supinér i bagsvinget, og pronér og stræk
   håndleddet i slaget. Ram **under** bolden, og lad udsvinget gå højt og langt.
-  Bruges mest i single.
+  Bruges mest i damesingle. I herresingle bruges den mindre, fordi modtageren
+  kan angribe den eksplosivt (s. 94, 136). BWF anbefaler at lære flick-serven
+  først og så forlænge svinget (s. 95).
 
-## Forbane / net (s. 96-102)
+## Forbane / net (s. 96-108)
 
 - **Netdrop** (`net_shot`), forhånd og baghånd: afslappet stræk frem, drej
   armen, så strengene vender mod bolden, og skub bolden over med farten fra
@@ -79,7 +88,7 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   efter slaget. Tæt ved nettet er bevægelsen meget kort, og man slår på
   tværs af bolden for ikke at ramme nettet.
 
-## Midtbane (s. 105-108)
+## Midtbane (s. 109-115)
 
 - **Block ind til kroppen** (`defence`), baghånd: afslappet tommelgreb, albuen
   frem og bøjet, åben ketsjerflade. Ram lidt under bolden, og **skub** den over
@@ -91,10 +100,10 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   ført ind foran kroppen, og hjørnegreb bruges, når bolden er ved siden af
   kroppen eller skal på kryds.
 - **Push** (`push`): kontrolleret og fladt ned i modstanderens midtbane.
-  Manualens udtræk beskriver det ikke særskilt. *Beskrivelsen bygger på
+  Manualen beskriver ikke push som eget slag. *Beskrivelsen bygger på
   almindelig træningspraksis.*
 
-## Bagbane (s. 110-116)
+## Bagbane (s. 116-128)
 
 - **Forhånds-clear** (`clear`): basisgreb, klarposition over hovedet,
   frontarmen op, sidelæns. Sæt af op og frem fra bagerste ben, skub bagerste
@@ -124,7 +133,8 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
 - **Rundt om hovedet** (`around_the_head`): forhåndsslag over hovedet fra
   baghåndssiden, hvor overkroppen bøjes til venstre, og bolden rammes over
   eller lidt til venstre for hovedet. *Hele beskrivelsen er praksis. BWF's
-  udtræk beskriver ikke slaget særskilt.* Armens bevægelse er som i
+  Level 1-manual nævner kun slaget i forbifarten (s. 130, 221-222) og
+  beskriver det ikke. Level 2-manualen kræver registrering og er ikke læst.* Armens bevægelse er som i
   forhånds-clear, drop og smash.
 - **Baghånds-clear** (`backhand`): **basisgreb eller hjørnegreb**, albuen nede
   og ketsjerhovedet oppe. Løft albuen, lad ketsjerhovedet falde, stræk armen med
@@ -161,7 +171,6 @@ træningspraksis:
   Officiel side: <https://development.bwfbadminton.com/coaches/level-1>.
   Læst fra
   <http://www.badminton-israel.co.il/newsNdata/General/CoachEducationBWF/BWF_Coach_Manual_Level_1.pdf>
-  (opslag 29-09-2026, målrettede udtræk og ikke læst side for side). Udtræk
-  om flick-serv, forhåndsserv, trukket drop, spin-netdrop, lift, drive og
-  kill tilføjet 29-09-2026.
+  2. udgave 2017. Modul 7 er læst side for side 01-10-2026 (tidligere kun
+  målrettede udtræk).
 - Serveregler: se [regler.md](regler.md).

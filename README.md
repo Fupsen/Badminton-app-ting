@@ -31,7 +31,7 @@ kører på Android, iOS, Windows, macOS og Linux.
   benarbejde (fx hop og landing, vejen til hvert nethjørne og rotation i
   double), samt de gældende **regler** (3×15, serv, fejl, let m.m.). Hvert
   punkt har beskrivelse, hvornår det bruges, teknikpunkter, typiske fejl og
-  hvornår du sidst trænede det. Dertil kommer 32 øvelser med niveau, antal
+  hvornår du sidst trænede det. Dertil kommer 34 øvelser med niveau, antal
   spillere, tid, trin og tips, fra øvelser for børn og øvelser alene til
   kampe med særregler og intervaltræning. En øvelse kan logges direkte som
   træningspas. Teksterne tager udgangspunkt i højrehåndede spillere og er

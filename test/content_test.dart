@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:badminton_app/content/rules.dart';
 import 'package:badminton_app/content/technique.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -53,11 +55,37 @@ void main() {
     ]) {
       expect(techniqueById(id), isNotNull, reason: id);
     }
+    for (final id in ['balloon_play', 'fast_feet', 'throwminton']) {
+      expect(drillById(id), isNotNull, reason: id);
+    }
     // Der skal være øvelser på alle niveauer, og nogle der kan laves alene.
     for (final level in DrillLevel.values) {
       expect(drills.where((d) => d.level == level), isNotEmpty);
     }
     expect(drills.where((d) => d.minPlayers == 1).length, greaterThan(3));
+  });
+
+  test('every technique and drill is documented in docs/viden', () {
+    // Appen og vidensbanken skal stemme overens (se CLAUDE.md). Hvert id skal
+    // nævnes som `id` i en af filerne, så man kan finde kilden.
+    final docs = [
+      'teknik.md',
+      'benarbejde.md',
+      'ovelser.md',
+      'taktik.md',
+      'fysisk-traening.md',
+    ].map((f) => File('docs/viden/$f').readAsStringSync()).join();
+    for (final id in [
+      for (final t in techniques) t.id,
+      for (final d in drills) d.id,
+    ]) {
+      expect(docs, contains('`$id`'), reason: id);
+    }
+    // Hver øvelse har en række i ovelser.md med kilde.
+    final drillTable = File('docs/viden/ovelser.md').readAsStringSync();
+    for (final d in drills) {
+      expect(drillTable, contains('| `${d.id}` | ${d.name} |'), reason: d.id);
+    }
   });
 
   test('every drill refers to existing techniques', () {

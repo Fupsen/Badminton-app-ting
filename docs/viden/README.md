@@ -5,7 +5,7 @@ så Claude (og mennesker) har noget solidt at bygge appens indhold og svar på.
 `CLAUDE.md` i roden af repoet peger hertil, så Claude læser den i nye
 sessioner.
 
-**Sidst opdateret:** 29-09-2026.
+**Sidst opdateret:** 01-10-2026.
 
 | Fil | Indhold |
 | --- | --- |
@@ -14,7 +14,7 @@ sessioner.
 | [benarbejde.md](benarbejde.md) | Bevægelsescyklus, split step, skridttyper, udfald, landing og mønstre til hvert hjørne. |
 | [ovelser.md](ovelser.md) | Alle øvelser i appen med niveau og kilde, og hvordan BWF organiserer træningen (fodring, multi-fjer, skygge, kampe med særregler). |
 | [taktik.md](taktik.md) | Grundprincipper, single, double, mixed og situationstræning. |
-| [fysisk-traening.md](fysisk-traening.md) | Kampens krav, opvarmning, træning af hver egenskab, børn og unge, planlægning. |
+| [fysisk-traening.md](fysisk-traening.md) | Kampens krav, opvarmning, træning af hver egenskab, børn og unge (BWF's udviklingstrin, Badminton Danmarks anbefalinger om træning, hvile og søvn), planlægning. |
 | [skader.md](skader.md) | Hvor ofte og hvor skader sker, typiske skader og forebyggelse. |
 | [kilder.md](kilder.md) | Alle kilder samlet. |
 
@@ -42,15 +42,19 @@ sessioner.
 
 ## Kendte huller (til næste opdatering)
 
-- BWF's Level 1-manual er kun læst som målrettede udtræk, ikke side for side
-  (moduler 3-9 og 11). Level 2-manualen og BWF Shuttle Time (børn og skoler)
-  er ikke læst.
-- "Rundt om hovedet" og de fleste øvelsers tider og gentagelser bygger på
-  praksis og mangler en trænerkilde.
-- Badminton Danmarks BATK-materiale og talentstrategien er ikke læst direkte.
-- Taktik til double og mixed bygger mest på praksis og bør suppleres med en
-  trænerkilde.
+- BWF's Level 1-manual er læst side for side for modul 3-9 og 11 (01-10-2026).
+  Modul 8 (taktik) er kun læst for de vigtigste sider. **Level 2-manualen**
+  kræver registrering hos BWF, og **BWF Shuttle Time** (børn og skoler)
+  blokerer automatiske opslag. Ingen af dem er læst.
+- **"Rundt om hovedet"** er ikke beskrevet i Level 1-manualen og bygger
+  stadig på praksis. Det samme gælder de fleste øvelsers tider og antal
+  gentagelser.
+- **BATK** (Badminton Danmark) er en bog, der ikke ligger frit, og den er ved
+  at blive opdateret. Talentstrategien og siden om fysisk-motorisk
+  basistræning er læst direkte.
+- bwfbadminton.com afviser automatiske opslag (Cloudflare). Nyhederne om 3×15
+  og spin-serv er læst tidligere via Firecrawl.
 - Mental træning og udstyr (strenge, spænding, sko, fjerbold eller plast) er
   ikke dækket endnu.
-- De fleste forskningstal er fra abstracts. Fuld tekst var ikke tilgængelig
-  fra dette miljø.
+- Forskningen er tjekket i PubMed 01-10-2026. Skadesoversigten [S2025] er
+  læst i fuld tekst. Resten er abstracts.

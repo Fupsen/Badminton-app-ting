@@ -1,7 +1,7 @@
 # Taktik
 
 Hovedkilde: BWF *Level 1 Coaches' Manual*, modul 8 "Tactics", s. 132-180
-[BWF-L1]. Manualens udtræk er kort, så en stor del herunder er **almindelig
+[BWF-L1]. Det, der ikke står i manualen, er **almindelig
 træningspraksis**. Det er markeret med *(praksis)* og bør tjekkes med en
 træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
 
@@ -23,9 +23,17 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
 
 ## Single
 
-- **Serv:** varier mellem høj, kort og flick-serv [BWF-L1]. En høj serv til
-  baglinjen er standard. Den korte serv bruges især mod en modtager, der står
-  langt tilbage. *(praksis)*
+- **Herre- og damesingle er forskellige** [BWF-L1, s. 136]: herresingle er
+  mere angrebspræget med færre clears, flere slag nedad og **langt flere
+  korte serv**. Damesingle kræver mere tålmodighed for at skabe
+  angrebschancer.
+- **Høj serv** bruges mest i damesingle. Den presser modstanderen bagud,
+  svækker angrebet og giver serveren tid. Server mod midten af baglinjen, så
+  vinklerne bliver små, og stil dig bagefter lidt til samme side, som du
+  servede til, så du dækker de lige returneringer [BWF-L1, s. 136].
+- **Kort serv og flick-serv** i single: flick-serven serves ofte bredt for at
+  tvinge en forudsigelig lige returnering [BWF-L1, s. 138-141]. Varier mellem
+  høj, kort og flick-serv, så modtageren ikke kan læse dig.
 - **Neutralt spil:** placér slagene, så modstanderen skal langt, og kom selv
   tilbage til basis (se [benarbejde.md](benarbejde.md)).
 - **Angreb:** når modstanderen er presset, så udnyt svagheden og hold presset.
@@ -36,7 +44,10 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
 
 ## Double (generelt)
 
-- **Formationer** [BWF-L1]:
+- **Herredouble** er mere eksplosiv, clears er sjældne, og serv og
+  returnering er afgørende. **Damedouble** er mindre eksplosiv, bygger mere på
+  tålmodigt spil, og har de længste dueller i badminton [BWF-L1, s. 148].
+- **Formationer** [BWF-L1, s. 148]:
   - *Angreb*: **front-bag**. Én spiller bagerst smasher eller dropper, én ved
     nettet afslutter.
   - *Forsvar*: **side om side**. Hver spiller dækker sin halvdel.
@@ -44,20 +55,21 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
   om side. Når man får en bold, der kan slås nedad, går man fra side om side
   til front-bag. Den, der slår et løft fra nettet, går typisk bagud i
   forsvarsposition i samme side.
-- **Serv og returnering** er afgørende. Den lave serv er standard, og
-  returneringen skal forsøge at komme først til bolden og slå nedad
-  [BWF-L1].
-- **Damedouble** [BWF-L1]: ofte længere og mere tålmodige dueller, lave serv,
-  og kampen om at dominere nettet eller udnytte midt- og bagbanen.
-- **Herredouble** [BWF-L1]: mere eksplosiv, færre clears, og serv og
-  returnering er ekstra vigtige.
+- **Serv og returnering** er afgørende. Den lave serv er standard og serves
+  (i damedouble og mixed) oftest mod midten, så vinklerne bliver små, eller mod modtageren for
+  variationens skyld. Bredt ud i sidegangen er mere risikabelt, fordi det
+  åbner for en lige returnering [BWF-L1, s. 148 og 170]. Returneringen skal forsøge
+  at komme først til bolden og slå nedad.
 
 ## Mixed double
 
 - Traditionel rollefordeling ifølge BWF-manualen: **kvinden dominerer for- og
-  midtbanen, manden midt- og bagbanen**. Målet er at skabe angrebschancer for
-  den stærkeste spiller i hver position, med finter og tålmodigt spil
-  [BWF-L1].
+  midtbanen, manden midt- og bagbanen**. BWF begrunder det med, at kvinden
+  har mindre kraft end manden [BWF-L1, s. 170].
+- Når manden server, står kvinden ved nettet lidt til venstre (fra højre
+  servefelt). Fra venstre servefelt kan hun stå til venstre eller til højre.
+  Til højre forstyrrer det en modtager, der tit returnerer lige. Efter serven
+  dækker manden midt- og bagbanen [BWF-L1, s. 170].
 - *Bemærkning:* rollerne bestemmes i praksis af, hvem der er bedst til hvad,
   ikke af køn. Mange par bytter roller efter situationen. *(praksis)*
 
@@ -65,6 +77,9 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
 
 - **[B/børn]** Start med at kunne holde en duel i gang og skelne mellem at slå
   højt og langt og at slå kort, før I arbejder med formationer. *(praksis)*
+  BWF anbefaler single for de yngste, så gradvist double fra ca. 9-12 år
+  (drenge) og 8-11 år (piger), og mixed sidst i 12-16-årsalderen. Brug kampe
+  med særregler til at løse taktiske problemer [BWF-L1, s. 49].
 - **[Ø]** Træn **situationer**, fx "modtag kort serv, og få første angreb",
   "forsvar mod smash, og vend det til neutralt", eller "angreb, og afslut ved
   nettet". Brug øvelserne i appen (`serve_receive`, `smash_defence`,
@@ -77,7 +92,9 @@ træner. Niveau-markering: **[B]** begynder, **[Ø]** øvet, **[E]** elite.
 
 ## Kilder
 
-- [BWF-L1] BWF Coach Education: *Coaches' Manual Level 1*, modul 8, s. 132-180.
+- [BWF-L1] BWF Coach Education: *Coaches' Manual Level 1*, 2. udgave 2017,
+  modul 8, s. 132-180. Siderne om basisposition, single, double og mixed er
+  læst 01-10-2026.
   <https://development.bwfbadminton.com/coaches/level-1> (læst fra
   <http://www.badminton-israel.co.il/newsNdata/General/CoachEducationBWF/BWF_Coach_Manual_Level_1.pdf>,
   opslag 29-09-2026, sammendrag).
