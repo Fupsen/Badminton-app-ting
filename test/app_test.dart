@@ -317,11 +317,12 @@ void main() {
     expect(find.text('Greb'), findsOneWidget);
     expect(find.text('Kort serv'), findsOneWidget);
 
-    // Listen (ikke søgefeltet, som også kan scrolles).
-    await tester.scrollUntilVisible(find.text('Clear'), 200,
-        scrollable: find
-            .ancestor(of: find.text('Greb'), matching: find.byType(Scrollable))
-            .first);
+    // Listen (ikke søgefeltet, som også kan scrolles). Den findes én gang,
+    // for "Greb" forsvinder ud af skærmen undervejs.
+    final list = find.byWidget(tester.widget(find
+        .ancestor(of: find.text('Greb'), matching: find.byType(Scrollable))
+        .first));
+    await tester.scrollUntilVisible(find.text('Clear'), 200, scrollable: list);
     await tester.tap(find.text('Clear'));
     await tester.pumpAndSettle();
     expect(find.text('Teknikpunkter'), findsOneWidget);

@@ -38,16 +38,16 @@ forkerte sidetal fra et automatisk sammendrag. De er rettet.
 
 | Id | Navn | Niveau | Spillere | Kilde |
 | --- | --- | --- | --- | --- |
-| `clear_duel` | Clear-duel | B | 2 | *(praksis)* |
+| `clear_duel` | Clear-duel | B | 2 | *(praksis)*, angrebs-clear som variation [BWF-L1, s. 117] |
 | `clear_drop_net` | Clear, drop og net | Ø | 2 | *(praksis)*, rally-fodring [BWF-L1, s. 38] |
 | `smash_defence` | Smash og forsvar | Ø | 2 | *(praksis)* |
 | `drive_duel` | Drive-duel | B | 2 | *(praksis)* |
-| `net_duel` | Net-duel | B | 2 | *(praksis)* |
+| `net_duel` | Net-duel | B | 2 | *(praksis)*, kryds som variation [BWF-L1, s. 84] |
 | `serve_targets` | Serv på mål | B | 1 | *(praksis)* |
-| `serve_receive` | Serv og returnering | Ø | 2 | [BWF-L1, modul 8] (serv og returnering er afgørende) |
+| `serve_receive` | Serv og returnering | Ø | 2 | [BWF-L1, modul 8] (serv og returnering er afgørende), afskæring ved nettet i double [s. 155]. Drive-serv *(praksis)* |
 | `lift_accuracy` | Lift til baglinjen | B | 2 | *(praksis)* |
 | `multi_feed_net` | Multi-fjer ved nettet | Ø | 2 | [BWF-L1, s. 38] |
-| `multi_feed_rear` | Multi-fjer i bagbanen | Ø | 2 | [BWF-L1, s. 38] |
+| `multi_feed_rear` | Multi-fjer i bagbanen | Ø | 2 | [BWF-L1, s. 38], skåret drop [s. 122]. Halv-smash *(praksis)* |
 | `shadow_six` | Skyggebadminton, 6 hjørner | B | 1 | Skygge og mønstre [BWF-L1, s. 34 og 64-69] |
 | `split_step_reaction` | Split-step-reaktion | B | 2 | *(praksis)* |
 | `lunge_series` | Udfaldsserier | B | 1 | *(praksis)*, udfaldsteknik [BWF-L1, s. 61-62] |
@@ -84,8 +84,9 @@ forkerte sidetal fra et automatisk sammendrag. De er rettet.
 | `lie_down_sprint` | Lig ned, rejs dig, løb! | B | 1 | Agility-leg [BWF-L1, s. 192] |
 | `net_shot_targets` | Netdrop på point | B | 2 | Begynderøvelser til baghånds-netdrop og spin [BWF-L1, s. 98] |
 | `overhead_suspended` | Overhåndsslag mod hængende fjerbold | B | 1 | Begynderøvelser til clear, smash og drop [BWF-L1, s. 118, 120, 122] |
-| `backhand_clear_intro` | Baghånds-clear med ryggen til nettet | Ø | 1 | Begynderøvelser til baghånds-clear [BWF-L1, s. 126] |
+| `backhand_clear_intro` | Baghånds-clear med ryggen til nettet | Ø | 1 | Begynderøvelser til baghånds-clear og baghånds-smash som variation [BWF-L1, s. 126] |
 | `smash_block_lift` | Smash, block, block, løft | Ø | 2 | Smash-block-block-lift og 3 point for smash [BWF-L1, s. 120], drop-løft [s. 122] |
+| `cross_block_game` | Smash og kryds-block | Ø | 2 | Forsvar i single i midtbanen: kryds-block mod lige smash og omvendt [BWF-L1, s. 146]. *Antal dueller er praksis* |
 | `high_serve_targets` | Single med høj serv på mål | B | 2 | Kun høj serv mod mål [BWF-L1, s. 136] |
 | `return_high_serve` | Returnering af høj serv | Ø | 2 | 2 point for en bestemt returnering, eller kun to returneringer [BWF-L1, s. 137] |
 | `drop_gates` | Drop gennem porte | E | 4 | Drop gennem markerede porte i nettet [BWF-L1, s. 154]. Figuren om, hvilken port der hører til hvilken side, kan ikke læses i PDF-teksten |

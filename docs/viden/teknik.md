@@ -65,6 +65,12 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   Bruges mest i damesingle. I herresingle bruges den mindre, fordi modtageren
   kan angribe den eksplosivt (s. 94, 136). BWF anbefaler at lære flick-serven
   først og så forlænge svinget (s. 95).
+- **Drive-serv** (`drive_serve`) **[Ø]**: en hurtig, flad serv mod
+  modtagerens krop eller baghånd, mest i double og som overraskelse. Samme
+  forberedelse som den korte serv, kort og hurtigt skub, og hele fjerbolden
+  under 1,15 m (se [regler.md](regler.md#serv-9)). *Hele beskrivelsen er
+  praksis. Manualen beskriver ikke drive-serven. Tolkning: 1,15 m-reglen gør
+  den sværere at slå fladt.*
 
 ## Forbane / net (s. 96-108)
 
@@ -75,6 +81,11 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   buet bane, fx fra højre mod venstre, så bolden vælter rundt over nettet og
   er svær at returnere. Spin er kun forbudt i serven (se
   [regler.md](regler.md#serv-9)).
+- **Kryds-netdrop** (`cross_net_shot`) **[Ø]**: netdrop på tværs til det
+  modsatte forreste hjørne. Ram tidligt og højt, og drej ketsjerfladen med
+  greb eller håndled. Manualen beskriver generelt, hvordan man slår på kryds:
+  træf foran kroppen, skift greb, bøj håndleddet eller skær bolden (s. 84).
+  *Teknikpunkterne og risikoen (bolden er længe over nettet) er praksis.*
 - **Lift** (`lift`): med baghånd bruges tommelgreb og indadrotation, derefter
   udadrotation gennem bolden. Med forhånd bøjes håndleddet og strækkes gennem
   bolden. Armen roterer videre og slapper af i udsvinget. Et *angrebslift*
@@ -87,12 +98,20 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   Med forhånd **skiftes til stegepandegreb**. Få **hurtigt** ketsjeren op igen
   efter slaget. Tæt ved nettet er bevægelsen meget kort, og man slår på
   tværs af bolden for ikke at ramme nettet.
+- **Tap ved nettet** (`net_tap`) **[Ø]**: kort, hurtigt slag nedad, når en
+  drive eller push går lidt for højt. I double skal den forreste spiller tage
+  bolden tidligt og afskære drive og push (s. 155). *Selve teknikken (meget
+  kort slag med håndled og fingre, ingen bagsving) er praksis.*
 
 ## Midtbane (s. 109-115)
 
 - **Block ind til kroppen** (`defence`), baghånd: afslappet tommelgreb, albuen
   frem og bøjet, åben ketsjerflade. Ram lidt under bolden, og **skub** den over
   i stedet for at slå.
+- **Kryds-block** (`cross_block`) **[Ø]**: samme block, men på kryds. I
+  single-forsvar giver en block på kryds mod en lige smash smasheren længere
+  vej, og mod en smash på kryds er en lige block bedst (s. 146). Retningen
+  ændres med greb eller håndled (s. 84).
 - **Drive** (`drive`): albuen op og frem, bøjet. Ved baghånd bruges eventuelt
   tommelgreb og rotation udad, ved forhånd eventuelt stegepandegreb og rotation
   indad. Slå hårdt gennem bolden foran eller ved siden af kroppen, og få
@@ -110,6 +129,10 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   hofte frem, før albuen op og frem med udadrotation, og vend til
   indadrotation (pronation). Ram kraftigt **over og foran slagskulderen**.
   Bagerste fod lander foran.
+- **Angrebs-clear** (`attacking_clear`): en clear, der går lige over
+  modstanderens ketsjer og presser bagud. En forsvars-clear er lidt højere og
+  giver dig selv tid til at komme i balance (s. 117). Samme slag som
+  forhånds-clear. *At ramme mere fremad end opad er praksis.*
 - **Forhånds-smash** (`smash`): V-greb, afslappet klarposition, sidelæns. Tag
   et skridt bagud, så bagerste ben bliver ladet, **hop og drej i luften**,
   "kast" ketsjerhovedet med pronation, og ræk op for at ramme. Varier farten,
@@ -120,9 +143,19 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   [benarbejde.md](benarbejde.md#hop-og-landing-s-61-62) og
   [skader.md](skader.md)). *Serielængde og "afslutning, ikke i hver duel"
   er praksis.*
+- **Halv-smash (stik-smash)** (`half_smash`) **[Ø]**: en smash med mindre
+  fart og mere vinkel. Manualen nævner halv-smash som et valg i double
+  (s. 153). *Teknikken (kort sving, mest underarmsrotation, hurtig balance)
+  er praksis.*
 - **Forhånds-drop** (`drop`): **samme bevægelse som clear**, men stop
   armrotationen lige før træffet. Et skåret drop (fra højre mod venstre eller
   omvendt) giver variation og snyder modstanderen.
+- **Skåret drop** (`sliced_drop`) **[Ø]** og **omvendt skåret drop**
+  (`reverse_slice_drop`) **[E]**: manualen anbefaler at eksperimentere med at
+  skære bolden både fra højre mod venstre og fra venstre mod højre for at
+  øge rækkevidden og snyde modstanderen (s. 122), og at skære bolden er en
+  af måderne at slå på kryds (s. 84). *Teknikpunkterne (fart som ved smash,
+  vendt ketsjerflade, skæring hen over korken) er praksis.*
 - **Trukket drop** (`pulled_drop`) **[Ø]**: bruges i forsvar, når bolden er
   bag spilleren i et bagerste hjørne. Det lindrer presset og begrænser
   modstanderens angreb og vinkler. Forhånd: albuen bøjet, grebet drejes mod
@@ -146,9 +179,10 @@ ketsjeren skal ramme korken først (se [regler.md](regler.md#serv-9)).
   forberedelse som baghånds-clear, og mindre rotation lige før træffet. Bolden
   lander lige bag modstanderens korte servelinje. Sæt forreste fod i gulvet
   samtidig med eller lige før træffet, så du hurtigt kan vende.
-- **Baghånds-smash** **[E]**: samme "punch" som baghånds-clear, men med mere
-  bøjet håndled, så bolden går nedad. *Ikke med i appen, fordi den sjældent
-  bruges.*
+- **Baghånds-smash** (`backhand_smash`) **[E]**: samme "punch" som
+  baghånds-clear, men med mere bøjet håndled i fremsvinget, så bolden går
+  nedad (s. 126). Hører til de slag, der spilles med bolden bag spilleren
+  (s. 82). Sjælden og uden stor fart, så den bruges som overraskelse.
 
 ## Typiske fejl
 

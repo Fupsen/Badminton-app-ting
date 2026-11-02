@@ -160,6 +160,37 @@ const strokes = <Technique>[
   ),
   // Bagbane
   Technique(
+    id: 'drive_serve',
+    kind: TechniqueKind.stroke,
+    name: 'Drive-serv',
+    category: 'Serv',
+    summary:
+        'En hurtig, flad serv, der går lige over nettet og direkte mod '
+        'modtagerens krop eller baghånd.',
+    whenToUse:
+        'Mest i double som overraskelse mod en modtager, der står langt '
+        'fremme eller er langsom til at reagere. Den skal bruges sjældent, '
+        'for en klar modtager kan angribe den. Reglen om, at hele '
+        'fjerbolden skal være under 1,15 m, når den rammes, gør den sværere '
+        'at slå fladt. Teknikpunkterne bygger på almindelig '
+        'træningspraksis.',
+    keyPoints: [
+      'Samme stilling og forberedelse som din korte serv, så modtageren '
+          'ikke kan se den komme.',
+      'Ram hele fjerbolden under 1,15 m, og giv et kort, hurtigt skub '
+          'frem i stedet for et langt sving.',
+      'Sigt mod modtagerens ketsjerskulder, krop eller baghånd, så det er '
+          'svært at angribe.',
+      'Vær klar til en hurtig returnering, og hold ketsjeren oppe efter '
+          'serven.',
+    ],
+    commonMistakes: [
+      'Bruger den for tit, så modtageren venter på den.',
+      'Rammer over 1,15 m og laver servefejl.',
+      'Serven går for højt og bliver slået ned.',
+    ],
+  ),
+  Technique(
     id: 'clear',
     kind: TechniqueKind.stroke,
     name: 'Clear',
@@ -186,6 +217,35 @@ const strokes = <Technique>[
     ],
   ),
   Technique(
+    id: 'attacking_clear',
+    kind: TechniqueKind.stroke,
+    name: 'Angrebs-clear',
+    category: 'Bagbane',
+    summary:
+        'En lavere og hurtigere clear, der går lige over modstanderens '
+        'ketsjer og lander bagerst på banen.',
+    whenToUse:
+        'Når modstanderen står langt fremme eller er ved at gå frem mod '
+        'nettet. Den presser modstanderen bagud og kan give et svagt svar. '
+        'Når du selv er presset og har brug for tid, er en højere '
+        'forsvars-clear bedre.',
+    keyPoints: [
+      'Samme forberedelse og slag som forhånds-clear: basisgreb, '
+          'sidelæns, albuen op og frem og underarmsrotation.',
+      'Træf foran kroppen og så højt som muligt, og slå mere fremad end '
+          'opad, så bolden får en fladere bane.',
+      'Banen skal lige gå over modstanderens ketsjer. For lav, og den '
+          'bliver opsnappet.',
+      'Skjul slaget som et drop eller smash, og gå straks tilbage mod '
+          'midten.',
+    ],
+    commonMistakes: [
+      'Clearen er for lav og bliver opsnappet i midtbanen.',
+      'Clearen er for kort og kan smashes.',
+      'Slås, når du er presset bag fjerbolden, så du ikke når tilbage.',
+    ],
+  ),
+  Technique(
     id: 'drop',
     kind: TechniqueKind.stroke,
     name: 'Drop',
@@ -209,6 +269,60 @@ const strokes = <Technique>[
       'Anden forberedelse end ved clear, så dropet bliver afsløret.',
       'Dropet lander midt på banen og kan angribes.',
       'Dropet er for højt over nettet.',
+    ],
+  ),
+  Technique(
+    id: 'sliced_drop',
+    kind: TechniqueKind.stroke,
+    name: 'Skåret drop',
+    category: 'Bagbane',
+    summary:
+        'Et hurtigt drop, hvor ketsjerfladen skærer hen over fjerbolden fra '
+        'højre mod venstre, så bolden går nedad og ofte på kryds.',
+    whenToUse:
+        'Når du vil have dropet hurtigere ned end et blødt drop, eller vil '
+        'spille det på kryds uden at ændre forberedelsen. Godt mod en '
+        'modstander, der står bagerst. Snittet bremser bolden, så den '
+        'falder brat. Teknikpunkterne bygger på almindelig træningspraksis.',
+    keyPoints: [
+      'Samme forberedelse og fart i armen som ved smash, så modstanderen '
+          'tror, der kommer et hårdt slag.',
+      'Vend ketsjerfladen lidt, og skær hen over korken fra højre mod '
+          'venstre i stedet for at ramme den fladt.',
+      'Træf foran kroppen og højt, og lad bolden falde lige over nettet.',
+      'Kom hurtigt frem mod midten efter slaget.',
+    ],
+    commonMistakes: [
+      'Rammer for fladt, så bolden flyver langt.',
+      'Bremser armen, så slaget bliver afsløret.',
+      'Dropet går i nettet, fordi skæringen er for kraftig.',
+    ],
+  ),
+  Technique(
+    id: 'reverse_slice_drop',
+    kind: TechniqueKind.stroke,
+    name: 'Omvendt skåret drop',
+    category: 'Bagbane',
+    summary:
+        'Et skåret drop, hvor ketsjeren skærer fra venstre mod højre, så '
+        'bolden går lige ned eller mod forhåndssiden, selv om armen ser ud '
+        'til at gå på kryds.',
+    whenToUse:
+        'Elite: til at snyde en modstander, der læser dit almindelige '
+        'skårne drop. Kræver meget kontrol af underarm og håndled. '
+        'Teknikpunkterne bygger på almindelig træningspraksis.',
+    keyPoints: [
+      'Samme forberedelse som ved clear og smash.',
+      'Drej underarmen ud, så ketsjerfladen vender mod højre, og skær hen '
+          'over korken fra venstre mod højre.',
+      'Træf lidt mere over hovedet eller til venstre for slagskulderen '
+          'end ved et almindeligt drop.',
+      'Træn det først fra en høj, let fodring, før du bruger det i kamp.',
+    ],
+    commonMistakes: [
+      'Slaget bliver for langsomt og højt, så det kan angribes.',
+      'Ketsjerfladen er ikke vendt, så det bliver et almindeligt drop.',
+      'Bruges af begyndere, før det almindelige drop sidder.',
     ],
   ),
   Technique(
@@ -260,6 +374,34 @@ const strokes = <Technique>[
       'Træffer bag hovedet, så smashen bliver flad og lang.',
       'Smasher fra for langt tilbage og bliver kontret.',
       'Bliver stående efter slaget.',
+    ],
+  ),
+  Technique(
+    id: 'half_smash',
+    kind: TechniqueKind.stroke,
+    name: 'Halv-smash (stik-smash)',
+    category: 'Bagbane',
+    summary:
+        'En smash med mindre fart og mere vinkel, slået med et kort, '
+        'hurtigt "stik" i stedet for fuld kraft.',
+    whenToUse:
+        'Når du ikke er helt bag fjerbolden, når du vil spare kræfter, '
+        'eller når du vil ramme et bestemt sted, fx midt mellem to spillere '
+        'i double eller lige ned foran en modstander. Du kommer hurtigere i '
+        'balance efter en halv-smash end efter en fuld smash. '
+        'Teknikpunkterne bygger på almindelig træningspraksis.',
+    keyPoints: [
+      'Samme forberedelse som ved fuld smash, så modstanderen ikke kan se '
+          'forskel.',
+      'Kort sving: brug mest underarmsrotation og håndled, og mindre af '
+          'hele kroppen.',
+      'Træf foran slagskulderen, så bolden går stejlt ned.',
+      'Kom straks i balance, og følg op ved nettet eller i midtbanen.',
+    ],
+    commonMistakes: [
+      'Slaget bliver blødt og fladt, så det ikke er en trussel.',
+      'Bruges altid i stedet for en rigtig smash, når muligheden er der.',
+      'Træf bag hovedet, så bolden går fladt.',
     ],
   ),
   Technique(
@@ -348,6 +490,33 @@ const strokes = <Technique>[
   ),
   // Midtbane
   Technique(
+    id: 'backhand_smash',
+    kind: TechniqueKind.stroke,
+    name: 'Baghånds-smash',
+    category: 'Bagbane',
+    summary:
+        'En nedadgående baghånd fra bagbanen: samme korte "punch" som '
+        'baghånds-clear, men med mere bøjet håndled, så bolden går ned.',
+    whenToUse:
+        'Elite: når en høj bold til baghåndshjørnet ikke kan nås rundt om '
+        'hovedet, og modstanderen ikke venter et angreb. Den er sjælden og '
+        'har ikke stor fart, så den bruges som overraskelse.',
+    keyPoints: [
+      'Samme greb og forberedelse som baghånds-clear: basis- eller '
+          'hjørnegreb, ryggen mod nettet og albuen nede.',
+      'Løft albuen, og stræk armen med udadrotation, ligesom i '
+          'baghånds-clear.',
+      'Bøj håndleddet mere i fremsvinget, og ram bolden højt og ved siden '
+          'af kroppen, så den går nedad.',
+      'Stop hånden brat, og vend hurtigt tilbage mod nettet.',
+    ],
+    commonMistakes: [
+      'Rammer bag kroppen, så bolden går op i stedet for ned.',
+      'Prøver at slå med kraft fra skulderen i stedet for et kort punch.',
+      'Bruges, når et forhåndsslag rundt om hovedet var muligt.',
+    ],
+  ),
+  Technique(
     id: 'drive',
     kind: TechniqueKind.stroke,
     name: 'Drive',
@@ -394,6 +563,33 @@ const strokes = <Technique>[
       'Står for højt og for oprejst.',
       'For stort sving, så fjerbolden går ud.',
       'Træffer bag kroppen og mister kontrollen.',
+    ],
+  ),
+  Technique(
+    id: 'cross_block',
+    kind: TechniqueKind.stroke,
+    name: 'Kryds-block',
+    category: 'Midtbane',
+    summary:
+        'En block, der returnerer en smash på kryds til modstanderens '
+        'forreste område i stedet for lige frem.',
+    whenToUse:
+        'I forsvar mod en lige smash. En block på kryds giver modstanderen '
+        'længst vej til nettet og gør det svært at følge op på smashen. Mod '
+        'en smash på kryds er en lige block bedst.',
+    keyPoints: [
+      'Afslappet greb, ketsjeren foran kroppen og albuen bøjet, som ved '
+          'en almindelig block.',
+      'Vend ketsjerfladen mod modsatte side ved at dreje grebet eller '
+          'bøje håndleddet.',
+      'Skub bolden blødt og lavt over nettet i stedet for at slå.',
+      'Kom straks klar til næste slag med ketsjeren foran kroppen.',
+    ],
+    commonMistakes: [
+      'Blocken går højt og kan dræbes ved nettet.',
+      'Blocken bliver for lang og lander i midtbanen.',
+      'Ketsjeren er ikke klar foran kroppen, så smashen kommer for '
+          'hurtigt.',
     ],
   ),
   Technique(
@@ -469,6 +665,34 @@ const strokes = <Technique>[
     ],
   ),
   Technique(
+    id: 'cross_net_shot',
+    kind: TechniqueKind.stroke,
+    name: 'Kryds-netdrop',
+    category: 'Net',
+    summary:
+        'Et netdrop, der går på tværs af banen tæt over nettet til '
+        'modstanderens modsatte forreste hjørne.',
+    whenToUse:
+        'Når modstanderen står i samme side som dig ved nettet, eller når '
+        'du har ventet med slaget, så modstanderen har lagt sig fast. Det '
+        'er risikabelt, fordi bolden er længe over nettet og kan blive '
+        'opsnappet. Teknikpunkterne bygger på almindelig træningspraksis.',
+    keyPoints: [
+      'Samme forberedelse som et lige netdrop, så modstanderen ikke kan '
+          'se retningen.',
+      'Ram fjerbolden så højt og så tidligt som muligt.',
+      'Drej ketsjerfladen mod den modsatte side med grebet eller '
+          'håndleddet, og skub bolden lige over nettekanten.',
+      'Gå straks lidt tilbage, så du er klar til et løft eller et nyt '
+          'netdrop.',
+    ],
+    commonMistakes: [
+      'Bolden går for højt eller for langt og bliver dræbt.',
+      'Slås fra lavt nede, så den bliver langsom og let at nå.',
+      'Bruges hver gang, så modstanderen venter den.',
+    ],
+  ),
+  Technique(
     id: 'net_kill',
     kind: TechniqueKind.stroke,
     name: 'Net kill',
@@ -490,6 +714,33 @@ const strokes = <Technique>[
     commonMistakes: [
       'Svinger for meget og rammer nettet.',
       'Ketsjeren er nede og når ikke op i tide.',
+    ],
+  ),
+  Technique(
+    id: 'net_tap',
+    kind: TechniqueKind.stroke,
+    name: 'Tap ved nettet (afskæring)',
+    category: 'Net',
+    summary:
+        'Et kort, hurtigt slag nedad ved nettet, når modstanderens drive, '
+        'push eller kryds går lidt for højt.',
+    whenToUse:
+        'Mest for den forreste spiller i double, der skal tage bolden '
+        'tidligt og afskære drive og push. Også ved nettet i single, når et '
+        'netdrop er for højt. Teknikpunkterne bygger på almindelig '
+        'træningspraksis.',
+    keyPoints: [
+      'Ketsjeren højt og foran kroppen, så du kan nå bolden tidligt.',
+      'Et meget kort slag med håndleddet og fingrene i grebet, nærmest et '
+          '"tap", uden bagsving.',
+      'Slå nedad og gerne mod modstanderens fødder eller ind i tomt '
+          'område.',
+      'Hold ketsjeren oppe efter slaget, og vær klar til næste bold.',
+    ],
+    commonMistakes: [
+      'For stort sving, så ketsjeren rammer nettet, eller bolden går ud.',
+      'Ketsjeren hænger ned, så bolden når forbi.',
+      'Går efter bolde, der er for lave, og slår dem i nettet.',
     ],
   ),
   Technique(
@@ -859,7 +1110,7 @@ const drills = <Drill>[
     id: 'clear_duel',
     name: 'Clear-duel',
     purpose: 'Træner længde og højde i clear og at komme bag fjerbolden.',
-    techniqueIds: ['clear', 'scissor_kick', 'split_step'],
+    techniqueIds: ['clear', 'attacking_clear', 'scissor_kick', 'split_step'],
     minPlayers: 2,
     minutes: 10,
     level: DrillLevel.beginner,
@@ -868,6 +1119,8 @@ const drills = <Drill>[
       'Spil høje clears frem og tilbage, lige over hinanden.',
       'Gå tilbage i midten med split step mellem hvert slag.',
       'Variér: skift til krydsclear efter 5 minutter.',
+      'Variér: bland angrebs-clears ind, der lige går over makkerens '
+          'ketsjer.',
     ],
     tips: [
       'Tæl hvor mange clears der lander bag den bagerste double-servelinje.',
@@ -940,7 +1193,7 @@ const drills = <Drill>[
     id: 'net_duel',
     name: 'Net-duel',
     purpose: 'Træner blød hånd ved nettet og at dræbe for høje net-slag.',
-    techniqueIds: ['net_shot', 'net_kill', 'lunge'],
+    techniqueIds: ['net_shot', 'cross_net_shot', 'net_kill', 'lunge'],
     minPlayers: 2,
     minutes: 8,
     level: DrillLevel.beginner,
@@ -949,6 +1202,7 @@ const drills = <Drill>[
       'Spil netdrop frem og tilbage.',
       'Hvis et slag går for højt, må modstanderen dræbe det.',
       'Tæl point: hvem vinder først 11?',
+      'Variér: spil både lige netdrop og kryds-netdrop.',
     ],
     tips: [
       'Træf fjerbolden så højt som muligt.',
@@ -980,7 +1234,14 @@ const drills = <Drill>[
     id: 'serve_receive',
     name: 'Serv og returnering',
     purpose: 'Træner serv og det vigtige første angreb på modtagers side.',
-    techniqueIds: ['serve_short', 'serve_long', 'push', 'net_kill'],
+    techniqueIds: [
+      'serve_short',
+      'serve_long',
+      'drive_serve',
+      'push',
+      'net_kill',
+      'net_tap',
+    ],
     minPlayers: 2,
     minutes: 10,
     level: DrillLevel.intermediate,
@@ -990,6 +1251,8 @@ const drills = <Drill>[
           'eller smash.',
       'Spil duellen ud til 3 slag, og start forfra.',
       'Byt roller efter 10 serv.',
+      'Double: A blander af og til en drive-serv ind, og A\'s makker står '
+          'klar til at afskære modtagerens push med et tap ved nettet.',
     ],
     tips: [
       'Modtager står med ketsjeren oppe og vægten fremme.',
@@ -1047,6 +1310,9 @@ const drills = <Drill>[
       'clear',
       'smash',
       'drop',
+      'half_smash',
+      'sliced_drop',
+      'reverse_slice_drop',
       'around_the_head',
       'scissor_kick',
       'backhand_corner',
@@ -1061,6 +1327,8 @@ const drills = <Drill>[
       'Brug saksehop i forhåndshjørnet og rundt om hovedet i '
           'baghåndshjørnet.',
       'Serier på 15-20 fjerbolde.',
+      'Variation: halv-smash og skåret drop i stedet for fuld smash og blødt '
+          'drop. Elite: også omvendt skåret drop.',
     ],
     tips: [
       'Retur til midten efter hvert slag.',
@@ -1899,7 +2167,7 @@ const drills = <Drill>[
     id: 'backhand_clear_intro',
     name: 'Baghånds-clear med ryggen til nettet',
     purpose: 'Begynderøvelse til baghånds-clear: slag, vending og retur.',
-    techniqueIds: ['backhand', 'backhand_corner'],
+    techniqueIds: ['backhand', 'backhand_corner', 'backhand_smash'],
     minPlayers: 1,
     minutes: 10,
     level: DrillLevel.intermediate,
@@ -1916,6 +2184,8 @@ const drills = <Drill>[
       'Albuen nede og ketsjerhovedet oppe, når du kommer frem. Slaget er et kort '
           '"punch".',
       'Prøv at ændre greb og håndled for at slå både lige og på kryds.',
+      'Elite: når clearen sidder, så bøj håndleddet mere i fremsvinget, og '
+          'slå en baghånds-smash nedad.',
     ],
   ),
   Drill(
@@ -1939,6 +2209,29 @@ const drills = <Drill>[
     tips: [
       'Varier smashens fart, og sigt mod det tomme område eller mod kroppen.',
       'Læg mål på banen for at få stejlere og mere præcise slag.',
+    ],
+  ),
+  Drill(
+    id: 'cross_block_game',
+    name: 'Smash og kryds-block',
+    purpose:
+        'Forsvar i single: block på kryds mod en lige smash og lige block mod '
+        'en smash på kryds.',
+    techniqueIds: ['cross_block', 'defence', 'smash'],
+    minPlayers: 2,
+    minutes: 15,
+    level: DrillLevel.intermediate,
+    steps: [
+      'A og B starter en duel, så A får chancen for en lige smash.',
+      'B svarer mest med en block på kryds, men må af og til spille andre '
+          'slag. Spil duellen ud.',
+      'Næste runde: A smasher på kryds, og B svarer mest med en lige block.',
+      'Byt roller efter 10 dueller.',
+    ],
+    tips: [
+      'En block på kryds mod en lige smash giver smasheren længst vej til '
+          'nettet.',
+      'Hold blocken lav og kort, så den ikke kan dræbes ved nettet.',
     ],
   ),
   Drill(
