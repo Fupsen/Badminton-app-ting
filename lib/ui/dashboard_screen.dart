@@ -1,14 +1,23 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/live_match_store.dart';
+import '../logic/live_score.dart';
 import '../logic/stats.dart';
 import '../state/app_state.dart';
 import 'backup_screen.dart';
 import 'goals_screen.dart';
 import 'labels.dart';
+import 'live_score_screen.dart';
 import 'matches_screen.dart';
+import 'plans_screen.dart';
 import 'training_screen.dart';
 import 'widgets/common.dart';
+
+/// Påmindelse om backup efter så mange dage. På iPhone (webudgaven) kan
+/// Safari slette data, så der mindes der oftere.
+const backupReminderDays = kIsWeb ? 14 : 30;
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -34,7 +43,10 @@ class DashboardScreen extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(12),
         children: [
-          if (state.needsBackupReminder(DateTime.now()))
+          if (state.needsBackupReminder(
+            DateTime.now(),
+            days: backupReminderDays,
+          ))
             BackupReminderCard(neverBackedUp: state.lastBackupAt == null),
           Padding(
             padding: const EdgeInsets.fromLTRB(4, 4, 4, 12),
@@ -52,6 +64,35 @@ class DashboardScreen extends StatelessWidget {
                   icon: const Icon(Icons.fitness_center),
                   label: Text(l.logTraining),
                 ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(4, 0, 4, 12),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                if (state.activePlayer case final player?)
+                  _LiveScoreShortcut(
+                    key: ValueKey(player.id),
+                    playerId: player.id,
+                  ),
+                if (trainings.isNotEmpty)
+                  ActionChip(
+                    avatar: const Icon(Icons.replay),
+                    label: Text(l.shortcutRepeatTraining),
+                    onPressed: () => openTrainingForm(
+                      context,
+                      prefill: TrainingPrefill.fromSession(trainings.first),
+                    ),
+                  ),
+                if (state.plans.isNotEmpty)
+                  ActionChip(
+                    avatar: const Icon(Icons.list_alt),
+                    label: Text(l.shortcutPlans),
+                    onPressed: () => openPlans(context),
+                  ),
               ],
             ),
           ),
@@ -142,7 +183,9 @@ class BackupReminderCard extends StatelessWidget {
             const SizedBox(width: 12),
             Expanded(
               child: Text(
-                neverBackedUp ? l.backupReminderNever : l.backupReminderOld,
+                neverBackedUp
+                    ? l.backupReminderNever
+                    : l.backupReminderOld(backupReminderDays),
                 style: TextStyle(color: colors.onTertiaryContainer),
               ),
             ),
@@ -153,6 +196,61 @@ class BackupReminderCard extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// "Kamptæller", eller "Fortsæt kampen 8-5", når en kamp er i gang.
+class _LiveScoreShortcut extends StatefulWidget {
+  const _LiveScoreShortcut({super.key, required this.playerId});
+
+  final String playerId;
+
+  @override
+  State<_LiveScoreShortcut> createState() => _LiveScoreShortcutState();
+}
+
+class _LiveScoreShortcutState extends State<_LiveScoreShortcut> {
+  LiveMatch? _match;
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final match = await const LiveMatchStore().load(widget.playerId);
+    if (mounted) setState(() => _match = match);
+  }
+
+  Future<void> _open() async {
+    await openLiveScore(context);
+    await _load();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l = context.l10n;
+    final match = _match;
+    if (match == null || match.rallies.isEmpty) {
+      return ActionChip(
+        avatar: const Icon(Icons.scoreboard_outlined),
+        label: Text(l.shortcutLiveScore),
+        onPressed: _open,
+      );
+    }
+    // Mellem to sæt står det nye sæt i 0-0, så vis det seneste sæt.
+    final games = match.games;
+    final betweenGames =
+        match.ourPoints == 0 && match.theirPoints == 0 && games.isNotEmpty;
+    final (us, them) = betweenGames
+        ? (games.last.own, games.last.opponent)
+        : (match.ourPoints, match.theirPoints);
+    return ActionChip(
+      avatar: const Icon(Icons.play_arrow),
+      label: Text(l.shortcutContinueMatch(us, them)),
+      onPressed: _open,
     );
   }
 }

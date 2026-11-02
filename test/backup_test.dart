@@ -172,6 +172,46 @@ void main() {
       await state.markBackedUp(DateTime(2026, 9, 1));
       expect(state.needsBackupReminder(now), isFalse);
       expect(state.needsBackupReminder(DateTime(2026, 10, 2)), isTrue);
+      // På iPhone mindes der allerede efter 14 dage.
+      expect(state.needsBackupReminder(DateTime(2026, 9, 15), days: 14),
+          isFalse);
+      expect(state.needsBackupReminder(DateTime(2026, 9, 16), days: 14),
+          isTrue);
+    });
+
+    test('deletes return the removed row so they can be undone', () async {
+      final state = await loaded(AppData(
+        players: [player('p1', 'Mette')],
+        matches: [match('m1', 'p1'), match('m2', 'p1', opponents: 'Anders')],
+        activePlayerId: 'p1',
+      ));
+      final removed = await state.deleteMatch('m2');
+      expect(removed!.opponents, 'Anders');
+      expect(state.activeMatches.map((m) => m.id), ['m1']);
+      expect(await state.deleteMatch('findes-ikke'), isNull);
+      await state.saveMatch(removed);
+      expect(state.activeMatches.map((m) => m.id).toSet(), {'m1', 'm2'});
+    });
+
+    test('deleting a player can be undone with the snapshot', () async {
+      final state = await loaded(AppData(
+        players: [player('p1', 'Mette'), player('p2', 'Jonas')],
+        matches: [match('m1', 'p1'), match('m2', 'p2')],
+        activePlayerId: 'p1',
+      ));
+      await state.markBackedUp(DateTime(2026, 9, 1));
+      final snapshot = await state.deletePlayer('p1');
+      expect(state.players.map((p) => p.name), ['Jonas']);
+      expect(state.activePlayer!.id, 'p2');
+      expect(state.activeMatches.map((m) => m.id), ['m2']);
+
+      await state.markBackedUp(DateTime(2026, 9, 20));
+      await state.restoreSnapshot(snapshot);
+      expect(state.players.map((p) => p.name), ['Mette', 'Jonas']);
+      expect(state.activePlayer!.id, 'p1');
+      expect(state.activeMatches.map((m) => m.id), ['m1']);
+      // Tidspunktet for sidste backup rulles ikke tilbage.
+      expect(state.lastBackupAt, DateTime(2026, 9, 20));
     });
 
     test('replace keeps this device\'s backup time and fixes active player',

@@ -251,3 +251,24 @@ class WebInstallHint extends StatelessWidget {
     );
   }
 }
+
+/// Viser en besked med "Fortryd" efter en sletning. Hent [messenger] før en
+/// eventuel `Navigator.pop`, så beskeden vises på skærmen bagved.
+void showUndoSnackBar(
+  ScaffoldMessengerState messenger, {
+  required String message,
+  required String undoLabel,
+  required VoidCallback onUndo,
+}) {
+  messenger
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 6),
+        // Forsvinder af sig selv, selvom den har en knap.
+        persist: false,
+        action: SnackBarAction(label: undoLabel, onPressed: onUndo),
+      ),
+    );
+}

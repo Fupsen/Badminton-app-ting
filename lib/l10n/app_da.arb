@@ -176,7 +176,8 @@
   "backupInvalidFile": "Filen er ikke en gyldig backup fra Badminton-logbog.",
   "backupTooNew": "Backuppen er lavet med en nyere version af appen. Opdatér appen og prøv igen.",
   "backupReminderNever": "Du har ikke taget backup endnu. Dine data findes kun på denne enhed.",
-  "backupReminderOld": "Det er over 30 dage siden, du sidst tog backup.",
+  "backupReminderOld": "Det er over {days} dage siden, du sidst tog backup.",
+  "@backupReminderOld": {"placeholders": {"days": {"type": "int"}}},
   "backupReminderAction": "Tag backup",
   "countPlayers": "{count, plural, =1{1 spiller} other{{count} spillere}}",
   "@countPlayers": {"placeholders": {"count": {"type": "int"}}},
@@ -381,5 +382,17 @@
   "planFinishedSummary": "{done} af {total} øvelser gennemført · {minutes} min",
   "@planFinishedSummary": {"placeholders": {"done": {"type": "int"}, "total": {"type": "int"}, "minutes": {"type": "int"}}},
   "planNothingDone": "Ingen øvelser blev gennemført, så der er intet at logge.",
-  "planLog": "Log som træningspas"
+  "planLog": "Log som træningspas",
+  "undo": "Fortryd",
+  "matchDeleted": "Kampen er slettet.",
+  "trainingDeleted": "Træningspasset er slettet.",
+  "goalDeleted": "Målet er slettet.",
+  "planDeleted": "Planen er slettet.",
+  "playerDeleted": "{name} er slettet.",
+  "@playerDeleted": {"placeholders": {"name": {"type": "String"}}},
+  "shortcutLiveScore": "Kamptæller",
+  "shortcutContinueMatch": "Fortsæt kampen {us}-{them}",
+  "@shortcutContinueMatch": {"placeholders": {"us": {"type": "int"}, "them": {"type": "int"}}},
+  "shortcutRepeatTraining": "Gentag sidste træningspas",
+  "shortcutPlans": "Træningsplaner"
 }

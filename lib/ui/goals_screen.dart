@@ -151,9 +151,19 @@ class _GoalFormState extends State<GoalForm> {
   }
 
   Future<void> _delete() async {
+    final l = context.l10n;
     final state = context.read<AppState>();
-    if (await confirmDelete(context, context.l10n.deleteGoalTitle)) {
-      await state.deleteGoal(widget.existing!.id);
+    final messenger = ScaffoldMessenger.of(context);
+    if (await confirmDelete(context, l.deleteGoalTitle)) {
+      final removed = await state.deleteGoal(widget.existing!.id);
+      if (removed != null) {
+        showUndoSnackBar(
+          messenger,
+          message: l.goalDeleted,
+          undoLabel: l.undo,
+          onUndo: () => state.saveGoal(removed),
+        );
+      }
       if (mounted) Navigator.pop(context);
     }
   }

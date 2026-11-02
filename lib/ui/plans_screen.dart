@@ -131,8 +131,17 @@ class _PlanEditorState extends State<PlanEditor> {
   Future<void> _delete() async {
     final l = context.l10n;
     final state = context.read<AppState>();
+    final messenger = ScaffoldMessenger.of(context);
     if (await confirmDelete(context, l.deletePlanTitle)) {
-      await state.deletePlan(widget.existing!.id);
+      final removed = await state.deletePlan(widget.existing!.id);
+      if (removed != null) {
+        showUndoSnackBar(
+          messenger,
+          message: l.planDeleted,
+          undoLabel: l.undo,
+          onUndo: () => state.savePlan(removed),
+        );
+      }
       if (mounted) Navigator.pop(context);
     }
   }

@@ -6,6 +6,8 @@ import 'package:badminton_app/data/coach_client.dart';
 import 'package:badminton_app/data/data_store.dart';
 import 'package:badminton_app/data/live_match_store.dart';
 import 'package:badminton_app/l10n/app_localizations.dart';
+import 'package:badminton_app/logic/live_score.dart';
+import 'package:badminton_app/logic/scoring.dart';
 import 'package:badminton_app/main.dart';
 import 'package:badminton_app/models/models.dart';
 import 'package:badminton_app/ui/widgets/common.dart';
@@ -673,6 +675,82 @@ void main() {
     expect(logged.durationMinutes, 6);
     expect(logged.notes, 'Tirsdag');
     expect(logged.type, TrainingType.footwork);
+  });
+
+  testWidgets('deleting a match can be undone', (tester) async {
+    final data = onePlayer()..matches.add(sampleMatch('m1', 'p'));
+    final store = MemoryStore(data);
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+
+    await tester.tap(navItem('Kampe'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('mod Bo'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Slet'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.widgetWithText(FilledButton, 'Slet'));
+    await tester.pumpAndSettle();
+    expect((await store.load()).matches, isEmpty);
+    expect(find.text('Kampen er slettet.'), findsOneWidget);
+
+    await tester.tap(find.text('Fortryd'));
+    await tester.pumpAndSettle();
+    expect((await store.load()).matches.single.id, 'm1');
+    expect(find.text('mod Bo'), findsOneWidget);
+  });
+
+  testWidgets('overview shortcuts: repeat training and continue the match',
+      (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    final data = onePlayer()
+      ..trainings.add(TrainingSession(
+        id: 't1',
+        playerId: 'p',
+        date: DateTime(2026, 10, 1),
+        durationMinutes: 75,
+        type: TrainingType.footwork,
+        intensity: 5,
+        notes: 'Kun den dag',
+        techniqueIds: const ['split_step'],
+        drillIds: const ['ladder_feet'],
+      ));
+    final store = MemoryStore(data);
+    var live = const LiveMatch(
+      system: ScoringSystem.to15,
+      type: MatchType.single,
+      firstServer: Side.us,
+    );
+    for (final side in [Side.us, Side.us, Side.them, Side.us, Side.them]) {
+      live = live.pointTo(side);
+    }
+    await const LiveMatchStore().save('p', live);
+
+    await tester.pumpWidget(BadmintonApp(store: store));
+    await tester.pumpAndSettle();
+    // Ingen planer endnu, så den genvej vises ikke.
+    expect(find.widgetWithText(ActionChip, 'Træningsplaner'), findsNothing);
+
+    // Gentag sidste træningspas: alt undtagen noten og datoen kopieres.
+    await tester.tap(find.text('Gentag sidste træningspas'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Gem'));
+    await tester.pumpAndSettle();
+    final copy = (await store.load())
+        .trainings
+        .singleWhere((t) => t.id != 't1');
+    expect(copy.durationMinutes, 75);
+    expect(copy.type, TrainingType.footwork);
+    expect(copy.intensity, 5);
+    expect(copy.notes, isEmpty);
+    expect(copy.techniqueIds, ['split_step']);
+    expect(copy.drillIds, ['ladder_feet']);
+    expect(copy.date.day, DateTime.now().day);
+
+    // Den igangværende kamp kan fortsættes fra Oversigt.
+    await tester.tap(find.text('Fortsæt kampen 3-2'));
+    await tester.pumpAndSettle();
+    expect(find.bySemanticsLabel('Mig 3'), findsOneWidget);
   });
 
   testWidgets('drills: search, filter and start the timer', (tester) async {

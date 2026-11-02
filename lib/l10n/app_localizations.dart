@@ -955,8 +955,8 @@ abstract class AppLocalizations {
   /// No description provided for @backupReminderOld.
   ///
   /// In da, this message translates to:
-  /// **'Det er over 30 dage siden, du sidst tog backup.'**
-  String get backupReminderOld;
+  /// **'Det er over {days} dage siden, du sidst tog backup.'**
+  String backupReminderOld(int days);
 
   /// No description provided for @backupReminderAction.
   ///
@@ -1995,6 +1995,66 @@ abstract class AppLocalizations {
   /// In da, this message translates to:
   /// **'Log som træningspas'**
   String get planLog;
+
+  /// No description provided for @undo.
+  ///
+  /// In da, this message translates to:
+  /// **'Fortryd'**
+  String get undo;
+
+  /// No description provided for @matchDeleted.
+  ///
+  /// In da, this message translates to:
+  /// **'Kampen er slettet.'**
+  String get matchDeleted;
+
+  /// No description provided for @trainingDeleted.
+  ///
+  /// In da, this message translates to:
+  /// **'Træningspasset er slettet.'**
+  String get trainingDeleted;
+
+  /// No description provided for @goalDeleted.
+  ///
+  /// In da, this message translates to:
+  /// **'Målet er slettet.'**
+  String get goalDeleted;
+
+  /// No description provided for @planDeleted.
+  ///
+  /// In da, this message translates to:
+  /// **'Planen er slettet.'**
+  String get planDeleted;
+
+  /// No description provided for @playerDeleted.
+  ///
+  /// In da, this message translates to:
+  /// **'{name} er slettet.'**
+  String playerDeleted(String name);
+
+  /// No description provided for @shortcutLiveScore.
+  ///
+  /// In da, this message translates to:
+  /// **'Kamptæller'**
+  String get shortcutLiveScore;
+
+  /// No description provided for @shortcutContinueMatch.
+  ///
+  /// In da, this message translates to:
+  /// **'Fortsæt kampen {us}-{them}'**
+  String shortcutContinueMatch(int us, int them);
+
+  /// No description provided for @shortcutRepeatTraining.
+  ///
+  /// In da, this message translates to:
+  /// **'Gentag sidste træningspas'**
+  String get shortcutRepeatTraining;
+
+  /// No description provided for @shortcutPlans.
+  ///
+  /// In da, this message translates to:
+  /// **'Træningsplaner'**
+  String get shortcutPlans;
 }
 
 class _AppLocalizationsDelegate

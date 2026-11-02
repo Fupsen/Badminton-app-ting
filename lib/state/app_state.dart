@@ -98,7 +98,10 @@ class AppState extends ChangeNotifier {
   }
 
   /// Sletter spilleren og alle spillerens kampe, træninger og mål.
-  Future<void> deletePlayer(String id) async {
+  /// Returnerer en kopi af alle data fra før sletningen, så den kan fortrydes
+  /// med [restoreSnapshot].
+  Future<AppData> deletePlayer(String id) async {
+    final snapshot = AppData.fromJson(_data.toJson());
     _data.players.removeWhere((p) => p.id == id);
     _data.matches.removeWhere((m) => m.playerId == id);
     _data.trainings.removeWhere((t) => t.playerId == id);
@@ -108,6 +111,15 @@ class AppState extends ChangeNotifier {
           _data.players.isEmpty ? null : _data.players.first.id;
     }
     await _commit();
+    return snapshot;
+  }
+
+  /// Gendanner data fra [deletePlayer]. Tidspunktet for sidste backup
+  /// bevares, ligesom ved import.
+  Future<void> restoreSnapshot(AppData snapshot) {
+    final lastBackupAt = _data.lastBackupAt;
+    _data = AppData.fromJson(snapshot.toJson())..lastBackupAt = lastBackupAt;
+    return _commit();
   }
 
   Future<void> setActivePlayer(String id) async {
@@ -119,15 +131,15 @@ class AppState extends ChangeNotifier {
 
   DateTime? get lastBackupAt => _data.lastBackupAt;
 
-  /// Sand når der er data, som ikke er taget backup af i over 30 dage.
-  bool needsBackupReminder(DateTime now) {
+  /// Sand når der er data, som ikke er taget backup af i over [days] dage.
+  bool needsBackupReminder(DateTime now, {int days = 30}) {
     if (_data.matches.isEmpty &&
         _data.trainings.isEmpty &&
         _data.plans.isEmpty) {
       return false;
     }
     final last = _data.lastBackupAt;
-    return last == null || now.difference(last).inDays > 30;
+    return last == null || now.difference(last).inDays > days;
   }
 
   /// Laver en backup af alle data. Kald [markBackedUp], når filen faktisk er
@@ -156,28 +168,31 @@ class AppState extends ChangeNotifier {
     return _commit();
   }
 
-  // Kampe, træning og mål. "save" opretter eller erstatter på id.
+  // Kampe, træning, mål og planer. "save" opretter eller erstatter på id.
+  // "delete" returnerer det slettede, så sletningen kan fortrydes med "save".
 
   Future<void> saveMatch(MatchRecord match) =>
       _upsert(_data.matches, match, (m) => m.id);
 
-  Future<void> deleteMatch(String id) =>
+  Future<MatchRecord?> deleteMatch(String id) =>
       _remove(_data.matches, (m) => m.id == id);
 
   Future<void> saveTraining(TrainingSession session) =>
       _upsert(_data.trainings, session, (t) => t.id);
 
-  Future<void> deleteTraining(String id) =>
+  Future<TrainingSession?> deleteTraining(String id) =>
       _remove(_data.trainings, (t) => t.id == id);
 
   Future<void> saveGoal(Goal goal) => _upsert(_data.goals, goal, (g) => g.id);
 
-  Future<void> deleteGoal(String id) => _remove(_data.goals, (g) => g.id == id);
+  Future<Goal?> deleteGoal(String id) =>
+      _remove(_data.goals, (g) => g.id == id);
 
   Future<void> savePlan(TrainingPlan plan) =>
       _upsert(_data.plans, plan, (p) => p.id);
 
-  Future<void> deletePlan(String id) => _remove(_data.plans, (p) => p.id == id);
+  Future<TrainingPlan?> deletePlan(String id) =>
+      _remove(_data.plans, (p) => p.id == id);
 
   Future<void> _upsert<T>(List<T> list, T item, String Function(T) id) {
     final i = list.indexWhere((e) => id(e) == id(item));
@@ -189,8 +204,11 @@ class AppState extends ChangeNotifier {
     return _commit();
   }
 
-  Future<void> _remove<T>(List<T> list, bool Function(T) test) {
-    list.removeWhere(test);
-    return _commit();
+  Future<T?> _remove<T>(List<T> list, bool Function(T) test) async {
+    final i = list.indexWhere(test);
+    if (i < 0) return null;
+    final removed = list.removeAt(i);
+    await _commit();
+    return removed;
   }
 }
