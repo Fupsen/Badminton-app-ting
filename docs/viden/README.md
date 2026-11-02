@@ -5,7 +5,7 @@ så Claude (og mennesker) har noget solidt at bygge appens indhold og svar på.
 `CLAUDE.md` i roden af repoet peger hertil, så Claude læser den i nye
 sessioner.
 
-**Sidst opdateret:** 01-10-2026.
+**Sidst opdateret:** 02-11-2026.
 
 | Fil | Indhold |
 | --- | --- |
@@ -49,6 +49,12 @@ sessioner.
 - **"Rundt om hovedet"** er ikke beskrevet i Level 1-manualen og bygger
   stadig på praksis. Det samme gælder de fleste øvelsers tider og antal
   gentagelser.
+- **Slag tilføjet 02-11-2026 efter ønske om "så mange slag som muligt":**
+  **drive-serv** bygger helt på praksis. **Kryds-netdrop**, **tap ved
+  nettet**, **halv-smash**, **skåret drop** og **omvendt skåret drop** er
+  nævnt i manualen (s. 84, 122, 153, 155), men teknikpunkterne er praksis.
+  **Angrebs-clear**, **kryds-block** og **baghånds-smash** har kilde
+  (s. 117, 146, 126). En søgning på badminton.dk og BWF gav ikke mere.
 - **BATK** (Badminton Danmark) er en bog, der ikke ligger frit, og den er ved
   at blive opdateret. Talentstrategien og siden om fysisk-motorisk
   basistræning er læst direkte.

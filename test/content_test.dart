@@ -52,6 +52,15 @@ void main() {
       'backhand_net',
       'side_defence',
       'doubles_rotation',
+      'drive_serve',
+      'attacking_clear',
+      'half_smash',
+      'sliced_drop',
+      'reverse_slice_drop',
+      'backhand_smash',
+      'cross_block',
+      'cross_net_shot',
+      'net_tap',
     ]) {
       expect(techniqueById(id), isNotNull, reason: id);
     }
@@ -65,6 +74,7 @@ void main() {
       'overhead_suspended',
       'smash_block_lift',
       'drop_gates',
+      'cross_block_game',
     ]) {
       expect(drillById(id), isNotNull, reason: id);
     }
