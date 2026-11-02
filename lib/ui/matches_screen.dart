@@ -255,8 +255,17 @@ class _MatchFormState extends State<MatchForm> {
   Future<void> _delete() async {
     final l = context.l10n;
     final state = context.read<AppState>();
+    final messenger = ScaffoldMessenger.of(context);
     if (await confirmDelete(context, l.deleteMatchTitle)) {
-      await state.deleteMatch(widget.existing!.id);
+      final removed = await state.deleteMatch(widget.existing!.id);
+      if (removed != null) {
+        showUndoSnackBar(
+          messenger,
+          message: l.matchDeleted,
+          undoLabel: l.undo,
+          onUndo: () => state.saveMatch(removed),
+        );
+      }
       if (mounted) Navigator.pop(context);
     }
   }

@@ -111,7 +111,19 @@ class TrainingPrefill {
     this.type,
     this.minutes,
     this.notes,
+    this.intensity,
   });
+
+  /// Samme pas som [session] igen (fx "Gentag sidste træningspas"). Noten
+  /// kopieres ikke, fordi den som regel handler om netop den dag.
+  factory TrainingPrefill.fromSession(TrainingSession session) =>
+      TrainingPrefill(
+        techniqueIds: session.techniqueIds,
+        drillIds: session.drillIds,
+        type: session.type,
+        minutes: session.durationMinutes,
+        intensity: session.intensity,
+      );
 
   /// De øvelser fra en plan, der blev gennemført, samlet til ét pas.
   factory TrainingPrefill.forPlan(TrainingPlan plan, List<PlanItem> done) {
@@ -147,6 +159,7 @@ class TrainingPrefill {
   final TrainingType? type;
   final int? minutes;
   final String? notes;
+  final int? intensity;
 
   /// Rent benarbejde logges som footwork, alt andet som teknik.
   static TrainingType _typeFor(List<String> ids) =>
@@ -199,7 +212,7 @@ class _TrainingFormState extends State<TrainingForm> {
     final p = t == null ? widget.prefill : null;
     _date = t?.date ?? DateTime.now();
     _type = t?.type ?? p?.type ?? TrainingType.technique;
-    _intensity = t?.intensity ?? 3;
+    _intensity = t?.intensity ?? p?.intensity ?? 3;
     _duration = TextEditingController(
       text: (t?.durationMinutes ?? p?.minutes ?? 90).toString(),
     );
@@ -244,9 +257,19 @@ class _TrainingFormState extends State<TrainingForm> {
   }
 
   Future<void> _delete() async {
+    final l = context.l10n;
     final state = context.read<AppState>();
-    if (await confirmDelete(context, context.l10n.deleteTrainingTitle)) {
-      await state.deleteTraining(widget.existing!.id);
+    final messenger = ScaffoldMessenger.of(context);
+    if (await confirmDelete(context, l.deleteTrainingTitle)) {
+      final removed = await state.deleteTraining(widget.existing!.id);
+      if (removed != null) {
+        showUndoSnackBar(
+          messenger,
+          message: l.trainingDeleted,
+          undoLabel: l.undo,
+          onUndo: () => state.saveTraining(removed),
+        );
+      }
       if (mounted) Navigator.pop(context);
     }
   }

@@ -116,7 +116,15 @@ class PlayersScreen extends StatelessWidget {
                           l.deletePlayerTitle(p.name),
                           body: l.deletePlayerBody,
                         );
-                        if (ok) await state.deletePlayer(p.id);
+                        if (!ok || !context.mounted) return;
+                        final messenger = ScaffoldMessenger.of(context);
+                        final snapshot = await state.deletePlayer(p.id);
+                        showUndoSnackBar(
+                          messenger,
+                          message: l.playerDeleted(p.name),
+                          undoLabel: l.undo,
+                          onUndo: () => state.restoreSnapshot(snapshot),
+                        );
                       },
                     ),
                   ],

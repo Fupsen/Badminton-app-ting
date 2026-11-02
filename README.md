@@ -58,6 +58,9 @@ kører på Android, iOS, Windows, macOS og Linux.
 - **Spillerprofil**: niveau (begynder, klubspiller, elite) og om man er
   venstrehåndet. Øvelserne starter på ens niveau, venstrehåndede får en
   påmindelse om at spejle beskrivelserne, og AI-træneren får det at vide.
+- **Genveje på Oversigten**: "Kamptæller" (eller "Fortsæt kampen 8-5", når en
+  kamp er i gang), "Gentag sidste træningspas" (samme type, tid, intensitet,
+  slag og øvelser, dog ikke noten) og "Træningsplaner".
 - **Mål**: træningspas pr. uge, træningsminutter pr. uge eller sejrsprocent,
   med fremskridtsbjælke. Mål oprettes og vises på Oversigten.
 - **Statistik**: sejrsprocent samlet og pr. kamptype, træningsminutter pr.
@@ -75,7 +78,10 @@ kører på Android, iOS, Windows, macOS og Linux.
   overblik over dine kampe, din træning og dine mål sendes til Anthropic.
 - **Backup og gendannelse**: eksportér alle data til en JSON-fil og
   importér den igen. Du kan flette filen ind eller erstatte alt. Oversigten
-  minder dig om at tage backup, hvis det er over 30 dage siden.
+  minder dig om at tage backup, hvis det er over 30 dage siden (14 dage i
+  webudgaven på iPhone, fordi Safari kan slette data).
+- **Fortryd**: sletter du en kamp, et træningspas, et mål, en plan eller en
+  spiller, kan det fortrydes i nogle sekunder bagefter.
 - **Responsivt layout**: bundnavigation på telefon og sidemenu på bredere
   skærme.
 

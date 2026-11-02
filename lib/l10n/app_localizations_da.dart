@@ -521,8 +521,9 @@ class AppLocalizationsDa extends AppLocalizations {
       'Du har ikke taget backup endnu. Dine data findes kun på denne enhed.';
 
   @override
-  String get backupReminderOld =>
-      'Det er over 30 dage siden, du sidst tog backup.';
+  String backupReminderOld(int days) {
+    return 'Det er over $days dage siden, du sidst tog backup.';
+  }
 
   @override
   String get backupReminderAction => 'Tag backup';
@@ -1172,4 +1173,38 @@ class AppLocalizationsDa extends AppLocalizations {
 
   @override
   String get planLog => 'Log som træningspas';
+
+  @override
+  String get undo => 'Fortryd';
+
+  @override
+  String get matchDeleted => 'Kampen er slettet.';
+
+  @override
+  String get trainingDeleted => 'Træningspasset er slettet.';
+
+  @override
+  String get goalDeleted => 'Målet er slettet.';
+
+  @override
+  String get planDeleted => 'Planen er slettet.';
+
+  @override
+  String playerDeleted(String name) {
+    return '$name er slettet.';
+  }
+
+  @override
+  String get shortcutLiveScore => 'Kamptæller';
+
+  @override
+  String shortcutContinueMatch(int us, int them) {
+    return 'Fortsæt kampen $us-$them';
+  }
+
+  @override
+  String get shortcutRepeatTraining => 'Gentag sidste træningspas';
+
+  @override
+  String get shortcutPlans => 'Træningsplaner';
 }
